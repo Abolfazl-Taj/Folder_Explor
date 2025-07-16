@@ -8,10 +8,11 @@ export async function POST() {
 
   response.cookies.set("token", "", {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: false,
     sameSite: "strict",
-    path: "/",
+    path: "/dashboard",
     maxAge: 0,
+    expires: new Date(0),
   });
 
   return response;

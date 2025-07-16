@@ -12,6 +12,7 @@ const FormikForm = <T,>({
         <Formik
             initialValues={initialState}
             validationSchema={schema}
+            validateOnChange={true}
             onSubmit={(value) => onSubmit(value)}
         >
             {({ }) => (

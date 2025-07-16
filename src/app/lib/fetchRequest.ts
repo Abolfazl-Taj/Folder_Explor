@@ -9,8 +9,10 @@ export const postRequest = async ({
   body,
 }: {
   url: string;
-  body: any;
+  body?: any;
 }) => {
-  const response = await axios.post(url, body);
+  const response = await axios.post(url, body, {
+    withCredentials: true,
+  });
   return response.data;
 };

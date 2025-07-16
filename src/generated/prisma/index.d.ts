@@ -3532,8 +3532,8 @@ export namespace Prisma {
   export type FileGroupByOutputType = {
     id: string
     name: string
-    url: string
-    folderId: string
+    url: string | null
+    folderId: string | null
     userId: string
     createdAt: Date
     updatedAt: Date
@@ -3564,7 +3564,7 @@ export namespace Prisma {
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    folder?: boolean | FolderDefaultArgs<ExtArgs>
+    folder?: boolean | File$folderArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["file"]>
 
@@ -3576,7 +3576,7 @@ export namespace Prisma {
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    folder?: boolean | FolderDefaultArgs<ExtArgs>
+    folder?: boolean | File$folderArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["file"]>
 
@@ -3588,7 +3588,7 @@ export namespace Prisma {
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    folder?: boolean | FolderDefaultArgs<ExtArgs>
+    folder?: boolean | File$folderArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["file"]>
 
@@ -3604,29 +3604,29 @@ export namespace Prisma {
 
   export type FileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "url" | "folderId" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["file"]>
   export type FileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    folder?: boolean | FolderDefaultArgs<ExtArgs>
+    folder?: boolean | File$folderArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type FileIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    folder?: boolean | FolderDefaultArgs<ExtArgs>
+    folder?: boolean | File$folderArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type FileIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    folder?: boolean | FolderDefaultArgs<ExtArgs>
+    folder?: boolean | File$folderArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
 
   export type $FilePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "File"
     objects: {
-      folder: Prisma.$FolderPayload<ExtArgs>
+      folder: Prisma.$FolderPayload<ExtArgs> | null
       user: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
-      url: string
-      folderId: string
+      url: string | null
+      folderId: string | null
       userId: string
       createdAt: Date
       updatedAt: Date
@@ -4024,7 +4024,7 @@ export namespace Prisma {
    */
   export interface Prisma__FileClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    folder<T extends FolderDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FolderDefaultArgs<ExtArgs>>): Prisma__FolderClient<$Result.GetResult<Prisma.$FolderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    folder<T extends File$folderArgs<ExtArgs> = {}>(args?: Subset<T, File$folderArgs<ExtArgs>>): Prisma__FolderClient<$Result.GetResult<Prisma.$FolderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -4458,6 +4458,25 @@ export namespace Prisma {
   }
 
   /**
+   * File.folder
+   */
+  export type File$folderArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Folder
+     */
+    select?: FolderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Folder
+     */
+    omit?: FolderOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FolderInclude<ExtArgs> | null
+    where?: FolderWhereInput
+  }
+
+  /**
    * File without action
    */
   export type FileDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4733,20 +4752,20 @@ export namespace Prisma {
     NOT?: FileWhereInput | FileWhereInput[]
     id?: StringFilter<"File"> | string
     name?: StringFilter<"File"> | string
-    url?: StringFilter<"File"> | string
-    folderId?: StringFilter<"File"> | string
+    url?: StringNullableFilter<"File"> | string | null
+    folderId?: StringNullableFilter<"File"> | string | null
     userId?: StringFilter<"File"> | string
     createdAt?: DateTimeFilter<"File"> | Date | string
     updatedAt?: DateTimeFilter<"File"> | Date | string
-    folder?: XOR<FolderScalarRelationFilter, FolderWhereInput>
+    folder?: XOR<FolderNullableScalarRelationFilter, FolderWhereInput> | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type FileOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
-    url?: SortOrder
-    folderId?: SortOrder
+    url?: SortOrderInput | SortOrder
+    folderId?: SortOrderInput | SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -4760,20 +4779,20 @@ export namespace Prisma {
     OR?: FileWhereInput[]
     NOT?: FileWhereInput | FileWhereInput[]
     name?: StringFilter<"File"> | string
-    url?: StringFilter<"File"> | string
-    folderId?: StringFilter<"File"> | string
+    url?: StringNullableFilter<"File"> | string | null
+    folderId?: StringNullableFilter<"File"> | string | null
     userId?: StringFilter<"File"> | string
     createdAt?: DateTimeFilter<"File"> | Date | string
     updatedAt?: DateTimeFilter<"File"> | Date | string
-    folder?: XOR<FolderScalarRelationFilter, FolderWhereInput>
+    folder?: XOR<FolderNullableScalarRelationFilter, FolderWhereInput> | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
 
   export type FileOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
-    url?: SortOrder
-    folderId?: SortOrder
+    url?: SortOrderInput | SortOrder
+    folderId?: SortOrderInput | SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -4788,8 +4807,8 @@ export namespace Prisma {
     NOT?: FileScalarWhereWithAggregatesInput | FileScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"File"> | string
     name?: StringWithAggregatesFilter<"File"> | string
-    url?: StringWithAggregatesFilter<"File"> | string
-    folderId?: StringWithAggregatesFilter<"File"> | string
+    url?: StringNullableWithAggregatesFilter<"File"> | string | null
+    folderId?: StringNullableWithAggregatesFilter<"File"> | string | null
     userId?: StringWithAggregatesFilter<"File"> | string
     createdAt?: DateTimeWithAggregatesFilter<"File"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"File"> | Date | string
@@ -4931,18 +4950,18 @@ export namespace Prisma {
   export type FileCreateInput = {
     id?: string
     name: string
-    url: string
+    url?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    folder: FolderCreateNestedOneWithoutFilesInput
+    folder?: FolderCreateNestedOneWithoutFilesInput
     user: UserCreateNestedOneWithoutFilesInput
   }
 
   export type FileUncheckedCreateInput = {
     id?: string
     name: string
-    url: string
-    folderId: string
+    url?: string | null
+    folderId?: string | null
     userId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -4951,18 +4970,18 @@ export namespace Prisma {
   export type FileUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
+    url?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    folder?: FolderUpdateOneRequiredWithoutFilesNestedInput
+    folder?: FolderUpdateOneWithoutFilesNestedInput
     user?: UserUpdateOneRequiredWithoutFilesNestedInput
   }
 
   export type FileUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
-    folderId?: StringFieldUpdateOperationsInput | string
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    folderId?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -4971,8 +4990,8 @@ export namespace Prisma {
   export type FileCreateManyInput = {
     id?: string
     name: string
-    url: string
-    folderId: string
+    url?: string | null
+    folderId?: string | null
     userId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -4981,7 +5000,7 @@ export namespace Prisma {
   export type FileUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
+    url?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4989,8 +5008,8 @@ export namespace Prisma {
   export type FileUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
-    folderId?: StringFieldUpdateOperationsInput | string
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    folderId?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -5171,11 +5190,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
-  export type FolderScalarRelationFilter = {
-    is?: FolderWhereInput
-    isNot?: FolderWhereInput
   }
 
   export type FileCountOrderByAggregateInput = {
@@ -5430,10 +5444,12 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type FolderUpdateOneRequiredWithoutFilesNestedInput = {
+  export type FolderUpdateOneWithoutFilesNestedInput = {
     create?: XOR<FolderCreateWithoutFilesInput, FolderUncheckedCreateWithoutFilesInput>
     connectOrCreate?: FolderCreateOrConnectWithoutFilesInput
     upsert?: FolderUpsertWithoutFilesInput
+    disconnect?: FolderWhereInput | boolean
+    delete?: FolderWhereInput | boolean
     connect?: FolderWhereUniqueInput
     update?: XOR<XOR<FolderUpdateToOneWithWhereWithoutFilesInput, FolderUpdateWithoutFilesInput>, FolderUncheckedUpdateWithoutFilesInput>
   }
@@ -5588,17 +5604,17 @@ export namespace Prisma {
   export type FileCreateWithoutUserInput = {
     id?: string
     name: string
-    url: string
+    url?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    folder: FolderCreateNestedOneWithoutFilesInput
+    folder?: FolderCreateNestedOneWithoutFilesInput
   }
 
   export type FileUncheckedCreateWithoutUserInput = {
     id?: string
     name: string
-    url: string
-    folderId: string
+    url?: string | null
+    folderId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -5663,8 +5679,8 @@ export namespace Prisma {
     NOT?: FileScalarWhereInput | FileScalarWhereInput[]
     id?: StringFilter<"File"> | string
     name?: StringFilter<"File"> | string
-    url?: StringFilter<"File"> | string
-    folderId?: StringFilter<"File"> | string
+    url?: StringNullableFilter<"File"> | string | null
+    folderId?: StringNullableFilter<"File"> | string | null
     userId?: StringFilter<"File"> | string
     createdAt?: DateTimeFilter<"File"> | Date | string
     updatedAt?: DateTimeFilter<"File"> | Date | string
@@ -5751,7 +5767,7 @@ export namespace Prisma {
   export type FileCreateWithoutFolderInput = {
     id?: string
     name: string
-    url: string
+    url?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutFilesInput
@@ -5760,7 +5776,7 @@ export namespace Prisma {
   export type FileUncheckedCreateWithoutFolderInput = {
     id?: string
     name: string
-    url: string
+    url?: string | null
     userId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -5987,8 +6003,8 @@ export namespace Prisma {
   export type FileCreateManyUserInput = {
     id?: string
     name: string
-    url: string
-    folderId: string
+    url?: string | null
+    folderId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -6024,17 +6040,17 @@ export namespace Prisma {
   export type FileUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
+    url?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    folder?: FolderUpdateOneRequiredWithoutFilesNestedInput
+    folder?: FolderUpdateOneWithoutFilesNestedInput
   }
 
   export type FileUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
-    folderId?: StringFieldUpdateOperationsInput | string
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    folderId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6042,8 +6058,8 @@ export namespace Prisma {
   export type FileUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
-    folderId?: StringFieldUpdateOperationsInput | string
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    folderId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6059,7 +6075,7 @@ export namespace Prisma {
   export type FileCreateManyFolderInput = {
     id?: string
     name: string
-    url: string
+    url?: string | null
     userId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -6096,7 +6112,7 @@ export namespace Prisma {
   export type FileUpdateWithoutFolderInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
+    url?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutFilesNestedInput
@@ -6105,7 +6121,7 @@ export namespace Prisma {
   export type FileUncheckedUpdateWithoutFolderInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
+    url?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6114,7 +6130,7 @@ export namespace Prisma {
   export type FileUncheckedUpdateManyWithoutFolderInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
+    url?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

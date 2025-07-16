@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
-body{
-  @apply bg-[#111]
+body {
+  @apply bg-[#111];
+}
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #111 inset !important;
+  -webkit-text-fill-color: white !important;
+  transition: background-color 5000s ease-in-out 0s;
 }

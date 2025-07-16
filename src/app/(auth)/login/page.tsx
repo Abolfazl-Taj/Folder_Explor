@@ -4,21 +4,28 @@ import FormikForm from "@/components/FormikForm";
 import Input from "@/components/Input"
 import { MdAlternateEmail } from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";
-import LoginScheme from "../lib/schemas/Login";
-import { postRequest } from "../lib/fetchRequest";
+import LoginScheme from "@/app/lib/schemas/Login";
+import { postRequest } from "@/app/lib/fetchRequest";
 import { useRouter } from "next/navigation";
+import { getFromLocalStorage, setToLocalStorage } from "@/app/lib/localStorgeRequest";
+import { useEffect } from "react";
+import { useUser } from "@/hooks/useUser";
 
 const LoginPage = () => {
     const router = useRouter()
-    const submithandler = async (value: { email: string; password: string }) => {
-        const res = await postRequest({
-            url: "http://localhost:3000/api/login/",
+    const submithandler = (value: { email: string; password: string }) => {
+        postRequest({
+            url: "/api/login/",
             body: value,
-        });
-        router.push("/dashboard")
-
+        }).then(res => {
+            setToLocalStorage("user", res.user)
+            router.push("/dashboard")
+        })
     };
-
+    useEffect(() => {
+        if (getFromLocalStorage("user"))
+            router.push("/dashboard")
+    }, [])
     return (
         <div className="w-full h-screen flex justify-center items-center bg-gradient-to-r from-[#222] via-[#111] to-[#333] ">
             <Continer>

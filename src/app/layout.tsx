@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Userprovider from "@/provider/Userprovider";
 
 const interFont = Inter({
   variable: "--font-Inter-sans",
@@ -21,11 +22,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${interFont.variable}  antialiased`}
-      >
-        {children}
-      </body>
+      <Userprovider>
+        <body
+          className={`${interFont.variable}  antialiased`}
+        >
+          {children}
+        </body>
+      </Userprovider>
     </html>
   );
 }
