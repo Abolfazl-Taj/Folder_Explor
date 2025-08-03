@@ -5,33 +5,48 @@ import userContext from "@/context/userContext"
 import { userType } from "@/types/user"
 import { useRouter } from "next/navigation"
 import { ReactNode, useEffect, useState } from "react"
-import { usePathname } from "next/navigation";
+import { usePathname } from "next/navigation"
+
 const authRoutes = ["/login", "/register", "/logout"]
+
 const Userprovider = ({ children }: { children: ReactNode }) => {
-    const [user, setUser] = useState<userType | null | undefined>(null);
+    const [user, setUser] = useState<userType | null | undefined>(null)
     const router = useRouter()
     const pathName = usePathname()
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
-        if (authRoutes.includes(pathName)) return
-        const user = getFromLocalStorage("user")
-        if (!user || user === undefined) {
-            try {
-                getRequest({ url: "/api/me" }).then(res => {
-                    setUser(res.data)
-                    setToLocalStorage("user", res.data)
-                })
-            } catch (error) {
-                router.push("/login")
-                removeFromLocalStorage("user")
-                setUser(null)
-            }
+        if (authRoutes.includes(pathName)) {
+            setLoading(false);
+            return;
         }
-    }, [])
+
+        const storedUser = getFromLocalStorage("user");
+
+        if (!storedUser || storedUser === undefined) {
+            getRequest({ url: "/api/me" })
+                .then(res => {
+                    setUser(res.user);
+                    setToLocalStorage("user", res.user);
+                    setLoading(false);
+                })
+                .catch(() => {
+                    removeFromLocalStorage("user");
+                    setUser(null);
+                    setLoading(false);
+                    router.push("/login");
+                });
+        } else {
+            setUser(storedUser);
+            setLoading(false);
+        }
+    }, [pathName]);
+
     return (
-        <userContext.Provider value={{ setUser: setUser, user: user }}>
+        <userContext.Provider value={{ user, setUser }}>
             {children}
         </userContext.Provider>
-    )
+    );
 }
 
 export default Userprovider

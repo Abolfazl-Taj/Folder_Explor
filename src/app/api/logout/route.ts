@@ -10,7 +10,7 @@ export async function POST() {
     httpOnly: true,
     secure: false,
     sameSite: "strict",
-    path: "/dashboard",
+    path: "/",
     maxAge: 0,
     expires: new Date(0),
   });

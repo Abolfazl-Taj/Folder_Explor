@@ -13,7 +13,7 @@ export async function GETHandler(req: NextRequest) {
     const folders = await prisma.folder.findMany({
       where: { userId },
       include: {
-        files: true,
+        files: {select:{createdAt:true , name:true , folderId:true , id:true , userId:true , updatedAt:true }},
         user: true,
       },
     });

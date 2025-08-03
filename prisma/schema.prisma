@@ -38,12 +38,14 @@ model Folder {
 model File {
   id        String   @id @default(cuid())
   name      String
-  url       String?
+  mimeType  String?
+  content   String ?  
+  size      Int?     
   folderId  String?
   userId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
+  
   folder Folder? @relation(fields: [folderId], references: [id])
   user   User   @relation(fields: [userId], references: [id])
 }

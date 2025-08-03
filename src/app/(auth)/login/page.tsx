@@ -1,7 +1,7 @@
 "use client"
-import Continer from "@/components/Continer"
-import FormikForm from "@/components/FormikForm";
-import Input from "@/components/Input"
+import Continer from "@/app/components/Continer"
+import FormikForm from "@/app/components/FormikForm";
+import Input from "@/app/components/Input"
 import { MdAlternateEmail } from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";
 import LoginScheme from "@/app/lib/schemas/Login";
@@ -9,7 +9,7 @@ import { postRequest } from "@/app/lib/fetchRequest";
 import { useRouter } from "next/navigation";
 import { getFromLocalStorage, setToLocalStorage } from "@/app/lib/localStorgeRequest";
 import { useEffect } from "react";
-import { useUser } from "@/hooks/useUser";
+import Link from "next/link";
 
 const LoginPage = () => {
     const router = useRouter()
@@ -40,6 +40,9 @@ const LoginPage = () => {
 
                         </FormikForm>
                     </div>
+                    <Link className="w-full flex justify-center font-bold text-xs text-center text-gray-500 " href={"/register"}>
+                        <p className="w-fit border-b">New around here ? sign up!</p>
+                    </Link>
                 </div>
             </Continer>
         </div>

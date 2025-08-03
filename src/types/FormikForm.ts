@@ -1,9 +1,11 @@
 import { ReactNode } from "react";
-import * as Yup from "yup";
+import { FormikHelpers } from "formik";
 
-export type FormikFormType<T> = {
-  children: ReactNode;
-  schema: Yup.AnyObjectSchema;
-  initialState: object;
-  onSubmit: any
+export type FormikFormType<> = {
+  initialState: any;
+  schema: any;
+  onSubmit: (values: any, formikHelpers?: FormikHelpers<any>) => void;
+  children:
+    | ReactNode
+    | ((formik: FormikHelpers<any> & { values: any }) => ReactNode);
 };

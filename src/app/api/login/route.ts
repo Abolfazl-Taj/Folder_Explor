@@ -45,12 +45,13 @@ export async function POST(req: NextRequest) {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      path: "/dashboard",
+      path: "/",
       maxAge: 60 * 60 * 24 * 7,
     });
 
     return response;
   } catch (err) {
+    console.log(err);
     return NextResponse.json(
       { message: "Internal Server Error", err },
       { status: 500 }

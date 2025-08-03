@@ -1,26 +1,25 @@
 import nextResponse from "@/app/lib/nextResponse";
 import prisma from "@/app/lib/prisma";
-import { NextRequest } from "next/server";
 
-export const DELETEHanlder = async (req: NextRequest) => {
+export async function DELETEHandler(id: string) {
+  if (!id) {
+    return nextResponse({ message: "Folder ID is required" }, { status: 400 });
+  }
+
   try {
-    const { fileId } = await req.json();
-    if (!fileId)
-      return nextResponse(
-        { message: "File id is requierd !" },
-        { status: 400 }
-      );
-    const deletedFile = prisma.file.delete({ where: { id: fileId } });
-    if (!deletedFile)
-      return nextResponse({ message: "File dose not exist" }, { status: 404 });
+    const deletedFile = await prisma.file.delete({
+      where: { id: id },
+    });
+
     return nextResponse(
-      { message: "File deleted successfully", deletedFile },
+      { message: "File deleted successfully!", deletedFile },
       { status: 200 }
     );
-  } catch (err) {
+  } catch (error) {
+    console.log(error);
     return nextResponse(
-      { message: "Internal server error", error: err },
+      { message: "Internal Server Error", error },
       { status: 500 }
     );
   }
-};
+}

@@ -1,15 +1,16 @@
 "use client"
-import FormikForm from "@/components/FormikForm";
-import Input from "@/components/Input"
+import FormikForm from "@/app/components/FormikForm";
+import Input from "@/app/components/Input"
 import { MdAlternateEmail } from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { postRequest } from "@/app/lib/fetchRequest";
 import { useRouter } from "next/navigation";
-import Continer from "@/components/Continer";
+import Continer from "@/app/components/Continer";
 import RegisterScheme from "@/app/lib/schemas/register";
 import { BsFillShieldLockFill } from "react-icons/bs";
-import {useEffect } from "react";
+import { useEffect } from "react";
 import { getFromLocalStorage, setToLocalStorage } from "@/app/lib/localStorgeRequest";
+import Link from "next/link";
 
 const RegisterPage = () => {
     const router = useRouter()
@@ -47,8 +48,10 @@ const RegisterPage = () => {
                             <Input labelName="Password" name="password" placeHolder="******" type="password" strengthBar={true} icon={<RiLockPasswordLine />} />
                             <Input labelName="Confirm Password" name="confirmPass" placeHolder="******" type="confirmPassword" icon={<BsFillShieldLockFill />} />
                             <button type="submit" className="bg-[#222]/40 px-4 py-1 rounded hover:bg-[#222]">Sign up!</button>
-
                         </FormikForm>
+                        <Link className="w-full flex justify-center font-bold text-xs text-center text-gray-500  " href={"/login"}>
+                            <p className="w-fit border-b">You have account ? your him Login!</p>
+                        </Link>
                     </div>
                 </div>
             </Continer>

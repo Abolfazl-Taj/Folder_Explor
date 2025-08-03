@@ -1,10 +1,77 @@
 @import "tailwindcss";
-
+@keyframes bgAnimation {
+  100% {
+    background-position: 250px;
+  }
+}
 body {
-  @apply bg-[#111];
+  background: url("../../public/background.svg");
+  background-size: 100%;
+  background-position: center;
+  animation: alternate bgAnimation 10s infinite ease-in-out;
+  background-blend-mode: darken;
+  @apply bg-[#111]/10;
 }
 input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 1000px #111 inset !important;
   -webkit-text-fill-color: white !important;
   transition: background-color 5000s ease-in-out 0s;
+}
+.glassDark {
+  background: rgba(26, 26, 26, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px) saturate(180%);
+  border-radius: 12px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+  color: white;
+}
+/* Custom Scrollbar for dark theme */
+::-webkit-scrollbar {
+  width: 8px;
+  @apply transition-all duration-300 ease-in-out;
+}
+
+::-webkit-scrollbar-track {
+  background: #000; /* black background */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #111; /* dark red */
+  border-radius: 8px;
+  border: 2px solid #000; /* creates padding */
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #7f1d1d #000;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #b91c1c; /* lighter red */
+  width: 10px;
+}
+/* Remove outline and box-shadow from editor container */
+.monaco-editor,
+.monaco-editor .margin,
+.monaco-editor .monaco-scrollable-element,
+.monaco-editor .inputarea {
+  background-color: #111;
+  outline: none !important;
+}
+
+/* Also remove focus outline when editor is focused */
+.monaco-editor-focused {
+  outline: none !important;
+}
+.margin-view-overlays{
+  @apply bg-gradient-to-b from-[#111]/20 to-[#000]/20 backdrop-blur-3xl rounded-md shadow
+}
+.line-numbers{
+  @apply !text-[#9995]
+}
+.active-line-number{
+  @apply  !text-red-800 font-semibold
+}
+.vs-dark{
+  @apply !bg-[#111]/20 backdrop-blur-3xl
 }

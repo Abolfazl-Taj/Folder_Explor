@@ -1,0 +1,32 @@
+const languageExtensions: { [key: string]: string } = {
+  ".ts": "typescript",
+  ".js": "javascript",
+  ".css": "css",
+  ".less": "less",
+  ".scss": "scss",
+  ".json": "json",
+  ".html": "html",
+  ".xml": "xml",
+  ".php": "php",
+  ".cs": "csharp", // "c#" is usually referred to as "csharp"
+  ".cpp": "cpp",
+  ".razor": "razor",
+  ".md": "markdown",
+  ".diff": "diff",
+  ".java": "java",
+  ".vb": "vb",
+  ".coffee": "coffeescript",
+  ".hbs": "handlebars",
+  ".bat": "bat", // batch
+  ".pug": "pug",
+  ".fs": "fsharp",
+  ".lua": "lua",
+  ".ps1": "powershell",
+  ".py": "python",
+  ".rb": "ruby",
+  ".sass": "sass",
+  ".r": "r",
+  ".m": "objective-c",
+  ".txt": "text",
+};
+export default languageExtensions;

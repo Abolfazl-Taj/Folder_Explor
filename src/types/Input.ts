@@ -7,4 +7,5 @@ export type inputType = {
   labelClass?: string;
   icon?: React.ReactNode;
   strengthBar?: boolean;
+  defaultValue? :string
 };
