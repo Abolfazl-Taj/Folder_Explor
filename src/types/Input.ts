@@ -1,6 +1,6 @@
 export type inputType = {
   labelName: string;
-  type: "text" | "password" | "confirmPassword";
+  type: "text" | "password" | "confirmPassword" | "file";
   placeHolder: string;
   name: string;
   inputClass?: string;
@@ -8,4 +8,5 @@ export type inputType = {
   icon?: React.ReactNode;
   strengthBar?: boolean;
   defaultValue? :string
+  className?: string
 };

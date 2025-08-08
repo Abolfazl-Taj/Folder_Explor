@@ -26,7 +26,8 @@ const FolderForm = ({ type, data, folderId }: Modal) => {
         }).then(() => {
             queryClient.invalidateQueries()
             setIsopen(false)
-            router.push("/dashboard")
+            const path = folderId ? `/dashboard/${folderId}` : "/dashboard"
+            router.push(path)
         })
     }
     const deleteFolder = () => {

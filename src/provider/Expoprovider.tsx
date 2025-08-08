@@ -17,8 +17,8 @@ const ExpoProvider = ({ children }: { children: ReactNode }) => {
 
     useEffect(() => {
         if (data) {
-            setFolders(data.data.folders);
-            setFiles(data.data.files);
+            setFolders(data?.data?.folders);
+            setFiles(data?.data?.files);
         }
     }, [data]);
 

@@ -3,7 +3,7 @@ import { getRequest } from "@/app/lib/fetchRequest"
 import { getFromLocalStorage, removeFromLocalStorage, setToLocalStorage } from "@/app/lib/localStorgeRequest"
 import userContext from "@/context/userContext"
 import { userType } from "@/types/user"
-import { useRouter } from "next/navigation"
+import { redirect, useRouter } from "next/navigation"
 import { ReactNode, useEffect, useState } from "react"
 import { usePathname } from "next/navigation"
 
@@ -16,17 +16,17 @@ const Userprovider = ({ children }: { children: ReactNode }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (authRoutes.includes(pathName)) {
-            setLoading(false);
-            return;
-        }
-
         const storedUser = getFromLocalStorage("user");
 
-        if (!storedUser || storedUser === undefined) {
+        const shouldForceRefresh = pathName === "/profile"; // for example
+
+        if (!storedUser || shouldForceRefresh) {
             getRequest({ url: "/api/me" })
                 .then(res => {
-                    setUser(res.user);
+                    if (res.redirected || res.user === undefined) {
+                        return redirect("/login")
+                    }
+                    setUser(res.user)
                     setToLocalStorage("user", res.user);
                     setLoading(false);
                 })
@@ -41,6 +41,7 @@ const Userprovider = ({ children }: { children: ReactNode }) => {
             setLoading(false);
         }
     }, [pathName]);
+
 
     return (
         <userContext.Provider value={{ user, setUser }}>

@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
       data: { email, password: hashPassword },
       select: { id: true, email: true, createdAt: true },
     });
-    const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, {
+    const token = jwt.sign({ id: user.id, email: user.email , img:null , userName:null }, JWT_SECRET, {
       expiresIn: "7d",
     });
 

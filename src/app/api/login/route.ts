@@ -32,9 +32,18 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, {
-      expiresIn: "7d",
-    });
+    const token = jwt.sign(
+      {
+        id: user.id,
+        email: user.email,
+        userName: user.userName || null,
+        img: user.img || null,
+      },
+      JWT_SECRET,
+      {
+        expiresIn: "7d",
+      }
+    );
 
     const response = NextResponse.json(
       { message: "Login successful", user: { id: user.id, email: user.email } },

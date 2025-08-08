@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 
 const JWT_SECRET = process.env.JWT_SECRET || "my_super_secret_key";
-
 // Public routes that don’t require auth
 const publicRoutes = [
   "/api/login",
@@ -30,11 +29,12 @@ export function middleware(req: NextRequest) {
   }
 
   const token = req.cookies.get("token")?.value;
+
   const isPublic = publicRoutes.some((path) => pathname.startsWith(path));
 
   if (isPublic) return NextResponse.next();
 
-  if (!token) {
+  if (!token || token === undefined) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 

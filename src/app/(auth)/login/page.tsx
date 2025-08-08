@@ -33,11 +33,10 @@ const LoginPage = () => {
                     <h1 className="font-semibold text-2xl text-center">Welcome Back!</h1>
                     <p className="text-sm text-gray-300 text-justify font-thin">We missed you just few just steps to get back in town</p>
                     <div className="flex flex-col gap-4">
-                        <FormikForm initialState={{ email: "", password: "" }} schema={LoginScheme} onSubmit={submithandler}>
+                        <FormikForm className="flex flex-col gap-3" initialState={{ email: "", password: "" }} schema={LoginScheme} onSubmit={submithandler}>
                             <Input labelName="Email" name="email" placeHolder="you@gmail.com" type="text" icon={<MdAlternateEmail />} />
                             <Input labelName="Password" name="password" placeHolder="******" type="password" icon={<RiLockPasswordLine />} />
-                            <button type="submit" className="bg-[#222]/40 px-4 py-1 rounded hover:bg-[#222]">Login</button>
-
+                            <button type="submit" className="bg-[#222]/40 px-4 py-1 rounded hover:bg-[#222] self-center w-1/3">Login</button>
                         </FormikForm>
                     </div>
                     <Link className="w-full flex justify-center font-bold text-xs text-center text-gray-500 " href={"/register"}>
