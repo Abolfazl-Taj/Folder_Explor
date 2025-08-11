@@ -13,6 +13,7 @@ const publicRoutes = [
   "/register",
   "/api/file",
   "/api/getall",
+  "/register",
 ];
 
 export function middleware(req: NextRequest) {

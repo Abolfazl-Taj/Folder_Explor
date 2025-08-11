@@ -16,6 +16,8 @@ export async function GET(req: NextRequest) {
       email: string;
       img?: string; // Optional fields
       userName?: string;
+      createdAt?: string;
+      updatedAt?: string;
     };
     return NextResponse.json(
       {
@@ -25,6 +27,8 @@ export async function GET(req: NextRequest) {
           email: decoded.email,
           img: decoded.img || null,
           userName: decoded.userName || null,
+          createdAt: decoded.createdAt || null,
+          updatedAt: decoded.updatedAt || null,
         },
       },
       { status: 200 }

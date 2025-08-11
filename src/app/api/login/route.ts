@@ -38,6 +38,8 @@ export async function POST(req: NextRequest) {
         email: user.email,
         userName: user.userName || null,
         img: user.img || null,
+        createdAt: user.createdAt || null,
+        updatedAt: user.updatedAt || null,
       },
       JWT_SECRET,
       {

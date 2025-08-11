@@ -25,11 +25,22 @@ export async function POST(request: NextRequest) {
     const hashPassword = await bcrypt.hash(password, 10);
     const user = await prisma.user.create({
       data: { email, password: hashPassword },
-      select: { id: true, email: true, createdAt: true },
+      select: { id: true, email: true, createdAt: true, updatedAt: true },
     });
-    const token = jwt.sign({ id: user.id, email: user.email , img:null , userName:null }, JWT_SECRET, {
-      expiresIn: "7d",
-    });
+    const token = jwt.sign(
+      {
+        id: user.id,
+        email: user.email,
+        img: null,
+        userName: null,
+        createdAt: user.createdAt,
+        updateAt: user.updatedAt,
+      },
+      JWT_SECRET,
+      {
+        expiresIn: "7d",
+      }
+    );
 
     const response = NextResponse.json(
       { message: "User created successfully", user },

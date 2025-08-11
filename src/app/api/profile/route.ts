@@ -72,6 +72,8 @@ export const POST = async (req: NextRequest) => {
         email: true,
         id: true,
         img: true,
+        createdAt: true,
+        updatedAt: true,
       },
     });
     const newToken = jwt.sign(
@@ -80,6 +82,8 @@ export const POST = async (req: NextRequest) => {
         email: updatedUser.email,
         img: updatedUser.img,
         userName: updatedUser.userName,
+        createdAt: updatedUser.createdAt,
+        updatedAt: updatedUser.updatedAt,
       },
       JWT_SECRET,
       { expiresIn: "7d" }
