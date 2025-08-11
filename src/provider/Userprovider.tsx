@@ -16,6 +16,7 @@ const Userprovider = ({ children }: { children: ReactNode }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        if (authRoutes.some(path => path === pathName)) return
         const storedUser = getFromLocalStorage("user");
 
         const shouldForceRefresh = pathName === "/profile"; // for example

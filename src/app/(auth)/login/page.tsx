@@ -8,11 +8,12 @@ import LoginScheme from "@/app/lib/schemas/Login";
 import { postRequest } from "@/app/lib/fetchRequest";
 import { useRouter } from "next/navigation";
 import { getFromLocalStorage, setToLocalStorage } from "@/app/lib/localStorgeRequest";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
 const LoginPage = () => {
     const router = useRouter()
+    const [error, setError] = useState<any>()
     const submithandler = (value: { email: string; password: string }) => {
         postRequest({
             url: "/api/login/",
@@ -20,6 +21,9 @@ const LoginPage = () => {
         }).then(res => {
             setToLocalStorage("user", res.user)
             router.push("/dashboard")
+        }).catch((err) => {
+            console.log(err);
+            setError(err.response.data.message)
         })
     };
     useEffect(() => {
@@ -39,12 +43,13 @@ const LoginPage = () => {
                             <button type="submit" className="bg-[#222]/40 px-4 py-1 rounded hover:bg-[#222] self-center w-1/3">Login</button>
                         </FormikForm>
                     </div>
+                    {error && <span className="w-full text-center bg-red-500 font-bold text-white py-1 rounded-md">{error}</span>}
                     <Link className="w-full flex justify-center font-bold text-xs text-center text-gray-500 " href={"/register"}>
                         <p className="w-fit border-b">New around here ? sign up!</p>
                     </Link>
                 </div>
-            </Continer>
-        </div>
+            </Continer >
+        </div >
     )
 }
 

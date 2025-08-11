@@ -8,12 +8,13 @@ import { useRouter } from "next/navigation";
 import Continer from "@/app/components/Continer";
 import RegisterScheme from "@/app/lib/schemas/register";
 import { BsFillShieldLockFill } from "react-icons/bs";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getFromLocalStorage, setToLocalStorage } from "@/app/lib/localStorgeRequest";
 import Link from "next/link";
 
 const RegisterPage = () => {
     const router = useRouter()
+    const [error, setError] = useState<any>()
     const submithandler = (value: { email: string; password: string }) => {
         postRequest({
             url: "/api/register/",
@@ -21,6 +22,8 @@ const RegisterPage = () => {
         }).then(res => {
             setToLocalStorage("user", res.user)
             router.push("/dashboard")
+        }).catch(err => {
+            setError(err.response.data.error)
         })
     };
     useEffect(() => {
@@ -41,15 +44,17 @@ const RegisterPage = () => {
                     </p>
 
                     <div className="flex flex-col gap-4 flex-1">
-                        <FormikForm
+                        <FormikForm className="flex flex-col gap-2"
                             initialState={{ email: "", password: "", confirmPass: "" }}
                             schema={RegisterScheme} onSubmit={submithandler}>
                             <Input labelName="Email" name="email" placeHolder="you@gmail.com" type="text" icon={<MdAlternateEmail />} />
                             <Input labelName="Password" name="password" placeHolder="******" type="password" strengthBar={true} icon={<RiLockPasswordLine />} />
                             <Input labelName="Confirm Password" name="confirmPass" placeHolder="******" type="confirmPassword" icon={<BsFillShieldLockFill />} />
-                            <button type="submit" className="bg-[#222]/40 px-4 py-1 rounded hover:bg-[#222]">Sign up!</button>
+                            <button type="submit" className="bg-[#222]/40 px-4 py-1 rounded hover:bg-[#222] self-center my-2">Sign up!</button>
                         </FormikForm>
-                        <Link className="w-full flex justify-center font-bold text-xs text-center text-gray-500  " href={"/login"}>
+                        {error && <span className="w-full text-center bg-red-500 font-bold text-white py-1 rounded-md">{error}</span>}
+
+                        <Link className="w-full flex justify-center font-bold text-xs text-center text-gray-500 " href={"/login"}>
                             <p className="w-fit border-b">You have account ? your him Login!</p>
                         </Link>
                     </div>
