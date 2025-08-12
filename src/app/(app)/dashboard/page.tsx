@@ -4,6 +4,7 @@ import Folders from "@/app/components/Folders";
 import Loading from "@/app/components/Loading";
 import ModalForm from "@/app/components/ModalForm";
 import SortData from "@/app/components/SortData";
+import sortData from "@/app/lib/sortData";
 import useExpo from "@/hooks/useExpo"
 import { useEffect, useState } from "react";
 
@@ -12,13 +13,16 @@ import { useEffect, useState } from "react";
 const Dashboard = () => {
   const { folders, files, loading, error } = useExpo();
   const [data, setData] = useState()
+  const [sortMethod, setSortMethod] = useState({ type: "sort", field: "name" })
   useEffect(() => {
-    setData({ files, folders })
-  }, [files, folders])
+    const sortedFolder = folders && sortData(folders, sortMethod.type, sortMethod.field)
+    const sortedFile = files && sortData(files, sortMethod.type, sortMethod.field)
+    setData({ files: sortedFile, folders: sortedFolder })
+  }, [files, folders, sortMethod])
 
   return (
     <div className="flex-1 p-4 space-y-3 flex flex-col relative">
-      <SortData setData={setData} data={data} />
+      <SortData sortMethod={sortMethod} setSortMethod={setSortMethod} />
       <span className="shadow w-fit p-2 bg-[#333] rounded-md self-center border border-zinc-900/25 font-semibold">Path: {`Main Folder`}</span>
 
       {loading ? (

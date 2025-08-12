@@ -7,10 +7,12 @@ import { useQuery } from "@tanstack/react-query"
 import React, { use, useEffect, useState } from "react"
 import Files from "@/app/components/Files"
 import SortData from "@/app/components/SortData"
+import sortData from "@/app/lib/sortData"
 
 const FolderPage = ({ params }: { params: { slug?: string[] } }) => {
     const unwarpedSlug: string[] = use(params).slug
     const folderId = unwarpedSlug.at(-1)
+    const [sortMethod, setSortMethod] = useState({ type: "sort", field: "name" })
     const [data, setData] = useState<any>()
     const [folderPath, setFodlerPath] = useState("")
     const { data: rawData, isPending, error } = useQuery({
@@ -26,11 +28,9 @@ const FolderPage = ({ params }: { params: { slug?: string[] } }) => {
                 rawData.folder.parent?.name,
                 rawData.folder.name,
             ].filter(Boolean).join('/'))
-            setData({
-                folders: rawData.folder.children,
-                files: rawData.folder.files
-            })
-
+            const sortedFolder = rawData.folder.children && sortData(rawData.folder.children, sortMethod.type, sortMethod.field)
+            const sortedFile = rawData.folder.files && sortData(rawData.folder.files, sortMethod.type, sortMethod.field)
+            setData({ files: sortedFile, folders: sortedFolder })
         }
     }, [rawData])
 
@@ -39,7 +39,7 @@ const FolderPage = ({ params }: { params: { slug?: string[] } }) => {
             {isPending ? (<Loading />) :
                 <>
                     <div className="w-full flex flex-col p-4 max-h-[550px] overflow-y-auto gap-4">
-                        <SortData data={data} setData={setData} />
+                        <SortData sortMethod={sortMethod} setSortMethod={setSortMethod} />
                         <span className="shadow w-fit p-2 bg-[#333] rounded-md self-center border border-zinc-900/25 font-semibold">Path: {folderPath}</span>
                         <div className="mt-5 p-2 space-y-2">
                             <Folders data={data?.folders} />

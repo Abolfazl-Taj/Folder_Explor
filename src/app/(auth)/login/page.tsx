@@ -15,9 +15,11 @@ const LoginPage = () => {
     const router = useRouter()
     const [error, setError] = useState<any>()
     const submithandler = (value: { email: string; password: string }) => {
+        const safeEmail = value.email.trim().toLocaleLowerCase()
+        const safePassword = value.password.trim()
         postRequest({
             url: "/api/login/",
-            body: value,
+            body: { email: safeEmail, password: safePassword },
         }).then(res => {
             setToLocalStorage("user", res.user)
             router.push("/dashboard")

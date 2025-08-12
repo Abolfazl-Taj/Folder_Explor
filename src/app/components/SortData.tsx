@@ -12,26 +12,11 @@ const sortOptions = [
     { icon: <LuCalendarMinus />, type: "reverse", action: "date" },
 ] as const;
 
-type SortType = typeof sortOptions[number]["type"];
-type SortAction = typeof sortOptions[number]["action"];
 
-interface SortDataProps {
-    data: {
-        files: any[];
-        folders: any[];
-    };
-    setData: (data: { files: any[]; folders: any[] }) => void;
-}
 
-const SortData = ({ data, setData }: SortDataProps) => {
+
+const SortData = ({ sortMethod, setSortMethod }: { sortMethod: any, setSortMethod: any }) => {
     const { user } = useUser();
-
-    const handleSort = (type: SortType, action: SortAction) => {
-        setData({
-            files: sortData([...data.files], type, action),
-            folders: sortData([...data.folders], type, action),
-        });
-    };
 
     return (
         <div className="w-full flex items-center justify-between px-6 py-1 border border-white/10 rounded-full  backdrop-blur">
@@ -50,8 +35,16 @@ const SortData = ({ data, setData }: SortDataProps) => {
                 {sortOptions.map(({ icon, type, action }, index) => (
                     <button
                         key={index}
-                        onClick={() => handleSort(type, action)}
-                        className="text-xl sm:text-2xl text-white/80 hover:text-white transition p-1 rounded-full hover:bg-white/10"
+                        onClick={() => {
+                            setSortMethod({
+                                type,
+                                field: action
+                            })
+                        }}
+                        className={`
+                        ${type === sortMethod.type && sortMethod.field === action ? "bg-red-950 scale-110" : ""}
+                            
+                            text-xl sm:text-2xl text-white/80 hover:text-white transition-all p-1 rounded-full hover:bg-white/10`}
                         title={`${type === "reverse" ? "Reverse by" : "Sort by"} ${action}`}
                     >
                         {icon}
