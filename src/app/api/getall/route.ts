@@ -36,6 +36,7 @@ export const GET = async (req: NextRequest) => {
           userId: true,
           createdAt: true,
           updatedAt: true,
+          size:true
         },
       }),
     ]);

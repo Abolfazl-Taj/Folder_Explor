@@ -28,6 +28,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/app/lib/Icons.ks"
-  ],
+, "src/app/lib/Icons.js"  ],
   "exclude": ["node_modules"]
 }

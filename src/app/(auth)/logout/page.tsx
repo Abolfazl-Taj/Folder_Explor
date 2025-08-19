@@ -1,8 +1,7 @@
 "use client";
 import { postRequest } from "@/app/lib/fetchRequest";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useEffect } from "react";
-
 const LogOut = () => {
     const router = useRouter();
 
@@ -10,7 +9,6 @@ const LogOut = () => {
         const logout = async () => {
             try {
                 await postRequest({ url: "/api/logout" });
-                router.push("/login");
             } catch (err) {
                 console.error(err);
             }
@@ -19,7 +17,8 @@ const LogOut = () => {
         logout();
     }, [router]);
 
-    return <p>Logging out...</p>; // Return some JSX
+
+    redirect("/login")
 };
 
 export default LogOut;

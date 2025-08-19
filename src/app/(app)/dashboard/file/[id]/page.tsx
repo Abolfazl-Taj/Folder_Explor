@@ -89,7 +89,9 @@ const FilePage = () => {
           className="w-full h-[600px] rounded-xl border"
         />
       ) : data.file.mimeType.startsWith("image/") && fileUrl ? (
-        <img src={fileUrl} alt={data.file.name} className="max-h-[600px]" />
+        <div className='w-full flex justify-center items-center overflow-hidden p-4 shadow shadow-[#222] rounded'>
+          <img src={fileUrl} alt={data.file.name}  className='w-auto h-auto ' />
+        </div>
       ) : (
         <EditorContiner
           ref={editorRef}

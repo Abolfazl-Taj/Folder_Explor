@@ -30,5 +30,6 @@ const languageExtensions: { [key: string]: string } = {
   ".pdf": "pdf",
   ".txt": "text",
   ".png": "png",
+  ".jpg": "jpg",
 };
 export default languageExtensions;
