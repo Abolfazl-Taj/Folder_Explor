@@ -16,19 +16,18 @@ export const PATCHHandler = async (req: NextRequest) => {
     }
 
     // Convert content string to Buffer if provided
-    let contentBuffer: Buffer | undefined = undefined;
+    let contentBuffer: Buffer | any = null;
     let size = file.size;
 
-    if (typeof content === "string") {
-      contentBuffer = Buffer.from(content, "utf-8");
-      size = contentBuffer.length;
-    }
+    contentBuffer = Buffer.from(content, "utf-8");
+    size = contentBuffer.length;
+    const basedContent = contentBuffer.toString("base64")
 
     const updatedFile = await prisma.file.update({
       where: { id },
       data: {
         name: name ?? file.name,
-        content: content ? content : file.content,
+        content: content ? basedContent : file.content,
         size: size ?? file.size,
       },
     });

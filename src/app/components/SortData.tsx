@@ -17,7 +17,6 @@ const sortOptions = [
 
 const SortData = ({ sortMethod, setSortMethod }: { sortMethod: any, setSortMethod: any }) => {
     const { user } = useUser();
-
     return (
         <div className="w-full flex items-center justify-between px-6 py-1 border border-white/10 rounded-full  backdrop-blur">
             <Link href={"/settings"}>

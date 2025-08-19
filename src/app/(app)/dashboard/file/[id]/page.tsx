@@ -16,11 +16,25 @@ const FilePage = () => {
   const [lang, setLang] = useState<string | null>("")
   const [filename, setFilename] = useState<string | null>("")
   const [isEditing, setIsediting] = useState(false)
+  const [fileUrl, setFileUrl] = useState<string | null>(null);
   const router = useRouter()
   const { data, isLoading, error } = useQuery({
     queryKey: ["file", id],
     queryFn: () => getRequest({ url: `/api/file/${id}` })
   })
+
+  useEffect(() => {
+    if (!data?.file?.content || !data.file.mimeType) return;
+
+    // binary files (pdf, png, jpg, etc.)
+    if (
+      data.file.mimeType.startsWith("application/pdf") ||
+      data.file.mimeType.startsWith("image/")
+    ) {
+      const url = `data:${data.file.mimeType};base64,${data.file.content}`;
+      setFileUrl(url);
+    }
+  }, [data]);
   useEffect(() => {
     const name = filename || data?.file?.name;
     const suffix = name?.includes(".") ? "." + name.split(".").pop() : ".txt";
@@ -69,7 +83,23 @@ const FilePage = () => {
           </>
         )}
       </h1>
-      <EditorContiner ref={editorRef} defaultValue={data.file.content} language={lang} />
+      {data.file.mimeType === "application/pdf" && fileUrl ? (
+        <iframe
+          src={fileUrl}
+          className="w-full h-[600px] rounded-xl border"
+        />
+      ) : data.file.mimeType.startsWith("image/") && fileUrl ? (
+        <img src={fileUrl} alt={data.file.name} className="max-h-[600px]" />
+      ) : (
+        <EditorContiner
+          ref={editorRef}
+          // text/code → decode from base64
+          defaultValue={data.file.content ? atob(data.file.content) : ""}
+          language={lang}
+        />
+      )}
+
+
       <div className='w-full flex justify-around items-center '>
         <button className='bg-[#111]/50 border border-white/20 backdrop-blur-2xl w-fit px-4 py-2 rounded-md shadow' onClick={saveHandler}>Save</button>
         <button className='bg-red-900/50 border border-white/20 backdrop-blur-2xl w-fit px-4 py-2 rounded-md shadow' onClick={() => editorRef.current?.setValue(data.file.content ? data.file.content : "")}>Cancel Changes</button>

@@ -27,6 +27,8 @@ const languageExtensions: { [key: string]: string } = {
   ".sass": "sass",
   ".r": "r",
   ".m": "objective-c",
+  ".pdf": "pdf",
   ".txt": "text",
+  ".png": "png",
 };
 export default languageExtensions;

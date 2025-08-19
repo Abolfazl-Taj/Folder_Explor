@@ -77,7 +77,9 @@ const FolderForm = ({ type, data, folderId }: Modal) => {
                     <div className="p-4 w-1/3 rounded-xl bg-[#111] backdrop-blur-[14px] border border-white/10 shadow-lg flex flex-col gap-2">
                         <i onClick={() => setIsopen(false)} className="absolute top-2 right-4 text-[25px] text-red-900"><IoCloseSharp /></i>
                         <h1 className="font-bold text-2xl text-center">Add new folder</h1>
-                        <FormikForm initialState={{ name: "" }} schema={CreateFolderScheme} onSubmit={createFolder}>
+                        <FormikForm
+                            className="flex flex-col gap-4"
+                            initialState={{ name: "" }} schema={CreateFolderScheme} onSubmit={createFolder}>
                             <Input labelClass="text-xl" name="name" labelName="Folder name" placeHolder="Test123" icon={<FaFolderClosed />} type="text" />
                             <button className="bg-[#444]/40 transition-all w-fit px-4 py-1 self-center rounded-md hover:bg-[#444]" >Create folder</button>
                         </FormikForm>

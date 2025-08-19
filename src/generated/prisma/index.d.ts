@@ -3434,7 +3434,7 @@ export namespace Prisma {
     id: string | null
     name: string | null
     mimeType: string | null
-    content: string | null
+    content: Uint8Array | null
     size: number | null
     folderId: string | null
     userId: string | null
@@ -3446,7 +3446,7 @@ export namespace Prisma {
     id: string | null
     name: string | null
     mimeType: string | null
-    content: string | null
+    content: Uint8Array | null
     size: number | null
     folderId: string | null
     userId: string | null
@@ -3603,7 +3603,7 @@ export namespace Prisma {
     id: string
     name: string
     mimeType: string | null
-    content: string | null
+    content: Uint8Array | null
     size: number | null
     folderId: string | null
     userId: string
@@ -3708,7 +3708,7 @@ export namespace Prisma {
       id: string
       name: string
       mimeType: string | null
-      content: string | null
+      content: Uint8Array | null
       size: number | null
       folderId: string | null
       userId: string
@@ -4142,7 +4142,7 @@ export namespace Prisma {
     readonly id: FieldRef<"File", 'String'>
     readonly name: FieldRef<"File", 'String'>
     readonly mimeType: FieldRef<"File", 'String'>
-    readonly content: FieldRef<"File", 'String'>
+    readonly content: FieldRef<"File", 'Bytes'>
     readonly size: FieldRef<"File", 'Int'>
     readonly folderId: FieldRef<"File", 'String'>
     readonly userId: FieldRef<"File", 'String'>
@@ -4693,6 +4693,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Bytes'
+   */
+  export type BytesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Bytes'>
+    
+
+
+  /**
+   * Reference to a field of type 'Bytes[]'
+   */
+  export type ListBytesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Bytes[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -4867,7 +4881,7 @@ export namespace Prisma {
     id?: StringFilter<"File"> | string
     name?: StringFilter<"File"> | string
     mimeType?: StringNullableFilter<"File"> | string | null
-    content?: StringNullableFilter<"File"> | string | null
+    content?: BytesNullableFilter<"File"> | Uint8Array | null
     size?: IntNullableFilter<"File"> | number | null
     folderId?: StringNullableFilter<"File"> | string | null
     userId?: StringFilter<"File"> | string
@@ -4898,7 +4912,7 @@ export namespace Prisma {
     NOT?: FileWhereInput | FileWhereInput[]
     name?: StringFilter<"File"> | string
     mimeType?: StringNullableFilter<"File"> | string | null
-    content?: StringNullableFilter<"File"> | string | null
+    content?: BytesNullableFilter<"File"> | Uint8Array | null
     size?: IntNullableFilter<"File"> | number | null
     folderId?: StringNullableFilter<"File"> | string | null
     userId?: StringFilter<"File"> | string
@@ -4932,7 +4946,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"File"> | string
     name?: StringWithAggregatesFilter<"File"> | string
     mimeType?: StringNullableWithAggregatesFilter<"File"> | string | null
-    content?: StringNullableWithAggregatesFilter<"File"> | string | null
+    content?: BytesNullableWithAggregatesFilter<"File"> | Uint8Array | null
     size?: IntNullableWithAggregatesFilter<"File"> | number | null
     folderId?: StringNullableWithAggregatesFilter<"File"> | string | null
     userId?: StringWithAggregatesFilter<"File"> | string
@@ -5091,7 +5105,7 @@ export namespace Prisma {
     id?: string
     name: string
     mimeType?: string | null
-    content?: string | null
+    content?: Uint8Array | null
     size?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -5103,7 +5117,7 @@ export namespace Prisma {
     id?: string
     name: string
     mimeType?: string | null
-    content?: string | null
+    content?: Uint8Array | null
     size?: number | null
     folderId?: string | null
     userId: string
@@ -5115,7 +5129,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     mimeType?: NullableStringFieldUpdateOperationsInput | string | null
-    content?: NullableStringFieldUpdateOperationsInput | string | null
+    content?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     size?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -5127,7 +5141,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     mimeType?: NullableStringFieldUpdateOperationsInput | string | null
-    content?: NullableStringFieldUpdateOperationsInput | string | null
+    content?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     size?: NullableIntFieldUpdateOperationsInput | number | null
     folderId?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
@@ -5139,7 +5153,7 @@ export namespace Prisma {
     id?: string
     name: string
     mimeType?: string | null
-    content?: string | null
+    content?: Uint8Array | null
     size?: number | null
     folderId?: string | null
     userId: string
@@ -5151,7 +5165,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     mimeType?: NullableStringFieldUpdateOperationsInput | string | null
-    content?: NullableStringFieldUpdateOperationsInput | string | null
+    content?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     size?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -5161,7 +5175,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     mimeType?: NullableStringFieldUpdateOperationsInput | string | null
-    content?: NullableStringFieldUpdateOperationsInput | string | null
+    content?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     size?: NullableIntFieldUpdateOperationsInput | number | null
     folderId?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
@@ -5352,6 +5366,13 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type BytesNullableFilter<$PrismaModel = never> = {
+    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel> | null
+    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
+    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
+    not?: NestedBytesNullableFilter<$PrismaModel> | Uint8Array | null
+  }
+
   export type IntNullableFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -5405,6 +5426,16 @@ export namespace Prisma {
 
   export type FileSumOrderByAggregateInput = {
     size?: SortOrder
+  }
+
+  export type BytesNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel> | null
+    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
+    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
+    not?: NestedBytesNullableWithAggregatesFilter<$PrismaModel> | Uint8Array | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBytesNullableFilter<$PrismaModel>
+    _max?: NestedBytesNullableFilter<$PrismaModel>
   }
 
   export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -5645,6 +5676,10 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type NullableBytesFieldUpdateOperationsInput = {
+    set?: Uint8Array | null
+  }
+
   export type NullableIntFieldUpdateOperationsInput = {
     set?: number | null
     increment?: number
@@ -5780,6 +5815,23 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedBytesNullableFilter<$PrismaModel = never> = {
+    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel> | null
+    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
+    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
+    not?: NestedBytesNullableFilter<$PrismaModel> | Uint8Array | null
+  }
+
+  export type NestedBytesNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel> | null
+    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
+    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
+    not?: NestedBytesNullableWithAggregatesFilter<$PrismaModel> | Uint8Array | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBytesNullableFilter<$PrismaModel>
+    _max?: NestedBytesNullableFilter<$PrismaModel>
+  }
+
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -5841,7 +5893,7 @@ export namespace Prisma {
     id?: string
     name: string
     mimeType?: string | null
-    content?: string | null
+    content?: Uint8Array | null
     size?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -5852,7 +5904,7 @@ export namespace Prisma {
     id?: string
     name: string
     mimeType?: string | null
-    content?: string | null
+    content?: Uint8Array | null
     size?: number | null
     folderId?: string | null
     createdAt?: Date | string
@@ -5920,7 +5972,7 @@ export namespace Prisma {
     id?: StringFilter<"File"> | string
     name?: StringFilter<"File"> | string
     mimeType?: StringNullableFilter<"File"> | string | null
-    content?: StringNullableFilter<"File"> | string | null
+    content?: BytesNullableFilter<"File"> | Uint8Array | null
     size?: IntNullableFilter<"File"> | number | null
     folderId?: StringNullableFilter<"File"> | string | null
     userId?: StringFilter<"File"> | string
@@ -6014,7 +6066,7 @@ export namespace Prisma {
     id?: string
     name: string
     mimeType?: string | null
-    content?: string | null
+    content?: Uint8Array | null
     size?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -6025,7 +6077,7 @@ export namespace Prisma {
     id?: string
     name: string
     mimeType?: string | null
-    content?: string | null
+    content?: Uint8Array | null
     size?: number | null
     userId: string
     createdAt?: Date | string
@@ -6266,7 +6318,7 @@ export namespace Prisma {
     id?: string
     name: string
     mimeType?: string | null
-    content?: string | null
+    content?: Uint8Array | null
     size?: number | null
     folderId?: string | null
     createdAt?: Date | string
@@ -6305,7 +6357,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     mimeType?: NullableStringFieldUpdateOperationsInput | string | null
-    content?: NullableStringFieldUpdateOperationsInput | string | null
+    content?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     size?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6316,7 +6368,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     mimeType?: NullableStringFieldUpdateOperationsInput | string | null
-    content?: NullableStringFieldUpdateOperationsInput | string | null
+    content?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     size?: NullableIntFieldUpdateOperationsInput | number | null
     folderId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6327,7 +6379,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     mimeType?: NullableStringFieldUpdateOperationsInput | string | null
-    content?: NullableStringFieldUpdateOperationsInput | string | null
+    content?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     size?: NullableIntFieldUpdateOperationsInput | number | null
     folderId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6346,7 +6398,7 @@ export namespace Prisma {
     id?: string
     name: string
     mimeType?: string | null
-    content?: string | null
+    content?: Uint8Array | null
     size?: number | null
     userId: string
     createdAt?: Date | string
@@ -6385,7 +6437,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     mimeType?: NullableStringFieldUpdateOperationsInput | string | null
-    content?: NullableStringFieldUpdateOperationsInput | string | null
+    content?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     size?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6396,7 +6448,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     mimeType?: NullableStringFieldUpdateOperationsInput | string | null
-    content?: NullableStringFieldUpdateOperationsInput | string | null
+    content?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     size?: NullableIntFieldUpdateOperationsInput | number | null
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6407,7 +6459,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     mimeType?: NullableStringFieldUpdateOperationsInput | string | null
-    content?: NullableStringFieldUpdateOperationsInput | string | null
+    content?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     size?: NullableIntFieldUpdateOperationsInput | number | null
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

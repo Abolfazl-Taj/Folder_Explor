@@ -10,6 +10,7 @@ import { deleteRequest, postRequest } from "@/app/lib/fetchRequest"
 import { useRouter } from "next/navigation"
 import { useQueryClient } from "@tanstack/react-query"
 import { FaFileAlt } from "react-icons/fa";
+import { toast } from "react-toastify"
 
 const FileForm = ({ type, folderId = null, data }: Modal) => {
   const queryClient = useQueryClient()
@@ -18,14 +19,21 @@ const FileForm = ({ type, folderId = null, data }: Modal) => {
   const router = useRouter()
   const createFile = async (value: { name: string; content: string }) => {
     const { name, content } = value;
-
+    const pathName = folderId ? `/dashboard/${folderId}` : "/dashboard"
     if (selectedFile) {
       // Send FormData if file selected
       const formData = new FormData();
       formData.append("file", selectedFile);
       folderId ? formData.append("folderId", folderId) : null;
       formData.append("name", name.trim());
-      postRequest({ url: "/api/file", body: formData })
+      postRequest({ url: "/api/file", body: formData }).then(() => {
+        toast.success("File created successfully")
+        queryClient.invalidateQueries();
+      }).catch((err) => {
+        console.log(err);
+
+        toast.error("Somethign wrong happend try again")
+      })
     } else {
       // Normal JSON send for manual file creation
       await postRequest({
@@ -35,11 +43,17 @@ const FileForm = ({ type, folderId = null, data }: Modal) => {
           content,
           folderId: folderId,
         },
-      });
+      }).then((res) => {
+        toast.success("File created successfully")
+      }).catch((err) => {
+        console.log(err);
+
+        toast.error("Somethign wrong happend try again")
+      })
     }
 
+    router.push(pathName)
     queryClient.invalidateQueries();
-    router.push("/dashboard");
     setIsopen(false);
   };
   const deleteFile = () => {
@@ -78,7 +92,7 @@ const FileForm = ({ type, folderId = null, data }: Modal) => {
           >
             <IoCloseSharp />
           </button>          <h1 className="font-bold text-2xl text-center">Add new file</h1>
-          <FormikForm
+          <FormikForm className="flex flex-col gap-4"
             initialState={{ name: "", content: "" }}
             schema={CreateFileSchema}
             onSubmit={createFile}

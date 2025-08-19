@@ -13,7 +13,7 @@ export const POSTHandler = async (req: NextRequest) => {
 
     let name: string;
     let folderId: string | null = null;
-    let content: string = "";
+    let content: any = "";
     let mimeType: string;
     let size: number;
 
@@ -30,7 +30,7 @@ export const POSTHandler = async (req: NextRequest) => {
 
       const arrayBuffer = await uploadedFile.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
-      content = buffer.toString("utf-8");
+      content = buffer;
       name = formName || uploadedFile.name;
       folderId = formFolderId || null;
       size = buffer.length;
@@ -44,13 +44,12 @@ export const POSTHandler = async (req: NextRequest) => {
       const body = await req.json();
       name = body.name;
       folderId = body.folderId || null;
-      content = body.content;
-
+      content = Buffer.from(body.content, "utf-8");
       if (!name || typeof content !== "string") {
         return nextResponse({ message: "Invalid input" }, { status: 400 });
       }
 
-      size = Buffer.from(content, "utf-8").length;
+      size = content.length;
 
       const ext = "." + name.split(".").pop()?.toLowerCase();
       mimeType = extensionToMime[ext] || "text/plain";
@@ -67,8 +66,8 @@ export const POSTHandler = async (req: NextRequest) => {
         name,
         userId,
         folderId,
-        content, // stored as string
-        mimeType,
+        content: content || null, // stored as string
+        mimeType: mimeType || null,
         size, // stored as bytes
       },
     });

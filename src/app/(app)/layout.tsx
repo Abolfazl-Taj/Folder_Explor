@@ -2,7 +2,7 @@ import Continer from "@/app/components/Continer"
 import SideBar from "@/app/components/SideBar"
 import ExpoProvider from "@/provider/Expoprovider"
 import { ReactNode } from "react"
-
+import { Bounce, ToastContainer } from "react-toastify"
 const AppLayout = ({ children }: { children: ReactNode }) => {
 
     return <ExpoProvider>
@@ -13,8 +13,22 @@ const AppLayout = ({ children }: { children: ReactNode }) => {
                     <SideBar />
                     {children}
                 </div>
+
             </Continer>
         </div>
+        <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick={false}
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="dark"
+            transition={Bounce}
+        />
     </ExpoProvider>
 }
 export default AppLayout
