@@ -17,9 +17,9 @@ const FileForm = ({ type, folderId = null, data }: Modal) => {
   const [isopen, setIsopen] = useState(false)
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const router = useRouter()
+  const pathName = folderId ? `/dashboard/${folderId}` : "/dashboard"
   const createFile = async (value: { name: string; content: string }) => {
     const { name, content } = value;
-    const pathName = folderId ? `/dashboard/${folderId}` : "/dashboard"
     if (selectedFile) {
       // Send FormData if file selected
       const formData = new FormData();
@@ -31,7 +31,6 @@ const FileForm = ({ type, folderId = null, data }: Modal) => {
         queryClient.invalidateQueries();
       }).catch((err) => {
         console.log(err);
-
         toast.error("Somethign wrong happend try again")
       })
     } else {
@@ -56,12 +55,17 @@ const FileForm = ({ type, folderId = null, data }: Modal) => {
     queryClient.invalidateQueries();
     setIsopen(false);
   };
-  const deleteFile = () => {
-    deleteRequest(`/api/file/${data.id}`).then(() => {
-      queryClient.invalidateQueries()
-      router.push("/dashboard")
-      setIsopen(false)
-    })
+  const deleteFile = async () => {
+    try {
+      await deleteRequest(`/api/file/${data.id}`).then(() => {
+        queryClient.invalidateQueries()
+        setIsopen(false)
+        toast.success("File deleted sucessfully!")
+      })
+    } catch (err: any) {
+      toast.error(err.message)
+    }
+    router.push(pathName)
   }
   if (!isopen) {
     switch (type) {

@@ -10,11 +10,14 @@ import FormikForm from '../FormikForm';
 import { IoCloseSharp } from 'react-icons/io5';
 import Input from '../Input';
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 
 const FolderForm = ({ type, data, folderId }: Modal) => {
     const nameInput = useRef<HTMLInputElement>(null);
     const [isopen, setIsopen] = useState(false)
     const router = useRouter()
+    const path = folderId ? `/dashboard/${folderId}` : "/dashboard"
+
     const queryClient = useQueryClient()
     const createFolder = (value: any) => {
         const { name } = value
@@ -25,8 +28,11 @@ const FolderForm = ({ type, data, folderId }: Modal) => {
             }
         }).then(() => {
             queryClient.invalidateQueries()
+            toast.success("Folder created sucessfully!")
             setIsopen(false)
-            const path = folderId ? `/dashboard/${folderId}` : "/dashboard"
+            router.push(path)
+        }).catch(err => {
+            toast.error(err.message)
             router.push(path)
         })
     }
@@ -35,6 +41,14 @@ const FolderForm = ({ type, data, folderId }: Modal) => {
             queryClient.invalidateQueries()
             setIsopen(false)
             router.push("/dashboard")
+        }).then(() => {
+            queryClient.invalidateQueries()
+            toast.success("Folder deleted sucessfully!")
+            setIsopen(false)
+            router.push(path)
+        }).catch(err => {
+            toast.error(err.message)
+            router.push(path)
         })
     }
     const PatchFolder = () => {
@@ -44,8 +58,11 @@ const FolderForm = ({ type, data, folderId }: Modal) => {
                 id: data.id
             }).then(() => {
                 queryClient.invalidateQueries()
-                setIsopen(false)
-                router.push("/dashboard")
+                toast.success("Folder updated sucessfully!")
+                router.push(path)
+            }).catch(err => {
+                toast.error(err.message)
+                router.push(path)
             })
         }
     }

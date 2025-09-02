@@ -18,6 +18,8 @@ model User {
   updatedAt DateTime @updatedAt
   folders Folder[]
   files   File[]
+    resetToken      String?   // temporary token
+  resetTokenExp   DateTime? // expiry time
 }
 
 model Folder {

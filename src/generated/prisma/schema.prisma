@@ -9,15 +9,17 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  userName  String?  @unique
-  img       String?
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  folders   Folder[]
-  files     File[]
+  id            String    @id @default(cuid())
+  userName      String?   @unique
+  img           String?
+  email         String    @unique
+  password      String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  folders       Folder[]
+  files         File[]
+  resetToken    String? // temporary token
+  resetTokenExp DateTime? // expiry time
 }
 
 model Folder {

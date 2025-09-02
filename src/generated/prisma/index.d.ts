@@ -1148,6 +1148,8 @@ export namespace Prisma {
     password: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    resetToken: string | null
+    resetTokenExp: Date | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -1158,6 +1160,8 @@ export namespace Prisma {
     password: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    resetToken: string | null
+    resetTokenExp: Date | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -1168,6 +1172,8 @@ export namespace Prisma {
     password: number
     createdAt: number
     updatedAt: number
+    resetToken: number
+    resetTokenExp: number
     _all: number
   }
 
@@ -1180,6 +1186,8 @@ export namespace Prisma {
     password?: true
     createdAt?: true
     updatedAt?: true
+    resetToken?: true
+    resetTokenExp?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -1190,6 +1198,8 @@ export namespace Prisma {
     password?: true
     createdAt?: true
     updatedAt?: true
+    resetToken?: true
+    resetTokenExp?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -1200,6 +1210,8 @@ export namespace Prisma {
     password?: true
     createdAt?: true
     updatedAt?: true
+    resetToken?: true
+    resetTokenExp?: true
     _all?: true
   }
 
@@ -1283,6 +1295,8 @@ export namespace Prisma {
     password: string
     createdAt: Date
     updatedAt: Date
+    resetToken: string | null
+    resetTokenExp: Date | null
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -1310,6 +1324,8 @@ export namespace Prisma {
     password?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    resetToken?: boolean
+    resetTokenExp?: boolean
     folders?: boolean | User$foldersArgs<ExtArgs>
     files?: boolean | User$filesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1323,6 +1339,8 @@ export namespace Prisma {
     password?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    resetToken?: boolean
+    resetTokenExp?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1333,6 +1351,8 @@ export namespace Prisma {
     password?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    resetToken?: boolean
+    resetTokenExp?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -1343,9 +1363,11 @@ export namespace Prisma {
     password?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    resetToken?: boolean
+    resetTokenExp?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userName" | "img" | "email" | "password" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userName" | "img" | "email" | "password" | "createdAt" | "updatedAt" | "resetToken" | "resetTokenExp", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     folders?: boolean | User$foldersArgs<ExtArgs>
     files?: boolean | User$filesArgs<ExtArgs>
@@ -1368,6 +1390,8 @@ export namespace Prisma {
       password: string
       createdAt: Date
       updatedAt: Date
+      resetToken: string | null
+      resetTokenExp: Date | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -1800,6 +1824,8 @@ export namespace Prisma {
     readonly password: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
+    readonly resetToken: FieldRef<"User", 'String'>
+    readonly resetTokenExp: FieldRef<"User", 'DateTime'>
   }
     
 
@@ -4602,7 +4628,9 @@ export namespace Prisma {
     email: 'email',
     password: 'password',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    resetToken: 'resetToken',
+    resetTokenExp: 'resetTokenExp'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -4748,6 +4776,8 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    resetToken?: StringNullableFilter<"User"> | string | null
+    resetTokenExp?: DateTimeNullableFilter<"User"> | Date | string | null
     folders?: FolderListRelationFilter
     files?: FileListRelationFilter
   }
@@ -4760,6 +4790,8 @@ export namespace Prisma {
     password?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    resetToken?: SortOrderInput | SortOrder
+    resetTokenExp?: SortOrderInput | SortOrder
     folders?: FolderOrderByRelationAggregateInput
     files?: FileOrderByRelationAggregateInput
   }
@@ -4775,6 +4807,8 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    resetToken?: StringNullableFilter<"User"> | string | null
+    resetTokenExp?: DateTimeNullableFilter<"User"> | Date | string | null
     folders?: FolderListRelationFilter
     files?: FileListRelationFilter
   }, "id" | "userName" | "email">
@@ -4787,6 +4821,8 @@ export namespace Prisma {
     password?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    resetToken?: SortOrderInput | SortOrder
+    resetTokenExp?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -4803,6 +4839,8 @@ export namespace Prisma {
     password?: StringWithAggregatesFilter<"User"> | string
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    resetToken?: StringNullableWithAggregatesFilter<"User"> | string | null
+    resetTokenExp?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   }
 
   export type FolderWhereInput = {
@@ -4962,6 +5000,8 @@ export namespace Prisma {
     password: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    resetToken?: string | null
+    resetTokenExp?: Date | string | null
     folders?: FolderCreateNestedManyWithoutUserInput
     files?: FileCreateNestedManyWithoutUserInput
   }
@@ -4974,6 +5014,8 @@ export namespace Prisma {
     password: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    resetToken?: string | null
+    resetTokenExp?: Date | string | null
     folders?: FolderUncheckedCreateNestedManyWithoutUserInput
     files?: FileUncheckedCreateNestedManyWithoutUserInput
   }
@@ -4986,6 +5028,8 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExp?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     folders?: FolderUpdateManyWithoutUserNestedInput
     files?: FileUpdateManyWithoutUserNestedInput
   }
@@ -4998,6 +5042,8 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExp?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     folders?: FolderUncheckedUpdateManyWithoutUserNestedInput
     files?: FileUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -5010,6 +5056,8 @@ export namespace Prisma {
     password: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    resetToken?: string | null
+    resetTokenExp?: Date | string | null
   }
 
   export type UserUpdateManyMutationInput = {
@@ -5020,6 +5068,8 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExp?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -5030,6 +5080,8 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExp?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type FolderCreateInput = {
@@ -5224,6 +5276,17 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type FolderListRelationFilter = {
     every?: FolderWhereInput
     some?: FolderWhereInput
@@ -5257,6 +5320,8 @@ export namespace Prisma {
     password?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    resetToken?: SortOrder
+    resetTokenExp?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -5267,6 +5332,8 @@ export namespace Prisma {
     password?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    resetToken?: SortOrder
+    resetTokenExp?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -5277,6 +5344,8 @@ export namespace Prisma {
     password?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    resetToken?: SortOrder
+    resetTokenExp?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -5327,6 +5396,20 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type UserScalarRelationFilter = {
@@ -5492,6 +5575,10 @@ export namespace Prisma {
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
   }
 
   export type FolderUpdateManyWithoutUserNestedInput = {
@@ -5745,6 +5832,17 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -5813,6 +5911,20 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type NestedBytesNullableFilter<$PrismaModel = never> = {
@@ -5988,6 +6100,8 @@ export namespace Prisma {
     password: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    resetToken?: string | null
+    resetTokenExp?: Date | string | null
     files?: FileCreateNestedManyWithoutUserInput
   }
 
@@ -5999,6 +6113,8 @@ export namespace Prisma {
     password: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    resetToken?: string | null
+    resetTokenExp?: Date | string | null
     files?: FileUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -6113,6 +6229,8 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExp?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     files?: FileUpdateManyWithoutUserNestedInput
   }
 
@@ -6124,6 +6242,8 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExp?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     files?: FileUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -6223,6 +6343,8 @@ export namespace Prisma {
     password: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    resetToken?: string | null
+    resetTokenExp?: Date | string | null
     folders?: FolderCreateNestedManyWithoutUserInput
   }
 
@@ -6234,6 +6356,8 @@ export namespace Prisma {
     password: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    resetToken?: string | null
+    resetTokenExp?: Date | string | null
     folders?: FolderUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -6292,6 +6416,8 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExp?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     folders?: FolderUpdateManyWithoutUserNestedInput
   }
 
@@ -6303,6 +6429,8 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExp?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     folders?: FolderUncheckedUpdateManyWithoutUserNestedInput
   }
 

@@ -9,7 +9,7 @@ const ProfileView = ({ user, setIsEditing }: {
 }) => {
     return (
         <div className='w-full flex justify-center items-center flex-col gap-8'>
-            <Image unoptimized={true} className="w-50 h-50 rounded-full border-2 border-red-950" src={user?.img || "https://ui-avatars.com/api/?name=user&background=#111"} alt={`${user?.userName}-img`} width={20} height={20} />
+            <Image unoptimized={true} className="w-40  h-40  rounded-full border-2 border-red-950 object-cover" src={user?.img || "https://ui-avatars.com/api/?name=user&background=#111"} alt={`${user?.userName}-img`} width={20} height={20} />
             <div className='flex-1 flex flex-wrap gap-4'>
                 <div className='flex  gap-2 flex-col flex-[40%]'>
                     <h1 className='font-bold'>User Name :</h1>

@@ -1,6 +1,6 @@
-export const getFromLocalStorage = (name: string) => {
+export const getFromLocalStorage = (name: string )  => {
   const item = localStorage.getItem(name);
-  if (item === undefined) return JSON.parse(item);
+  if (item !== undefined) return JSON.parse(item);
   return null;
 };
 
@@ -8,5 +8,7 @@ export const setToLocalStorage = (name: string, value: any) => {
   localStorage.setItem(name, JSON.stringify(value));
 };
 export const removeFromLocalStorage = (name: string) => {
+  console.log(name);
+
   localStorage.removeItem(name);
 };

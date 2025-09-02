@@ -9,12 +9,14 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { MdAlternateEmail } from "react-icons/md";
+import { toast } from "react-toastify";
 
 const ProfilePage = () => {
     const { user } = useUser()
     const router = useRouter()
     const [isEditing, setIsEditing] = useState(false)
     const updateSettings = async (value: any) => {
+        setIsEditing(false)
         const formdata = new FormData()
         formdata.append("email", value.email)
         formdata.append("userName", value.userName)
@@ -22,10 +24,18 @@ const ProfilePage = () => {
         formdata.append("img", value.img)
         formdata.append("password", value.password)
         console.log(formdata);
-        await postRequest({
+        postRequest({
             url: "/api/profile", body: formdata
+        }).then(() => {
+            toast.success("Your profile saved sucessfully!")
+            router.push("/settings")
+        }).catch(err => {
+            console.log();
+
+            toast.error(err.message)
+            router.push("/settings")
+
         })
-        router.push("/settings")
     }
     return (
         <div className="flex-1 p-4 flex flex-col gap-4 h-full">
