@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Userprovider from "@/provider/Userprovider";
 import ReactQueryProvider from "@/provider/ReactQueryProvider";
+import Script from "next/script";
 
 const interFont = Inter({
   variable: "--font-Inter-sans",
@@ -24,12 +25,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <meta
-          name="google-signin-client_id"
-          content="725854454434-s0ckddk35qnqm9dlm7l8aqmk7g938rvi.apps.googleusercontent.com"
-        />
-      </head>
       <ReactQueryProvider>
         <body className={`${interFont.variable} antialiased relative`}>
           <Userprovider>{children}</Userprovider>

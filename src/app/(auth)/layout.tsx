@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Script from "next/script";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 export const metadata: Metadata = {
   title: "Auth | Folderexpo",
@@ -8,12 +8,8 @@ export const metadata: Metadata = {
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
-    <>
+    <GoogleOAuthProvider clientId={process.env.GOOGLE_CLIENT_ID!}>
       {children}
-      <Script
-        src="https://apis.google.com/js/platform.js"
-        strategy="afterInteractive"
-      />
-    </>
+    </GoogleOAuthProvider>
   );
 }
