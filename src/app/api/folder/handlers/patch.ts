@@ -3,15 +3,17 @@ import prisma from "@/app/lib/prisma";
 import { NextRequest } from "next/server";
 
 export const PATCHHandler = async (req: NextRequest) => {
-  const { id, name } = await req.json();
-  if (!id || !name)
+  const { id, ...body } = await req.json();
+  console.log("patch has been sended" , body);
+  
+  if (!id)
     return nextResponse(
       { message: "Required data not found " },
       { status: 400 }
     );
   try {
     const response = await prisma.folder.update({
-      data: { name },
+      data:  body ,
       where: { id },
     });
     return nextResponse(

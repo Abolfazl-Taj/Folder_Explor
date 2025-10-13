@@ -6,7 +6,6 @@ import { formatBytes } from "../lib/formatBytes";
 
 const Files = ({ data, queryKey }: { data: FileType[], queryKey: any }) => {
 
-    console.log(data);
     if (!data || data.length <= 0) return
     return (
         <div className="flex flex-col gap-2">

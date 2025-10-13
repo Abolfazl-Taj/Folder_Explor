@@ -1,7 +1,6 @@
 "use client";
 
 import { FolderType } from "@/types/Expo";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MdFolderCopy } from "react-icons/md";
@@ -15,7 +14,7 @@ const Folders = ({ data }: { data: FolderType[] }) => {
         <div className="flex flex-col gap-4">
 
             {data?.map((folder: FolderType) => (
-                <>
+                <div key={folder.id}>
                     <h2 className="font-bold text-lg">Folders:</h2>
                     <div key={folder.id}
                         className="group flex w-full items-center gap-3 border-b border-gray-300/20 py-2 px-3 rounded-md transition-all hover:bg-[#222] hover:shadow-md">
@@ -37,7 +36,7 @@ const Folders = ({ data }: { data: FolderType[] }) => {
                         <ModalForm type="update" data={folder} />
                         <ModalForm type="delete" data={{ id: folder.id, name: folder.name }} />
                 </div >
-                    </>
+                    </div>
             ))}
         </div>
     );

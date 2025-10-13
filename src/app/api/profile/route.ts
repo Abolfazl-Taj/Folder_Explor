@@ -5,7 +5,7 @@ import prisma from "@/app/lib/prisma";
 import { NextRequest } from "next/server";
 import bcrypt from "bcryptjs";
 import path from "path";
-import { writeFile } from "fs/promises";
+import { writeFile, unlink } from "fs/promises";
 const JWT_SECRET = process.env.JWT_SECRET || "my_super_secret_key";
 
 export const POST = async (req: NextRequest) => {
@@ -20,6 +20,8 @@ export const POST = async (req: NextRequest) => {
   let imgUrl: any = null;
   const id = getUserId(req);
   if (!id) return nextRedirect("/login", req);
+  const user = await prisma.user.findUnique({ where: { id } });
+  const userAvatar = user?.img;
   try {
     if (file && file.size > 0) {
       const bytes = await file.arrayBuffer();
@@ -29,12 +31,23 @@ export const POST = async (req: NextRequest) => {
         .replace(/[^a-zA-Z0-9._-]/g, "");
       const fileName = `avatar_${Date.now()}_${safeName}`;
       const filePath = path.join(process.cwd(), "public", "upload", fileName);
+      if (userAvatar) {
+        console.log(userAvatar);
+
+        const oldFilePath = path.join(
+          process.cwd(),
+          "public",
+          userAvatar.replace(/^\/+/g, "")
+        );
+        await unlink(oldFilePath).catch((err) =>
+          console.warn("Failed to delete old avatar:", err)
+        );
+      }
       await writeFile(filePath, buffer);
       imgUrl = `/upload/${fileName}`;
     }
     console.log({ userName, email, imgUrl, oldPassword, password });
 
-    const user = await prisma.user.findUnique({ where: { id } });
     if (!user)
       return nextResponse({ message: "User not found" }, { status: 404 });
     if (oldPassword) {

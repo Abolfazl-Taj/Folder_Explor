@@ -24,7 +24,7 @@ const Dashboard = () => {
   return (
     <div className="flex-1 p-4 space-y-3 flex flex-col relative">
       <SortData sortMethod={sortMethod} setSortMethod={setSortMethod} />
-      <span className="shadow w-fit p-2 bg-[#333] rounded-md self-center border border-zinc-900/25 font-semibold">Path: {`Main Folder`}</span>
+      <span className=" shadow w-fit p-2 bg-[#333] rounded-md self-center border border-zinc-900/25 font-semibold">Path: {`Main Folder`}</span>
 
       {loading ? (
         <Loading />

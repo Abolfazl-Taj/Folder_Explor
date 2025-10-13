@@ -138,7 +138,8 @@ exports.Prisma.FolderScalarFieldEnum = {
   parentId: 'parentId',
   userId: 'userId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  private: 'private'
 };
 
 exports.Prisma.FileScalarFieldEnum = {
@@ -151,6 +152,16 @@ exports.Prisma.FileScalarFieldEnum = {
   userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.FolderPermissionScalarFieldEnum = {
+  id: 'id',
+  folderId: 'folderId',
+  userId: 'userId',
+  canView: 'canView',
+  canCreate: 'canCreate',
+  canUpdate: 'canUpdate',
+  canDelete: 'canDelete'
 };
 
 exports.Prisma.SortOrder = {
@@ -172,7 +183,8 @@ exports.Prisma.NullsOrder = {
 exports.Prisma.ModelName = {
   User: 'User',
   Folder: 'Folder',
-  File: 'File'
+  File: 'File',
+  FolderPermission: 'FolderPermission'
 };
 
 /**

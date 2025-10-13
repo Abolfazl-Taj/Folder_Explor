@@ -28,6 +28,11 @@ export type Folder = $Result.DefaultSelection<Prisma.$FolderPayload>
  * 
  */
 export type File = $Result.DefaultSelection<Prisma.$FilePayload>
+/**
+ * Model FolderPermission
+ * 
+ */
+export type FolderPermission = $Result.DefaultSelection<Prisma.$FolderPermissionPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -183,6 +188,16 @@ export class PrismaClient<
     * ```
     */
   get file(): Prisma.FileDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.folderPermission`: Exposes CRUD operations for the **FolderPermission** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FolderPermissions
+    * const folderPermissions = await prisma.folderPermission.findMany()
+    * ```
+    */
+  get folderPermission(): Prisma.FolderPermissionDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -625,7 +640,8 @@ export namespace Prisma {
   export const ModelName: {
     User: 'User',
     Folder: 'Folder',
-    File: 'File'
+    File: 'File',
+    FolderPermission: 'FolderPermission'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -644,7 +660,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "folder" | "file"
+      modelProps: "user" | "folder" | "file" | "folderPermission"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -870,6 +886,80 @@ export namespace Prisma {
           }
         }
       }
+      FolderPermission: {
+        payload: Prisma.$FolderPermissionPayload<ExtArgs>
+        fields: Prisma.FolderPermissionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.FolderPermissionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FolderPermissionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.FolderPermissionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FolderPermissionPayload>
+          }
+          findFirst: {
+            args: Prisma.FolderPermissionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FolderPermissionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.FolderPermissionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FolderPermissionPayload>
+          }
+          findMany: {
+            args: Prisma.FolderPermissionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FolderPermissionPayload>[]
+          }
+          create: {
+            args: Prisma.FolderPermissionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FolderPermissionPayload>
+          }
+          createMany: {
+            args: Prisma.FolderPermissionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.FolderPermissionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FolderPermissionPayload>[]
+          }
+          delete: {
+            args: Prisma.FolderPermissionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FolderPermissionPayload>
+          }
+          update: {
+            args: Prisma.FolderPermissionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FolderPermissionPayload>
+          }
+          deleteMany: {
+            args: Prisma.FolderPermissionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.FolderPermissionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.FolderPermissionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FolderPermissionPayload>[]
+          }
+          upsert: {
+            args: Prisma.FolderPermissionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FolderPermissionPayload>
+          }
+          aggregate: {
+            args: Prisma.FolderPermissionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateFolderPermission>
+          }
+          groupBy: {
+            args: Prisma.FolderPermissionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<FolderPermissionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.FolderPermissionCountArgs<ExtArgs>
+            result: $Utils.Optional<FolderPermissionCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -957,6 +1047,7 @@ export namespace Prisma {
     user?: UserOmit
     folder?: FolderOmit
     file?: FileOmit
+    folderPermission?: FolderPermissionOmit
   }
 
   /* Types for Logging */
@@ -1053,11 +1144,13 @@ export namespace Prisma {
   export type UserCountOutputType = {
     folders: number
     files: number
+    permissions: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     folders?: boolean | UserCountOutputTypeCountFoldersArgs
     files?: boolean | UserCountOutputTypeCountFilesArgs
+    permissions?: boolean | UserCountOutputTypeCountPermissionsArgs
   }
 
   // Custom InputTypes
@@ -1085,6 +1178,13 @@ export namespace Prisma {
     where?: FileWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountPermissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FolderPermissionWhereInput
+  }
+
 
   /**
    * Count Type FolderCountOutputType
@@ -1093,11 +1193,13 @@ export namespace Prisma {
   export type FolderCountOutputType = {
     children: number
     files: number
+    permissions: number
   }
 
   export type FolderCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     children?: boolean | FolderCountOutputTypeCountChildrenArgs
     files?: boolean | FolderCountOutputTypeCountFilesArgs
+    permissions?: boolean | FolderCountOutputTypeCountPermissionsArgs
   }
 
   // Custom InputTypes
@@ -1123,6 +1225,13 @@ export namespace Prisma {
    */
   export type FolderCountOutputTypeCountFilesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: FileWhereInput
+  }
+
+  /**
+   * FolderCountOutputType without action
+   */
+  export type FolderCountOutputTypeCountPermissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FolderPermissionWhereInput
   }
 
 
@@ -1328,6 +1437,7 @@ export namespace Prisma {
     resetTokenExp?: boolean
     folders?: boolean | User$foldersArgs<ExtArgs>
     files?: boolean | User$filesArgs<ExtArgs>
+    permissions?: boolean | User$permissionsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1371,6 +1481,7 @@ export namespace Prisma {
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     folders?: boolean | User$foldersArgs<ExtArgs>
     files?: boolean | User$filesArgs<ExtArgs>
+    permissions?: boolean | User$permissionsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1381,6 +1492,7 @@ export namespace Prisma {
     objects: {
       folders: Prisma.$FolderPayload<ExtArgs>[]
       files: Prisma.$FilePayload<ExtArgs>[]
+      permissions: Prisma.$FolderPermissionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1788,6 +1900,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     folders<T extends User$foldersArgs<ExtArgs> = {}>(args?: Subset<T, User$foldersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FolderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     files<T extends User$filesArgs<ExtArgs> = {}>(args?: Subset<T, User$filesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    permissions<T extends User$permissionsArgs<ExtArgs> = {}>(args?: Subset<T, User$permissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FolderPermissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2262,6 +2375,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.permissions
+   */
+  export type User$permissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FolderPermission
+     */
+    select?: FolderPermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FolderPermission
+     */
+    omit?: FolderPermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FolderPermissionInclude<ExtArgs> | null
+    where?: FolderPermissionWhereInput
+    orderBy?: FolderPermissionOrderByWithRelationInput | FolderPermissionOrderByWithRelationInput[]
+    cursor?: FolderPermissionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FolderPermissionScalarFieldEnum | FolderPermissionScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2297,6 +2434,7 @@ export namespace Prisma {
     userId: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    private: boolean | null
   }
 
   export type FolderMaxAggregateOutputType = {
@@ -2306,6 +2444,7 @@ export namespace Prisma {
     userId: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    private: boolean | null
   }
 
   export type FolderCountAggregateOutputType = {
@@ -2315,6 +2454,7 @@ export namespace Prisma {
     userId: number
     createdAt: number
     updatedAt: number
+    private: number
     _all: number
   }
 
@@ -2326,6 +2466,7 @@ export namespace Prisma {
     userId?: true
     createdAt?: true
     updatedAt?: true
+    private?: true
   }
 
   export type FolderMaxAggregateInputType = {
@@ -2335,6 +2476,7 @@ export namespace Prisma {
     userId?: true
     createdAt?: true
     updatedAt?: true
+    private?: true
   }
 
   export type FolderCountAggregateInputType = {
@@ -2344,6 +2486,7 @@ export namespace Prisma {
     userId?: true
     createdAt?: true
     updatedAt?: true
+    private?: true
     _all?: true
   }
 
@@ -2426,6 +2569,7 @@ export namespace Prisma {
     userId: string
     createdAt: Date
     updatedAt: Date
+    private: boolean
     _count: FolderCountAggregateOutputType | null
     _min: FolderMinAggregateOutputType | null
     _max: FolderMaxAggregateOutputType | null
@@ -2452,10 +2596,12 @@ export namespace Prisma {
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    private?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     parent?: boolean | Folder$parentArgs<ExtArgs>
     children?: boolean | Folder$childrenArgs<ExtArgs>
     files?: boolean | Folder$filesArgs<ExtArgs>
+    permissions?: boolean | Folder$permissionsArgs<ExtArgs>
     _count?: boolean | FolderCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["folder"]>
 
@@ -2466,6 +2612,7 @@ export namespace Prisma {
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    private?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     parent?: boolean | Folder$parentArgs<ExtArgs>
   }, ExtArgs["result"]["folder"]>
@@ -2477,6 +2624,7 @@ export namespace Prisma {
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    private?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     parent?: boolean | Folder$parentArgs<ExtArgs>
   }, ExtArgs["result"]["folder"]>
@@ -2488,14 +2636,16 @@ export namespace Prisma {
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    private?: boolean
   }
 
-  export type FolderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "parentId" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["folder"]>
+  export type FolderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "parentId" | "userId" | "createdAt" | "updatedAt" | "private", ExtArgs["result"]["folder"]>
   export type FolderInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     parent?: boolean | Folder$parentArgs<ExtArgs>
     children?: boolean | Folder$childrenArgs<ExtArgs>
     files?: boolean | Folder$filesArgs<ExtArgs>
+    permissions?: boolean | Folder$permissionsArgs<ExtArgs>
     _count?: boolean | FolderCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type FolderIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2514,6 +2664,7 @@ export namespace Prisma {
       parent: Prisma.$FolderPayload<ExtArgs> | null
       children: Prisma.$FolderPayload<ExtArgs>[]
       files: Prisma.$FilePayload<ExtArgs>[]
+      permissions: Prisma.$FolderPermissionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2522,6 +2673,7 @@ export namespace Prisma {
       userId: string
       createdAt: Date
       updatedAt: Date
+      private: boolean
     }, ExtArgs["result"]["folder"]>
     composites: {}
   }
@@ -2920,6 +3072,7 @@ export namespace Prisma {
     parent<T extends Folder$parentArgs<ExtArgs> = {}>(args?: Subset<T, Folder$parentArgs<ExtArgs>>): Prisma__FolderClient<$Result.GetResult<Prisma.$FolderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     children<T extends Folder$childrenArgs<ExtArgs> = {}>(args?: Subset<T, Folder$childrenArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FolderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     files<T extends Folder$filesArgs<ExtArgs> = {}>(args?: Subset<T, Folder$filesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    permissions<T extends Folder$permissionsArgs<ExtArgs> = {}>(args?: Subset<T, Folder$permissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FolderPermissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2955,6 +3108,7 @@ export namespace Prisma {
     readonly userId: FieldRef<"Folder", 'String'>
     readonly createdAt: FieldRef<"Folder", 'DateTime'>
     readonly updatedAt: FieldRef<"Folder", 'DateTime'>
+    readonly private: FieldRef<"Folder", 'Boolean'>
   }
     
 
@@ -3415,6 +3569,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: FileScalarFieldEnum | FileScalarFieldEnum[]
+  }
+
+  /**
+   * Folder.permissions
+   */
+  export type Folder$permissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FolderPermission
+     */
+    select?: FolderPermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FolderPermission
+     */
+    omit?: FolderPermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FolderPermissionInclude<ExtArgs> | null
+    where?: FolderPermissionWhereInput
+    orderBy?: FolderPermissionOrderByWithRelationInput | FolderPermissionOrderByWithRelationInput[]
+    cursor?: FolderPermissionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FolderPermissionScalarFieldEnum | FolderPermissionScalarFieldEnum[]
   }
 
   /**
@@ -4608,6 +4786,1098 @@ export namespace Prisma {
 
 
   /**
+   * Model FolderPermission
+   */
+
+  export type AggregateFolderPermission = {
+    _count: FolderPermissionCountAggregateOutputType | null
+    _min: FolderPermissionMinAggregateOutputType | null
+    _max: FolderPermissionMaxAggregateOutputType | null
+  }
+
+  export type FolderPermissionMinAggregateOutputType = {
+    id: string | null
+    folderId: string | null
+    userId: string | null
+    canView: boolean | null
+    canCreate: boolean | null
+    canUpdate: boolean | null
+    canDelete: boolean | null
+  }
+
+  export type FolderPermissionMaxAggregateOutputType = {
+    id: string | null
+    folderId: string | null
+    userId: string | null
+    canView: boolean | null
+    canCreate: boolean | null
+    canUpdate: boolean | null
+    canDelete: boolean | null
+  }
+
+  export type FolderPermissionCountAggregateOutputType = {
+    id: number
+    folderId: number
+    userId: number
+    canView: number
+    canCreate: number
+    canUpdate: number
+    canDelete: number
+    _all: number
+  }
+
+
+  export type FolderPermissionMinAggregateInputType = {
+    id?: true
+    folderId?: true
+    userId?: true
+    canView?: true
+    canCreate?: true
+    canUpdate?: true
+    canDelete?: true
+  }
+
+  export type FolderPermissionMaxAggregateInputType = {
+    id?: true
+    folderId?: true
+    userId?: true
+    canView?: true
+    canCreate?: true
+    canUpdate?: true
+    canDelete?: true
+  }
+
+  export type FolderPermissionCountAggregateInputType = {
+    id?: true
+    folderId?: true
+    userId?: true
+    canView?: true
+    canCreate?: true
+    canUpdate?: true
+    canDelete?: true
+    _all?: true
+  }
+
+  export type FolderPermissionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FolderPermission to aggregate.
+     */
+    where?: FolderPermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FolderPermissions to fetch.
+     */
+    orderBy?: FolderPermissionOrderByWithRelationInput | FolderPermissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FolderPermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FolderPermissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FolderPermissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FolderPermissions
+    **/
+    _count?: true | FolderPermissionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FolderPermissionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FolderPermissionMaxAggregateInputType
+  }
+
+  export type GetFolderPermissionAggregateType<T extends FolderPermissionAggregateArgs> = {
+        [P in keyof T & keyof AggregateFolderPermission]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFolderPermission[P]>
+      : GetScalarType<T[P], AggregateFolderPermission[P]>
+  }
+
+
+
+
+  export type FolderPermissionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FolderPermissionWhereInput
+    orderBy?: FolderPermissionOrderByWithAggregationInput | FolderPermissionOrderByWithAggregationInput[]
+    by: FolderPermissionScalarFieldEnum[] | FolderPermissionScalarFieldEnum
+    having?: FolderPermissionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FolderPermissionCountAggregateInputType | true
+    _min?: FolderPermissionMinAggregateInputType
+    _max?: FolderPermissionMaxAggregateInputType
+  }
+
+  export type FolderPermissionGroupByOutputType = {
+    id: string
+    folderId: string
+    userId: string
+    canView: boolean
+    canCreate: boolean
+    canUpdate: boolean
+    canDelete: boolean
+    _count: FolderPermissionCountAggregateOutputType | null
+    _min: FolderPermissionMinAggregateOutputType | null
+    _max: FolderPermissionMaxAggregateOutputType | null
+  }
+
+  type GetFolderPermissionGroupByPayload<T extends FolderPermissionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<FolderPermissionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FolderPermissionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FolderPermissionGroupByOutputType[P]>
+            : GetScalarType<T[P], FolderPermissionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FolderPermissionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    folderId?: boolean
+    userId?: boolean
+    canView?: boolean
+    canCreate?: boolean
+    canUpdate?: boolean
+    canDelete?: boolean
+    folder?: boolean | FolderDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["folderPermission"]>
+
+  export type FolderPermissionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    folderId?: boolean
+    userId?: boolean
+    canView?: boolean
+    canCreate?: boolean
+    canUpdate?: boolean
+    canDelete?: boolean
+    folder?: boolean | FolderDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["folderPermission"]>
+
+  export type FolderPermissionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    folderId?: boolean
+    userId?: boolean
+    canView?: boolean
+    canCreate?: boolean
+    canUpdate?: boolean
+    canDelete?: boolean
+    folder?: boolean | FolderDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["folderPermission"]>
+
+  export type FolderPermissionSelectScalar = {
+    id?: boolean
+    folderId?: boolean
+    userId?: boolean
+    canView?: boolean
+    canCreate?: boolean
+    canUpdate?: boolean
+    canDelete?: boolean
+  }
+
+  export type FolderPermissionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "folderId" | "userId" | "canView" | "canCreate" | "canUpdate" | "canDelete", ExtArgs["result"]["folderPermission"]>
+  export type FolderPermissionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    folder?: boolean | FolderDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type FolderPermissionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    folder?: boolean | FolderDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type FolderPermissionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    folder?: boolean | FolderDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $FolderPermissionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "FolderPermission"
+    objects: {
+      folder: Prisma.$FolderPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      folderId: string
+      userId: string
+      canView: boolean
+      canCreate: boolean
+      canUpdate: boolean
+      canDelete: boolean
+    }, ExtArgs["result"]["folderPermission"]>
+    composites: {}
+  }
+
+  type FolderPermissionGetPayload<S extends boolean | null | undefined | FolderPermissionDefaultArgs> = $Result.GetResult<Prisma.$FolderPermissionPayload, S>
+
+  type FolderPermissionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<FolderPermissionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: FolderPermissionCountAggregateInputType | true
+    }
+
+  export interface FolderPermissionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['FolderPermission'], meta: { name: 'FolderPermission' } }
+    /**
+     * Find zero or one FolderPermission that matches the filter.
+     * @param {FolderPermissionFindUniqueArgs} args - Arguments to find a FolderPermission
+     * @example
+     * // Get one FolderPermission
+     * const folderPermission = await prisma.folderPermission.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends FolderPermissionFindUniqueArgs>(args: SelectSubset<T, FolderPermissionFindUniqueArgs<ExtArgs>>): Prisma__FolderPermissionClient<$Result.GetResult<Prisma.$FolderPermissionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one FolderPermission that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {FolderPermissionFindUniqueOrThrowArgs} args - Arguments to find a FolderPermission
+     * @example
+     * // Get one FolderPermission
+     * const folderPermission = await prisma.folderPermission.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends FolderPermissionFindUniqueOrThrowArgs>(args: SelectSubset<T, FolderPermissionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FolderPermissionClient<$Result.GetResult<Prisma.$FolderPermissionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first FolderPermission that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FolderPermissionFindFirstArgs} args - Arguments to find a FolderPermission
+     * @example
+     * // Get one FolderPermission
+     * const folderPermission = await prisma.folderPermission.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends FolderPermissionFindFirstArgs>(args?: SelectSubset<T, FolderPermissionFindFirstArgs<ExtArgs>>): Prisma__FolderPermissionClient<$Result.GetResult<Prisma.$FolderPermissionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first FolderPermission that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FolderPermissionFindFirstOrThrowArgs} args - Arguments to find a FolderPermission
+     * @example
+     * // Get one FolderPermission
+     * const folderPermission = await prisma.folderPermission.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends FolderPermissionFindFirstOrThrowArgs>(args?: SelectSubset<T, FolderPermissionFindFirstOrThrowArgs<ExtArgs>>): Prisma__FolderPermissionClient<$Result.GetResult<Prisma.$FolderPermissionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more FolderPermissions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FolderPermissionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FolderPermissions
+     * const folderPermissions = await prisma.folderPermission.findMany()
+     * 
+     * // Get first 10 FolderPermissions
+     * const folderPermissions = await prisma.folderPermission.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const folderPermissionWithIdOnly = await prisma.folderPermission.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends FolderPermissionFindManyArgs>(args?: SelectSubset<T, FolderPermissionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FolderPermissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a FolderPermission.
+     * @param {FolderPermissionCreateArgs} args - Arguments to create a FolderPermission.
+     * @example
+     * // Create one FolderPermission
+     * const FolderPermission = await prisma.folderPermission.create({
+     *   data: {
+     *     // ... data to create a FolderPermission
+     *   }
+     * })
+     * 
+     */
+    create<T extends FolderPermissionCreateArgs>(args: SelectSubset<T, FolderPermissionCreateArgs<ExtArgs>>): Prisma__FolderPermissionClient<$Result.GetResult<Prisma.$FolderPermissionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many FolderPermissions.
+     * @param {FolderPermissionCreateManyArgs} args - Arguments to create many FolderPermissions.
+     * @example
+     * // Create many FolderPermissions
+     * const folderPermission = await prisma.folderPermission.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends FolderPermissionCreateManyArgs>(args?: SelectSubset<T, FolderPermissionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many FolderPermissions and returns the data saved in the database.
+     * @param {FolderPermissionCreateManyAndReturnArgs} args - Arguments to create many FolderPermissions.
+     * @example
+     * // Create many FolderPermissions
+     * const folderPermission = await prisma.folderPermission.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many FolderPermissions and only return the `id`
+     * const folderPermissionWithIdOnly = await prisma.folderPermission.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends FolderPermissionCreateManyAndReturnArgs>(args?: SelectSubset<T, FolderPermissionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FolderPermissionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a FolderPermission.
+     * @param {FolderPermissionDeleteArgs} args - Arguments to delete one FolderPermission.
+     * @example
+     * // Delete one FolderPermission
+     * const FolderPermission = await prisma.folderPermission.delete({
+     *   where: {
+     *     // ... filter to delete one FolderPermission
+     *   }
+     * })
+     * 
+     */
+    delete<T extends FolderPermissionDeleteArgs>(args: SelectSubset<T, FolderPermissionDeleteArgs<ExtArgs>>): Prisma__FolderPermissionClient<$Result.GetResult<Prisma.$FolderPermissionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one FolderPermission.
+     * @param {FolderPermissionUpdateArgs} args - Arguments to update one FolderPermission.
+     * @example
+     * // Update one FolderPermission
+     * const folderPermission = await prisma.folderPermission.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends FolderPermissionUpdateArgs>(args: SelectSubset<T, FolderPermissionUpdateArgs<ExtArgs>>): Prisma__FolderPermissionClient<$Result.GetResult<Prisma.$FolderPermissionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more FolderPermissions.
+     * @param {FolderPermissionDeleteManyArgs} args - Arguments to filter FolderPermissions to delete.
+     * @example
+     * // Delete a few FolderPermissions
+     * const { count } = await prisma.folderPermission.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends FolderPermissionDeleteManyArgs>(args?: SelectSubset<T, FolderPermissionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FolderPermissions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FolderPermissionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FolderPermissions
+     * const folderPermission = await prisma.folderPermission.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends FolderPermissionUpdateManyArgs>(args: SelectSubset<T, FolderPermissionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FolderPermissions and returns the data updated in the database.
+     * @param {FolderPermissionUpdateManyAndReturnArgs} args - Arguments to update many FolderPermissions.
+     * @example
+     * // Update many FolderPermissions
+     * const folderPermission = await prisma.folderPermission.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more FolderPermissions and only return the `id`
+     * const folderPermissionWithIdOnly = await prisma.folderPermission.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends FolderPermissionUpdateManyAndReturnArgs>(args: SelectSubset<T, FolderPermissionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FolderPermissionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one FolderPermission.
+     * @param {FolderPermissionUpsertArgs} args - Arguments to update or create a FolderPermission.
+     * @example
+     * // Update or create a FolderPermission
+     * const folderPermission = await prisma.folderPermission.upsert({
+     *   create: {
+     *     // ... data to create a FolderPermission
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FolderPermission we want to update
+     *   }
+     * })
+     */
+    upsert<T extends FolderPermissionUpsertArgs>(args: SelectSubset<T, FolderPermissionUpsertArgs<ExtArgs>>): Prisma__FolderPermissionClient<$Result.GetResult<Prisma.$FolderPermissionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of FolderPermissions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FolderPermissionCountArgs} args - Arguments to filter FolderPermissions to count.
+     * @example
+     * // Count the number of FolderPermissions
+     * const count = await prisma.folderPermission.count({
+     *   where: {
+     *     // ... the filter for the FolderPermissions we want to count
+     *   }
+     * })
+    **/
+    count<T extends FolderPermissionCountArgs>(
+      args?: Subset<T, FolderPermissionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FolderPermissionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FolderPermission.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FolderPermissionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FolderPermissionAggregateArgs>(args: Subset<T, FolderPermissionAggregateArgs>): Prisma.PrismaPromise<GetFolderPermissionAggregateType<T>>
+
+    /**
+     * Group by FolderPermission.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FolderPermissionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FolderPermissionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FolderPermissionGroupByArgs['orderBy'] }
+        : { orderBy?: FolderPermissionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FolderPermissionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFolderPermissionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the FolderPermission model
+   */
+  readonly fields: FolderPermissionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FolderPermission.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__FolderPermissionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    folder<T extends FolderDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FolderDefaultArgs<ExtArgs>>): Prisma__FolderClient<$Result.GetResult<Prisma.$FolderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the FolderPermission model
+   */
+  interface FolderPermissionFieldRefs {
+    readonly id: FieldRef<"FolderPermission", 'String'>
+    readonly folderId: FieldRef<"FolderPermission", 'String'>
+    readonly userId: FieldRef<"FolderPermission", 'String'>
+    readonly canView: FieldRef<"FolderPermission", 'Boolean'>
+    readonly canCreate: FieldRef<"FolderPermission", 'Boolean'>
+    readonly canUpdate: FieldRef<"FolderPermission", 'Boolean'>
+    readonly canDelete: FieldRef<"FolderPermission", 'Boolean'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * FolderPermission findUnique
+   */
+  export type FolderPermissionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FolderPermission
+     */
+    select?: FolderPermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FolderPermission
+     */
+    omit?: FolderPermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FolderPermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which FolderPermission to fetch.
+     */
+    where: FolderPermissionWhereUniqueInput
+  }
+
+  /**
+   * FolderPermission findUniqueOrThrow
+   */
+  export type FolderPermissionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FolderPermission
+     */
+    select?: FolderPermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FolderPermission
+     */
+    omit?: FolderPermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FolderPermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which FolderPermission to fetch.
+     */
+    where: FolderPermissionWhereUniqueInput
+  }
+
+  /**
+   * FolderPermission findFirst
+   */
+  export type FolderPermissionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FolderPermission
+     */
+    select?: FolderPermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FolderPermission
+     */
+    omit?: FolderPermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FolderPermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which FolderPermission to fetch.
+     */
+    where?: FolderPermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FolderPermissions to fetch.
+     */
+    orderBy?: FolderPermissionOrderByWithRelationInput | FolderPermissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FolderPermissions.
+     */
+    cursor?: FolderPermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FolderPermissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FolderPermissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FolderPermissions.
+     */
+    distinct?: FolderPermissionScalarFieldEnum | FolderPermissionScalarFieldEnum[]
+  }
+
+  /**
+   * FolderPermission findFirstOrThrow
+   */
+  export type FolderPermissionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FolderPermission
+     */
+    select?: FolderPermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FolderPermission
+     */
+    omit?: FolderPermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FolderPermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which FolderPermission to fetch.
+     */
+    where?: FolderPermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FolderPermissions to fetch.
+     */
+    orderBy?: FolderPermissionOrderByWithRelationInput | FolderPermissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FolderPermissions.
+     */
+    cursor?: FolderPermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FolderPermissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FolderPermissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FolderPermissions.
+     */
+    distinct?: FolderPermissionScalarFieldEnum | FolderPermissionScalarFieldEnum[]
+  }
+
+  /**
+   * FolderPermission findMany
+   */
+  export type FolderPermissionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FolderPermission
+     */
+    select?: FolderPermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FolderPermission
+     */
+    omit?: FolderPermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FolderPermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which FolderPermissions to fetch.
+     */
+    where?: FolderPermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FolderPermissions to fetch.
+     */
+    orderBy?: FolderPermissionOrderByWithRelationInput | FolderPermissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FolderPermissions.
+     */
+    cursor?: FolderPermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FolderPermissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FolderPermissions.
+     */
+    skip?: number
+    distinct?: FolderPermissionScalarFieldEnum | FolderPermissionScalarFieldEnum[]
+  }
+
+  /**
+   * FolderPermission create
+   */
+  export type FolderPermissionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FolderPermission
+     */
+    select?: FolderPermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FolderPermission
+     */
+    omit?: FolderPermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FolderPermissionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a FolderPermission.
+     */
+    data: XOR<FolderPermissionCreateInput, FolderPermissionUncheckedCreateInput>
+  }
+
+  /**
+   * FolderPermission createMany
+   */
+  export type FolderPermissionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many FolderPermissions.
+     */
+    data: FolderPermissionCreateManyInput | FolderPermissionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * FolderPermission createManyAndReturn
+   */
+  export type FolderPermissionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FolderPermission
+     */
+    select?: FolderPermissionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the FolderPermission
+     */
+    omit?: FolderPermissionOmit<ExtArgs> | null
+    /**
+     * The data used to create many FolderPermissions.
+     */
+    data: FolderPermissionCreateManyInput | FolderPermissionCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FolderPermissionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * FolderPermission update
+   */
+  export type FolderPermissionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FolderPermission
+     */
+    select?: FolderPermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FolderPermission
+     */
+    omit?: FolderPermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FolderPermissionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a FolderPermission.
+     */
+    data: XOR<FolderPermissionUpdateInput, FolderPermissionUncheckedUpdateInput>
+    /**
+     * Choose, which FolderPermission to update.
+     */
+    where: FolderPermissionWhereUniqueInput
+  }
+
+  /**
+   * FolderPermission updateMany
+   */
+  export type FolderPermissionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update FolderPermissions.
+     */
+    data: XOR<FolderPermissionUpdateManyMutationInput, FolderPermissionUncheckedUpdateManyInput>
+    /**
+     * Filter which FolderPermissions to update
+     */
+    where?: FolderPermissionWhereInput
+    /**
+     * Limit how many FolderPermissions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * FolderPermission updateManyAndReturn
+   */
+  export type FolderPermissionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FolderPermission
+     */
+    select?: FolderPermissionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the FolderPermission
+     */
+    omit?: FolderPermissionOmit<ExtArgs> | null
+    /**
+     * The data used to update FolderPermissions.
+     */
+    data: XOR<FolderPermissionUpdateManyMutationInput, FolderPermissionUncheckedUpdateManyInput>
+    /**
+     * Filter which FolderPermissions to update
+     */
+    where?: FolderPermissionWhereInput
+    /**
+     * Limit how many FolderPermissions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FolderPermissionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * FolderPermission upsert
+   */
+  export type FolderPermissionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FolderPermission
+     */
+    select?: FolderPermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FolderPermission
+     */
+    omit?: FolderPermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FolderPermissionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the FolderPermission to update in case it exists.
+     */
+    where: FolderPermissionWhereUniqueInput
+    /**
+     * In case the FolderPermission found by the `where` argument doesn't exist, create a new FolderPermission with this data.
+     */
+    create: XOR<FolderPermissionCreateInput, FolderPermissionUncheckedCreateInput>
+    /**
+     * In case the FolderPermission was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FolderPermissionUpdateInput, FolderPermissionUncheckedUpdateInput>
+  }
+
+  /**
+   * FolderPermission delete
+   */
+  export type FolderPermissionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FolderPermission
+     */
+    select?: FolderPermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FolderPermission
+     */
+    omit?: FolderPermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FolderPermissionInclude<ExtArgs> | null
+    /**
+     * Filter which FolderPermission to delete.
+     */
+    where: FolderPermissionWhereUniqueInput
+  }
+
+  /**
+   * FolderPermission deleteMany
+   */
+  export type FolderPermissionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FolderPermissions to delete
+     */
+    where?: FolderPermissionWhereInput
+    /**
+     * Limit how many FolderPermissions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * FolderPermission without action
+   */
+  export type FolderPermissionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FolderPermission
+     */
+    select?: FolderPermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FolderPermission
+     */
+    omit?: FolderPermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FolderPermissionInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -4642,7 +5912,8 @@ export namespace Prisma {
     parentId: 'parentId',
     userId: 'userId',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    private: 'private'
   };
 
   export type FolderScalarFieldEnum = (typeof FolderScalarFieldEnum)[keyof typeof FolderScalarFieldEnum]
@@ -4661,6 +5932,19 @@ export namespace Prisma {
   };
 
   export type FileScalarFieldEnum = (typeof FileScalarFieldEnum)[keyof typeof FileScalarFieldEnum]
+
+
+  export const FolderPermissionScalarFieldEnum: {
+    id: 'id',
+    folderId: 'folderId',
+    userId: 'userId',
+    canView: 'canView',
+    canCreate: 'canCreate',
+    canUpdate: 'canUpdate',
+    canDelete: 'canDelete'
+  };
+
+  export type FolderPermissionScalarFieldEnum = (typeof FolderPermissionScalarFieldEnum)[keyof typeof FolderPermissionScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -4717,6 +6001,13 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime[]'
    */
   export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -4780,6 +6071,7 @@ export namespace Prisma {
     resetTokenExp?: DateTimeNullableFilter<"User"> | Date | string | null
     folders?: FolderListRelationFilter
     files?: FileListRelationFilter
+    permissions?: FolderPermissionListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -4794,6 +6086,7 @@ export namespace Prisma {
     resetTokenExp?: SortOrderInput | SortOrder
     folders?: FolderOrderByRelationAggregateInput
     files?: FileOrderByRelationAggregateInput
+    permissions?: FolderPermissionOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -4811,6 +6104,7 @@ export namespace Prisma {
     resetTokenExp?: DateTimeNullableFilter<"User"> | Date | string | null
     folders?: FolderListRelationFilter
     files?: FileListRelationFilter
+    permissions?: FolderPermissionListRelationFilter
   }, "id" | "userName" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -4853,10 +6147,12 @@ export namespace Prisma {
     userId?: StringFilter<"Folder"> | string
     createdAt?: DateTimeFilter<"Folder"> | Date | string
     updatedAt?: DateTimeFilter<"Folder"> | Date | string
+    private?: BoolFilter<"Folder"> | boolean
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     parent?: XOR<FolderNullableScalarRelationFilter, FolderWhereInput> | null
     children?: FolderListRelationFilter
     files?: FileListRelationFilter
+    permissions?: FolderPermissionListRelationFilter
   }
 
   export type FolderOrderByWithRelationInput = {
@@ -4866,10 +6162,12 @@ export namespace Prisma {
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    private?: SortOrder
     user?: UserOrderByWithRelationInput
     parent?: FolderOrderByWithRelationInput
     children?: FolderOrderByRelationAggregateInput
     files?: FileOrderByRelationAggregateInput
+    permissions?: FolderPermissionOrderByRelationAggregateInput
   }
 
   export type FolderWhereUniqueInput = Prisma.AtLeast<{
@@ -4882,10 +6180,12 @@ export namespace Prisma {
     userId?: StringFilter<"Folder"> | string
     createdAt?: DateTimeFilter<"Folder"> | Date | string
     updatedAt?: DateTimeFilter<"Folder"> | Date | string
+    private?: BoolFilter<"Folder"> | boolean
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     parent?: XOR<FolderNullableScalarRelationFilter, FolderWhereInput> | null
     children?: FolderListRelationFilter
     files?: FileListRelationFilter
+    permissions?: FolderPermissionListRelationFilter
   }, "id">
 
   export type FolderOrderByWithAggregationInput = {
@@ -4895,6 +6195,7 @@ export namespace Prisma {
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    private?: SortOrder
     _count?: FolderCountOrderByAggregateInput
     _max?: FolderMaxOrderByAggregateInput
     _min?: FolderMinOrderByAggregateInput
@@ -4910,6 +6211,7 @@ export namespace Prisma {
     userId?: StringWithAggregatesFilter<"Folder"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Folder"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Folder"> | Date | string
+    private?: BoolWithAggregatesFilter<"Folder"> | boolean
   }
 
   export type FileWhereInput = {
@@ -4992,6 +6294,75 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"File"> | Date | string
   }
 
+  export type FolderPermissionWhereInput = {
+    AND?: FolderPermissionWhereInput | FolderPermissionWhereInput[]
+    OR?: FolderPermissionWhereInput[]
+    NOT?: FolderPermissionWhereInput | FolderPermissionWhereInput[]
+    id?: StringFilter<"FolderPermission"> | string
+    folderId?: StringFilter<"FolderPermission"> | string
+    userId?: StringFilter<"FolderPermission"> | string
+    canView?: BoolFilter<"FolderPermission"> | boolean
+    canCreate?: BoolFilter<"FolderPermission"> | boolean
+    canUpdate?: BoolFilter<"FolderPermission"> | boolean
+    canDelete?: BoolFilter<"FolderPermission"> | boolean
+    folder?: XOR<FolderScalarRelationFilter, FolderWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type FolderPermissionOrderByWithRelationInput = {
+    id?: SortOrder
+    folderId?: SortOrder
+    userId?: SortOrder
+    canView?: SortOrder
+    canCreate?: SortOrder
+    canUpdate?: SortOrder
+    canDelete?: SortOrder
+    folder?: FolderOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type FolderPermissionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    folderId_userId?: FolderPermissionFolderIdUserIdCompoundUniqueInput
+    AND?: FolderPermissionWhereInput | FolderPermissionWhereInput[]
+    OR?: FolderPermissionWhereInput[]
+    NOT?: FolderPermissionWhereInput | FolderPermissionWhereInput[]
+    folderId?: StringFilter<"FolderPermission"> | string
+    userId?: StringFilter<"FolderPermission"> | string
+    canView?: BoolFilter<"FolderPermission"> | boolean
+    canCreate?: BoolFilter<"FolderPermission"> | boolean
+    canUpdate?: BoolFilter<"FolderPermission"> | boolean
+    canDelete?: BoolFilter<"FolderPermission"> | boolean
+    folder?: XOR<FolderScalarRelationFilter, FolderWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "folderId_userId">
+
+  export type FolderPermissionOrderByWithAggregationInput = {
+    id?: SortOrder
+    folderId?: SortOrder
+    userId?: SortOrder
+    canView?: SortOrder
+    canCreate?: SortOrder
+    canUpdate?: SortOrder
+    canDelete?: SortOrder
+    _count?: FolderPermissionCountOrderByAggregateInput
+    _max?: FolderPermissionMaxOrderByAggregateInput
+    _min?: FolderPermissionMinOrderByAggregateInput
+  }
+
+  export type FolderPermissionScalarWhereWithAggregatesInput = {
+    AND?: FolderPermissionScalarWhereWithAggregatesInput | FolderPermissionScalarWhereWithAggregatesInput[]
+    OR?: FolderPermissionScalarWhereWithAggregatesInput[]
+    NOT?: FolderPermissionScalarWhereWithAggregatesInput | FolderPermissionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"FolderPermission"> | string
+    folderId?: StringWithAggregatesFilter<"FolderPermission"> | string
+    userId?: StringWithAggregatesFilter<"FolderPermission"> | string
+    canView?: BoolWithAggregatesFilter<"FolderPermission"> | boolean
+    canCreate?: BoolWithAggregatesFilter<"FolderPermission"> | boolean
+    canUpdate?: BoolWithAggregatesFilter<"FolderPermission"> | boolean
+    canDelete?: BoolWithAggregatesFilter<"FolderPermission"> | boolean
+  }
+
   export type UserCreateInput = {
     id?: string
     userName?: string | null
@@ -5004,6 +6375,7 @@ export namespace Prisma {
     resetTokenExp?: Date | string | null
     folders?: FolderCreateNestedManyWithoutUserInput
     files?: FileCreateNestedManyWithoutUserInput
+    permissions?: FolderPermissionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -5018,6 +6390,7 @@ export namespace Prisma {
     resetTokenExp?: Date | string | null
     folders?: FolderUncheckedCreateNestedManyWithoutUserInput
     files?: FileUncheckedCreateNestedManyWithoutUserInput
+    permissions?: FolderPermissionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -5032,6 +6405,7 @@ export namespace Prisma {
     resetTokenExp?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     folders?: FolderUpdateManyWithoutUserNestedInput
     files?: FileUpdateManyWithoutUserNestedInput
+    permissions?: FolderPermissionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -5046,6 +6420,7 @@ export namespace Prisma {
     resetTokenExp?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     folders?: FolderUncheckedUpdateManyWithoutUserNestedInput
     files?: FileUncheckedUpdateManyWithoutUserNestedInput
+    permissions?: FolderPermissionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -5089,10 +6464,12 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    private?: boolean
     user: UserCreateNestedOneWithoutFoldersInput
     parent?: FolderCreateNestedOneWithoutChildrenInput
     children?: FolderCreateNestedManyWithoutParentInput
     files?: FileCreateNestedManyWithoutFolderInput
+    permissions?: FolderPermissionCreateNestedManyWithoutFolderInput
   }
 
   export type FolderUncheckedCreateInput = {
@@ -5102,8 +6479,10 @@ export namespace Prisma {
     userId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    private?: boolean
     children?: FolderUncheckedCreateNestedManyWithoutParentInput
     files?: FileUncheckedCreateNestedManyWithoutFolderInput
+    permissions?: FolderPermissionUncheckedCreateNestedManyWithoutFolderInput
   }
 
   export type FolderUpdateInput = {
@@ -5111,10 +6490,12 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    private?: BoolFieldUpdateOperationsInput | boolean
     user?: UserUpdateOneRequiredWithoutFoldersNestedInput
     parent?: FolderUpdateOneWithoutChildrenNestedInput
     children?: FolderUpdateManyWithoutParentNestedInput
     files?: FileUpdateManyWithoutFolderNestedInput
+    permissions?: FolderPermissionUpdateManyWithoutFolderNestedInput
   }
 
   export type FolderUncheckedUpdateInput = {
@@ -5124,8 +6505,10 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    private?: BoolFieldUpdateOperationsInput | boolean
     children?: FolderUncheckedUpdateManyWithoutParentNestedInput
     files?: FileUncheckedUpdateManyWithoutFolderNestedInput
+    permissions?: FolderPermissionUncheckedUpdateManyWithoutFolderNestedInput
   }
 
   export type FolderCreateManyInput = {
@@ -5135,6 +6518,7 @@ export namespace Prisma {
     userId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    private?: boolean
   }
 
   export type FolderUpdateManyMutationInput = {
@@ -5142,6 +6526,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    private?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type FolderUncheckedUpdateManyInput = {
@@ -5151,6 +6536,7 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    private?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type FileCreateInput = {
@@ -5235,6 +6621,74 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type FolderPermissionCreateInput = {
+    id?: string
+    canView?: boolean
+    canCreate?: boolean
+    canUpdate?: boolean
+    canDelete?: boolean
+    folder: FolderCreateNestedOneWithoutPermissionsInput
+    user: UserCreateNestedOneWithoutPermissionsInput
+  }
+
+  export type FolderPermissionUncheckedCreateInput = {
+    id?: string
+    folderId: string
+    userId: string
+    canView?: boolean
+    canCreate?: boolean
+    canUpdate?: boolean
+    canDelete?: boolean
+  }
+
+  export type FolderPermissionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    canView?: BoolFieldUpdateOperationsInput | boolean
+    canCreate?: BoolFieldUpdateOperationsInput | boolean
+    canUpdate?: BoolFieldUpdateOperationsInput | boolean
+    canDelete?: BoolFieldUpdateOperationsInput | boolean
+    folder?: FolderUpdateOneRequiredWithoutPermissionsNestedInput
+    user?: UserUpdateOneRequiredWithoutPermissionsNestedInput
+  }
+
+  export type FolderPermissionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folderId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    canView?: BoolFieldUpdateOperationsInput | boolean
+    canCreate?: BoolFieldUpdateOperationsInput | boolean
+    canUpdate?: BoolFieldUpdateOperationsInput | boolean
+    canDelete?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type FolderPermissionCreateManyInput = {
+    id?: string
+    folderId: string
+    userId: string
+    canView?: boolean
+    canCreate?: boolean
+    canUpdate?: boolean
+    canDelete?: boolean
+  }
+
+  export type FolderPermissionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    canView?: BoolFieldUpdateOperationsInput | boolean
+    canCreate?: BoolFieldUpdateOperationsInput | boolean
+    canUpdate?: BoolFieldUpdateOperationsInput | boolean
+    canDelete?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type FolderPermissionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folderId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    canView?: BoolFieldUpdateOperationsInput | boolean
+    canCreate?: BoolFieldUpdateOperationsInput | boolean
+    canUpdate?: BoolFieldUpdateOperationsInput | boolean
+    canDelete?: BoolFieldUpdateOperationsInput | boolean
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -5299,6 +6753,12 @@ export namespace Prisma {
     none?: FileWhereInput
   }
 
+  export type FolderPermissionListRelationFilter = {
+    every?: FolderPermissionWhereInput
+    some?: FolderPermissionWhereInput
+    none?: FolderPermissionWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -5309,6 +6769,10 @@ export namespace Prisma {
   }
 
   export type FileOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FolderPermissionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -5412,6 +6876,11 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
@@ -5429,6 +6898,7 @@ export namespace Prisma {
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    private?: SortOrder
   }
 
   export type FolderMaxOrderByAggregateInput = {
@@ -5438,6 +6908,7 @@ export namespace Prisma {
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    private?: SortOrder
   }
 
   export type FolderMinOrderByAggregateInput = {
@@ -5447,6 +6918,15 @@ export namespace Prisma {
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    private?: SortOrder
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type BytesNullableFilter<$PrismaModel = never> = {
@@ -5537,6 +7017,46 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
+  export type FolderScalarRelationFilter = {
+    is?: FolderWhereInput
+    isNot?: FolderWhereInput
+  }
+
+  export type FolderPermissionFolderIdUserIdCompoundUniqueInput = {
+    folderId: string
+    userId: string
+  }
+
+  export type FolderPermissionCountOrderByAggregateInput = {
+    id?: SortOrder
+    folderId?: SortOrder
+    userId?: SortOrder
+    canView?: SortOrder
+    canCreate?: SortOrder
+    canUpdate?: SortOrder
+    canDelete?: SortOrder
+  }
+
+  export type FolderPermissionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    folderId?: SortOrder
+    userId?: SortOrder
+    canView?: SortOrder
+    canCreate?: SortOrder
+    canUpdate?: SortOrder
+    canDelete?: SortOrder
+  }
+
+  export type FolderPermissionMinOrderByAggregateInput = {
+    id?: SortOrder
+    folderId?: SortOrder
+    userId?: SortOrder
+    canView?: SortOrder
+    canCreate?: SortOrder
+    canUpdate?: SortOrder
+    canDelete?: SortOrder
+  }
+
   export type FolderCreateNestedManyWithoutUserInput = {
     create?: XOR<FolderCreateWithoutUserInput, FolderUncheckedCreateWithoutUserInput> | FolderCreateWithoutUserInput[] | FolderUncheckedCreateWithoutUserInput[]
     connectOrCreate?: FolderCreateOrConnectWithoutUserInput | FolderCreateOrConnectWithoutUserInput[]
@@ -5551,6 +7071,13 @@ export namespace Prisma {
     connect?: FileWhereUniqueInput | FileWhereUniqueInput[]
   }
 
+  export type FolderPermissionCreateNestedManyWithoutUserInput = {
+    create?: XOR<FolderPermissionCreateWithoutUserInput, FolderPermissionUncheckedCreateWithoutUserInput> | FolderPermissionCreateWithoutUserInput[] | FolderPermissionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FolderPermissionCreateOrConnectWithoutUserInput | FolderPermissionCreateOrConnectWithoutUserInput[]
+    createMany?: FolderPermissionCreateManyUserInputEnvelope
+    connect?: FolderPermissionWhereUniqueInput | FolderPermissionWhereUniqueInput[]
+  }
+
   export type FolderUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<FolderCreateWithoutUserInput, FolderUncheckedCreateWithoutUserInput> | FolderCreateWithoutUserInput[] | FolderUncheckedCreateWithoutUserInput[]
     connectOrCreate?: FolderCreateOrConnectWithoutUserInput | FolderCreateOrConnectWithoutUserInput[]
@@ -5563,6 +7090,13 @@ export namespace Prisma {
     connectOrCreate?: FileCreateOrConnectWithoutUserInput | FileCreateOrConnectWithoutUserInput[]
     createMany?: FileCreateManyUserInputEnvelope
     connect?: FileWhereUniqueInput | FileWhereUniqueInput[]
+  }
+
+  export type FolderPermissionUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<FolderPermissionCreateWithoutUserInput, FolderPermissionUncheckedCreateWithoutUserInput> | FolderPermissionCreateWithoutUserInput[] | FolderPermissionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FolderPermissionCreateOrConnectWithoutUserInput | FolderPermissionCreateOrConnectWithoutUserInput[]
+    createMany?: FolderPermissionCreateManyUserInputEnvelope
+    connect?: FolderPermissionWhereUniqueInput | FolderPermissionWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -5609,6 +7143,20 @@ export namespace Prisma {
     deleteMany?: FileScalarWhereInput | FileScalarWhereInput[]
   }
 
+  export type FolderPermissionUpdateManyWithoutUserNestedInput = {
+    create?: XOR<FolderPermissionCreateWithoutUserInput, FolderPermissionUncheckedCreateWithoutUserInput> | FolderPermissionCreateWithoutUserInput[] | FolderPermissionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FolderPermissionCreateOrConnectWithoutUserInput | FolderPermissionCreateOrConnectWithoutUserInput[]
+    upsert?: FolderPermissionUpsertWithWhereUniqueWithoutUserInput | FolderPermissionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: FolderPermissionCreateManyUserInputEnvelope
+    set?: FolderPermissionWhereUniqueInput | FolderPermissionWhereUniqueInput[]
+    disconnect?: FolderPermissionWhereUniqueInput | FolderPermissionWhereUniqueInput[]
+    delete?: FolderPermissionWhereUniqueInput | FolderPermissionWhereUniqueInput[]
+    connect?: FolderPermissionWhereUniqueInput | FolderPermissionWhereUniqueInput[]
+    update?: FolderPermissionUpdateWithWhereUniqueWithoutUserInput | FolderPermissionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: FolderPermissionUpdateManyWithWhereWithoutUserInput | FolderPermissionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: FolderPermissionScalarWhereInput | FolderPermissionScalarWhereInput[]
+  }
+
   export type FolderUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<FolderCreateWithoutUserInput, FolderUncheckedCreateWithoutUserInput> | FolderCreateWithoutUserInput[] | FolderUncheckedCreateWithoutUserInput[]
     connectOrCreate?: FolderCreateOrConnectWithoutUserInput | FolderCreateOrConnectWithoutUserInput[]
@@ -5637,6 +7185,20 @@ export namespace Prisma {
     deleteMany?: FileScalarWhereInput | FileScalarWhereInput[]
   }
 
+  export type FolderPermissionUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<FolderPermissionCreateWithoutUserInput, FolderPermissionUncheckedCreateWithoutUserInput> | FolderPermissionCreateWithoutUserInput[] | FolderPermissionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FolderPermissionCreateOrConnectWithoutUserInput | FolderPermissionCreateOrConnectWithoutUserInput[]
+    upsert?: FolderPermissionUpsertWithWhereUniqueWithoutUserInput | FolderPermissionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: FolderPermissionCreateManyUserInputEnvelope
+    set?: FolderPermissionWhereUniqueInput | FolderPermissionWhereUniqueInput[]
+    disconnect?: FolderPermissionWhereUniqueInput | FolderPermissionWhereUniqueInput[]
+    delete?: FolderPermissionWhereUniqueInput | FolderPermissionWhereUniqueInput[]
+    connect?: FolderPermissionWhereUniqueInput | FolderPermissionWhereUniqueInput[]
+    update?: FolderPermissionUpdateWithWhereUniqueWithoutUserInput | FolderPermissionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: FolderPermissionUpdateManyWithWhereWithoutUserInput | FolderPermissionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: FolderPermissionScalarWhereInput | FolderPermissionScalarWhereInput[]
+  }
+
   export type UserCreateNestedOneWithoutFoldersInput = {
     create?: XOR<UserCreateWithoutFoldersInput, UserUncheckedCreateWithoutFoldersInput>
     connectOrCreate?: UserCreateOrConnectWithoutFoldersInput
@@ -5663,6 +7225,13 @@ export namespace Prisma {
     connect?: FileWhereUniqueInput | FileWhereUniqueInput[]
   }
 
+  export type FolderPermissionCreateNestedManyWithoutFolderInput = {
+    create?: XOR<FolderPermissionCreateWithoutFolderInput, FolderPermissionUncheckedCreateWithoutFolderInput> | FolderPermissionCreateWithoutFolderInput[] | FolderPermissionUncheckedCreateWithoutFolderInput[]
+    connectOrCreate?: FolderPermissionCreateOrConnectWithoutFolderInput | FolderPermissionCreateOrConnectWithoutFolderInput[]
+    createMany?: FolderPermissionCreateManyFolderInputEnvelope
+    connect?: FolderPermissionWhereUniqueInput | FolderPermissionWhereUniqueInput[]
+  }
+
   export type FolderUncheckedCreateNestedManyWithoutParentInput = {
     create?: XOR<FolderCreateWithoutParentInput, FolderUncheckedCreateWithoutParentInput> | FolderCreateWithoutParentInput[] | FolderUncheckedCreateWithoutParentInput[]
     connectOrCreate?: FolderCreateOrConnectWithoutParentInput | FolderCreateOrConnectWithoutParentInput[]
@@ -5675,6 +7244,17 @@ export namespace Prisma {
     connectOrCreate?: FileCreateOrConnectWithoutFolderInput | FileCreateOrConnectWithoutFolderInput[]
     createMany?: FileCreateManyFolderInputEnvelope
     connect?: FileWhereUniqueInput | FileWhereUniqueInput[]
+  }
+
+  export type FolderPermissionUncheckedCreateNestedManyWithoutFolderInput = {
+    create?: XOR<FolderPermissionCreateWithoutFolderInput, FolderPermissionUncheckedCreateWithoutFolderInput> | FolderPermissionCreateWithoutFolderInput[] | FolderPermissionUncheckedCreateWithoutFolderInput[]
+    connectOrCreate?: FolderPermissionCreateOrConnectWithoutFolderInput | FolderPermissionCreateOrConnectWithoutFolderInput[]
+    createMany?: FolderPermissionCreateManyFolderInputEnvelope
+    connect?: FolderPermissionWhereUniqueInput | FolderPermissionWhereUniqueInput[]
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
   }
 
   export type UserUpdateOneRequiredWithoutFoldersNestedInput = {
@@ -5723,6 +7303,20 @@ export namespace Prisma {
     deleteMany?: FileScalarWhereInput | FileScalarWhereInput[]
   }
 
+  export type FolderPermissionUpdateManyWithoutFolderNestedInput = {
+    create?: XOR<FolderPermissionCreateWithoutFolderInput, FolderPermissionUncheckedCreateWithoutFolderInput> | FolderPermissionCreateWithoutFolderInput[] | FolderPermissionUncheckedCreateWithoutFolderInput[]
+    connectOrCreate?: FolderPermissionCreateOrConnectWithoutFolderInput | FolderPermissionCreateOrConnectWithoutFolderInput[]
+    upsert?: FolderPermissionUpsertWithWhereUniqueWithoutFolderInput | FolderPermissionUpsertWithWhereUniqueWithoutFolderInput[]
+    createMany?: FolderPermissionCreateManyFolderInputEnvelope
+    set?: FolderPermissionWhereUniqueInput | FolderPermissionWhereUniqueInput[]
+    disconnect?: FolderPermissionWhereUniqueInput | FolderPermissionWhereUniqueInput[]
+    delete?: FolderPermissionWhereUniqueInput | FolderPermissionWhereUniqueInput[]
+    connect?: FolderPermissionWhereUniqueInput | FolderPermissionWhereUniqueInput[]
+    update?: FolderPermissionUpdateWithWhereUniqueWithoutFolderInput | FolderPermissionUpdateWithWhereUniqueWithoutFolderInput[]
+    updateMany?: FolderPermissionUpdateManyWithWhereWithoutFolderInput | FolderPermissionUpdateManyWithWhereWithoutFolderInput[]
+    deleteMany?: FolderPermissionScalarWhereInput | FolderPermissionScalarWhereInput[]
+  }
+
   export type FolderUncheckedUpdateManyWithoutParentNestedInput = {
     create?: XOR<FolderCreateWithoutParentInput, FolderUncheckedCreateWithoutParentInput> | FolderCreateWithoutParentInput[] | FolderUncheckedCreateWithoutParentInput[]
     connectOrCreate?: FolderCreateOrConnectWithoutParentInput | FolderCreateOrConnectWithoutParentInput[]
@@ -5749,6 +7343,20 @@ export namespace Prisma {
     update?: FileUpdateWithWhereUniqueWithoutFolderInput | FileUpdateWithWhereUniqueWithoutFolderInput[]
     updateMany?: FileUpdateManyWithWhereWithoutFolderInput | FileUpdateManyWithWhereWithoutFolderInput[]
     deleteMany?: FileScalarWhereInput | FileScalarWhereInput[]
+  }
+
+  export type FolderPermissionUncheckedUpdateManyWithoutFolderNestedInput = {
+    create?: XOR<FolderPermissionCreateWithoutFolderInput, FolderPermissionUncheckedCreateWithoutFolderInput> | FolderPermissionCreateWithoutFolderInput[] | FolderPermissionUncheckedCreateWithoutFolderInput[]
+    connectOrCreate?: FolderPermissionCreateOrConnectWithoutFolderInput | FolderPermissionCreateOrConnectWithoutFolderInput[]
+    upsert?: FolderPermissionUpsertWithWhereUniqueWithoutFolderInput | FolderPermissionUpsertWithWhereUniqueWithoutFolderInput[]
+    createMany?: FolderPermissionCreateManyFolderInputEnvelope
+    set?: FolderPermissionWhereUniqueInput | FolderPermissionWhereUniqueInput[]
+    disconnect?: FolderPermissionWhereUniqueInput | FolderPermissionWhereUniqueInput[]
+    delete?: FolderPermissionWhereUniqueInput | FolderPermissionWhereUniqueInput[]
+    connect?: FolderPermissionWhereUniqueInput | FolderPermissionWhereUniqueInput[]
+    update?: FolderPermissionUpdateWithWhereUniqueWithoutFolderInput | FolderPermissionUpdateWithWhereUniqueWithoutFolderInput[]
+    updateMany?: FolderPermissionUpdateManyWithWhereWithoutFolderInput | FolderPermissionUpdateManyWithWhereWithoutFolderInput[]
+    deleteMany?: FolderPermissionScalarWhereInput | FolderPermissionScalarWhereInput[]
   }
 
   export type FolderCreateNestedOneWithoutFilesInput = {
@@ -5791,6 +7399,34 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutFilesInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutFilesInput, UserUpdateWithoutFilesInput>, UserUncheckedUpdateWithoutFilesInput>
+  }
+
+  export type FolderCreateNestedOneWithoutPermissionsInput = {
+    create?: XOR<FolderCreateWithoutPermissionsInput, FolderUncheckedCreateWithoutPermissionsInput>
+    connectOrCreate?: FolderCreateOrConnectWithoutPermissionsInput
+    connect?: FolderWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutPermissionsInput = {
+    create?: XOR<UserCreateWithoutPermissionsInput, UserUncheckedCreateWithoutPermissionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPermissionsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type FolderUpdateOneRequiredWithoutPermissionsNestedInput = {
+    create?: XOR<FolderCreateWithoutPermissionsInput, FolderUncheckedCreateWithoutPermissionsInput>
+    connectOrCreate?: FolderCreateOrConnectWithoutPermissionsInput
+    upsert?: FolderUpsertWithoutPermissionsInput
+    connect?: FolderWhereUniqueInput
+    update?: XOR<XOR<FolderUpdateToOneWithWhereWithoutPermissionsInput, FolderUpdateWithoutPermissionsInput>, FolderUncheckedUpdateWithoutPermissionsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutPermissionsNestedInput = {
+    create?: XOR<UserCreateWithoutPermissionsInput, UserUncheckedCreateWithoutPermissionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPermissionsInput
+    upsert?: UserUpsertWithoutPermissionsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPermissionsInput, UserUpdateWithoutPermissionsInput>, UserUncheckedUpdateWithoutPermissionsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -5927,6 +7563,19 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type NestedBytesNullableFilter<$PrismaModel = never> = {
     equals?: Uint8Array | BytesFieldRefInput<$PrismaModel> | null
     in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
@@ -5976,9 +7625,11 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    private?: boolean
     parent?: FolderCreateNestedOneWithoutChildrenInput
     children?: FolderCreateNestedManyWithoutParentInput
     files?: FileCreateNestedManyWithoutFolderInput
+    permissions?: FolderPermissionCreateNestedManyWithoutFolderInput
   }
 
   export type FolderUncheckedCreateWithoutUserInput = {
@@ -5987,8 +7638,10 @@ export namespace Prisma {
     parentId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    private?: boolean
     children?: FolderUncheckedCreateNestedManyWithoutParentInput
     files?: FileUncheckedCreateNestedManyWithoutFolderInput
+    permissions?: FolderPermissionUncheckedCreateNestedManyWithoutFolderInput
   }
 
   export type FolderCreateOrConnectWithoutUserInput = {
@@ -6033,6 +7686,34 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type FolderPermissionCreateWithoutUserInput = {
+    id?: string
+    canView?: boolean
+    canCreate?: boolean
+    canUpdate?: boolean
+    canDelete?: boolean
+    folder: FolderCreateNestedOneWithoutPermissionsInput
+  }
+
+  export type FolderPermissionUncheckedCreateWithoutUserInput = {
+    id?: string
+    folderId: string
+    canView?: boolean
+    canCreate?: boolean
+    canUpdate?: boolean
+    canDelete?: boolean
+  }
+
+  export type FolderPermissionCreateOrConnectWithoutUserInput = {
+    where: FolderPermissionWhereUniqueInput
+    create: XOR<FolderPermissionCreateWithoutUserInput, FolderPermissionUncheckedCreateWithoutUserInput>
+  }
+
+  export type FolderPermissionCreateManyUserInputEnvelope = {
+    data: FolderPermissionCreateManyUserInput | FolderPermissionCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type FolderUpsertWithWhereUniqueWithoutUserInput = {
     where: FolderWhereUniqueInput
     update: XOR<FolderUpdateWithoutUserInput, FolderUncheckedUpdateWithoutUserInput>
@@ -6059,6 +7740,7 @@ export namespace Prisma {
     userId?: StringFilter<"Folder"> | string
     createdAt?: DateTimeFilter<"Folder"> | Date | string
     updatedAt?: DateTimeFilter<"Folder"> | Date | string
+    private?: BoolFilter<"Folder"> | boolean
   }
 
   export type FileUpsertWithWhereUniqueWithoutUserInput = {
@@ -6092,6 +7774,35 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"File"> | Date | string
   }
 
+  export type FolderPermissionUpsertWithWhereUniqueWithoutUserInput = {
+    where: FolderPermissionWhereUniqueInput
+    update: XOR<FolderPermissionUpdateWithoutUserInput, FolderPermissionUncheckedUpdateWithoutUserInput>
+    create: XOR<FolderPermissionCreateWithoutUserInput, FolderPermissionUncheckedCreateWithoutUserInput>
+  }
+
+  export type FolderPermissionUpdateWithWhereUniqueWithoutUserInput = {
+    where: FolderPermissionWhereUniqueInput
+    data: XOR<FolderPermissionUpdateWithoutUserInput, FolderPermissionUncheckedUpdateWithoutUserInput>
+  }
+
+  export type FolderPermissionUpdateManyWithWhereWithoutUserInput = {
+    where: FolderPermissionScalarWhereInput
+    data: XOR<FolderPermissionUpdateManyMutationInput, FolderPermissionUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type FolderPermissionScalarWhereInput = {
+    AND?: FolderPermissionScalarWhereInput | FolderPermissionScalarWhereInput[]
+    OR?: FolderPermissionScalarWhereInput[]
+    NOT?: FolderPermissionScalarWhereInput | FolderPermissionScalarWhereInput[]
+    id?: StringFilter<"FolderPermission"> | string
+    folderId?: StringFilter<"FolderPermission"> | string
+    userId?: StringFilter<"FolderPermission"> | string
+    canView?: BoolFilter<"FolderPermission"> | boolean
+    canCreate?: BoolFilter<"FolderPermission"> | boolean
+    canUpdate?: BoolFilter<"FolderPermission"> | boolean
+    canDelete?: BoolFilter<"FolderPermission"> | boolean
+  }
+
   export type UserCreateWithoutFoldersInput = {
     id?: string
     userName?: string | null
@@ -6103,6 +7814,7 @@ export namespace Prisma {
     resetToken?: string | null
     resetTokenExp?: Date | string | null
     files?: FileCreateNestedManyWithoutUserInput
+    permissions?: FolderPermissionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutFoldersInput = {
@@ -6116,6 +7828,7 @@ export namespace Prisma {
     resetToken?: string | null
     resetTokenExp?: Date | string | null
     files?: FileUncheckedCreateNestedManyWithoutUserInput
+    permissions?: FolderPermissionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutFoldersInput = {
@@ -6128,9 +7841,11 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    private?: boolean
     user: UserCreateNestedOneWithoutFoldersInput
     parent?: FolderCreateNestedOneWithoutChildrenInput
     files?: FileCreateNestedManyWithoutFolderInput
+    permissions?: FolderPermissionCreateNestedManyWithoutFolderInput
   }
 
   export type FolderUncheckedCreateWithoutChildrenInput = {
@@ -6140,7 +7855,9 @@ export namespace Prisma {
     userId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    private?: boolean
     files?: FileUncheckedCreateNestedManyWithoutFolderInput
+    permissions?: FolderPermissionUncheckedCreateNestedManyWithoutFolderInput
   }
 
   export type FolderCreateOrConnectWithoutChildrenInput = {
@@ -6153,9 +7870,11 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    private?: boolean
     user: UserCreateNestedOneWithoutFoldersInput
     children?: FolderCreateNestedManyWithoutParentInput
     files?: FileCreateNestedManyWithoutFolderInput
+    permissions?: FolderPermissionCreateNestedManyWithoutFolderInput
   }
 
   export type FolderUncheckedCreateWithoutParentInput = {
@@ -6164,8 +7883,10 @@ export namespace Prisma {
     userId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    private?: boolean
     children?: FolderUncheckedCreateNestedManyWithoutParentInput
     files?: FileUncheckedCreateNestedManyWithoutFolderInput
+    permissions?: FolderPermissionUncheckedCreateNestedManyWithoutFolderInput
   }
 
   export type FolderCreateOrConnectWithoutParentInput = {
@@ -6210,6 +7931,34 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type FolderPermissionCreateWithoutFolderInput = {
+    id?: string
+    canView?: boolean
+    canCreate?: boolean
+    canUpdate?: boolean
+    canDelete?: boolean
+    user: UserCreateNestedOneWithoutPermissionsInput
+  }
+
+  export type FolderPermissionUncheckedCreateWithoutFolderInput = {
+    id?: string
+    userId: string
+    canView?: boolean
+    canCreate?: boolean
+    canUpdate?: boolean
+    canDelete?: boolean
+  }
+
+  export type FolderPermissionCreateOrConnectWithoutFolderInput = {
+    where: FolderPermissionWhereUniqueInput
+    create: XOR<FolderPermissionCreateWithoutFolderInput, FolderPermissionUncheckedCreateWithoutFolderInput>
+  }
+
+  export type FolderPermissionCreateManyFolderInputEnvelope = {
+    data: FolderPermissionCreateManyFolderInput | FolderPermissionCreateManyFolderInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserUpsertWithoutFoldersInput = {
     update: XOR<UserUpdateWithoutFoldersInput, UserUncheckedUpdateWithoutFoldersInput>
     create: XOR<UserCreateWithoutFoldersInput, UserUncheckedCreateWithoutFoldersInput>
@@ -6232,6 +7981,7 @@ export namespace Prisma {
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetTokenExp?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     files?: FileUpdateManyWithoutUserNestedInput
+    permissions?: FolderPermissionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFoldersInput = {
@@ -6245,6 +7995,7 @@ export namespace Prisma {
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetTokenExp?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     files?: FileUncheckedUpdateManyWithoutUserNestedInput
+    permissions?: FolderPermissionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type FolderUpsertWithoutChildrenInput = {
@@ -6263,9 +8014,11 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    private?: BoolFieldUpdateOperationsInput | boolean
     user?: UserUpdateOneRequiredWithoutFoldersNestedInput
     parent?: FolderUpdateOneWithoutChildrenNestedInput
     files?: FileUpdateManyWithoutFolderNestedInput
+    permissions?: FolderPermissionUpdateManyWithoutFolderNestedInput
   }
 
   export type FolderUncheckedUpdateWithoutChildrenInput = {
@@ -6275,7 +8028,9 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    private?: BoolFieldUpdateOperationsInput | boolean
     files?: FileUncheckedUpdateManyWithoutFolderNestedInput
+    permissions?: FolderPermissionUncheckedUpdateManyWithoutFolderNestedInput
   }
 
   export type FolderUpsertWithWhereUniqueWithoutParentInput = {
@@ -6310,14 +8065,32 @@ export namespace Prisma {
     data: XOR<FileUpdateManyMutationInput, FileUncheckedUpdateManyWithoutFolderInput>
   }
 
+  export type FolderPermissionUpsertWithWhereUniqueWithoutFolderInput = {
+    where: FolderPermissionWhereUniqueInput
+    update: XOR<FolderPermissionUpdateWithoutFolderInput, FolderPermissionUncheckedUpdateWithoutFolderInput>
+    create: XOR<FolderPermissionCreateWithoutFolderInput, FolderPermissionUncheckedCreateWithoutFolderInput>
+  }
+
+  export type FolderPermissionUpdateWithWhereUniqueWithoutFolderInput = {
+    where: FolderPermissionWhereUniqueInput
+    data: XOR<FolderPermissionUpdateWithoutFolderInput, FolderPermissionUncheckedUpdateWithoutFolderInput>
+  }
+
+  export type FolderPermissionUpdateManyWithWhereWithoutFolderInput = {
+    where: FolderPermissionScalarWhereInput
+    data: XOR<FolderPermissionUpdateManyMutationInput, FolderPermissionUncheckedUpdateManyWithoutFolderInput>
+  }
+
   export type FolderCreateWithoutFilesInput = {
     id?: string
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    private?: boolean
     user: UserCreateNestedOneWithoutFoldersInput
     parent?: FolderCreateNestedOneWithoutChildrenInput
     children?: FolderCreateNestedManyWithoutParentInput
+    permissions?: FolderPermissionCreateNestedManyWithoutFolderInput
   }
 
   export type FolderUncheckedCreateWithoutFilesInput = {
@@ -6327,7 +8100,9 @@ export namespace Prisma {
     userId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    private?: boolean
     children?: FolderUncheckedCreateNestedManyWithoutParentInput
+    permissions?: FolderPermissionUncheckedCreateNestedManyWithoutFolderInput
   }
 
   export type FolderCreateOrConnectWithoutFilesInput = {
@@ -6346,6 +8121,7 @@ export namespace Prisma {
     resetToken?: string | null
     resetTokenExp?: Date | string | null
     folders?: FolderCreateNestedManyWithoutUserInput
+    permissions?: FolderPermissionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutFilesInput = {
@@ -6359,6 +8135,7 @@ export namespace Prisma {
     resetToken?: string | null
     resetTokenExp?: Date | string | null
     folders?: FolderUncheckedCreateNestedManyWithoutUserInput
+    permissions?: FolderPermissionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutFilesInput = {
@@ -6382,9 +8159,11 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    private?: BoolFieldUpdateOperationsInput | boolean
     user?: UserUpdateOneRequiredWithoutFoldersNestedInput
     parent?: FolderUpdateOneWithoutChildrenNestedInput
     children?: FolderUpdateManyWithoutParentNestedInput
+    permissions?: FolderPermissionUpdateManyWithoutFolderNestedInput
   }
 
   export type FolderUncheckedUpdateWithoutFilesInput = {
@@ -6394,7 +8173,9 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    private?: BoolFieldUpdateOperationsInput | boolean
     children?: FolderUncheckedUpdateManyWithoutParentNestedInput
+    permissions?: FolderPermissionUncheckedUpdateManyWithoutFolderNestedInput
   }
 
   export type UserUpsertWithoutFilesInput = {
@@ -6419,6 +8200,7 @@ export namespace Prisma {
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetTokenExp?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     folders?: FolderUpdateManyWithoutUserNestedInput
+    permissions?: FolderPermissionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFilesInput = {
@@ -6432,6 +8214,143 @@ export namespace Prisma {
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetTokenExp?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     folders?: FolderUncheckedUpdateManyWithoutUserNestedInput
+    permissions?: FolderPermissionUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type FolderCreateWithoutPermissionsInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    private?: boolean
+    user: UserCreateNestedOneWithoutFoldersInput
+    parent?: FolderCreateNestedOneWithoutChildrenInput
+    children?: FolderCreateNestedManyWithoutParentInput
+    files?: FileCreateNestedManyWithoutFolderInput
+  }
+
+  export type FolderUncheckedCreateWithoutPermissionsInput = {
+    id?: string
+    name: string
+    parentId?: string | null
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    private?: boolean
+    children?: FolderUncheckedCreateNestedManyWithoutParentInput
+    files?: FileUncheckedCreateNestedManyWithoutFolderInput
+  }
+
+  export type FolderCreateOrConnectWithoutPermissionsInput = {
+    where: FolderWhereUniqueInput
+    create: XOR<FolderCreateWithoutPermissionsInput, FolderUncheckedCreateWithoutPermissionsInput>
+  }
+
+  export type UserCreateWithoutPermissionsInput = {
+    id?: string
+    userName?: string | null
+    img?: string | null
+    email: string
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    resetToken?: string | null
+    resetTokenExp?: Date | string | null
+    folders?: FolderCreateNestedManyWithoutUserInput
+    files?: FileCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutPermissionsInput = {
+    id?: string
+    userName?: string | null
+    img?: string | null
+    email: string
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    resetToken?: string | null
+    resetTokenExp?: Date | string | null
+    folders?: FolderUncheckedCreateNestedManyWithoutUserInput
+    files?: FileUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutPermissionsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutPermissionsInput, UserUncheckedCreateWithoutPermissionsInput>
+  }
+
+  export type FolderUpsertWithoutPermissionsInput = {
+    update: XOR<FolderUpdateWithoutPermissionsInput, FolderUncheckedUpdateWithoutPermissionsInput>
+    create: XOR<FolderCreateWithoutPermissionsInput, FolderUncheckedCreateWithoutPermissionsInput>
+    where?: FolderWhereInput
+  }
+
+  export type FolderUpdateToOneWithWhereWithoutPermissionsInput = {
+    where?: FolderWhereInput
+    data: XOR<FolderUpdateWithoutPermissionsInput, FolderUncheckedUpdateWithoutPermissionsInput>
+  }
+
+  export type FolderUpdateWithoutPermissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    private?: BoolFieldUpdateOperationsInput | boolean
+    user?: UserUpdateOneRequiredWithoutFoldersNestedInput
+    parent?: FolderUpdateOneWithoutChildrenNestedInput
+    children?: FolderUpdateManyWithoutParentNestedInput
+    files?: FileUpdateManyWithoutFolderNestedInput
+  }
+
+  export type FolderUncheckedUpdateWithoutPermissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    private?: BoolFieldUpdateOperationsInput | boolean
+    children?: FolderUncheckedUpdateManyWithoutParentNestedInput
+    files?: FileUncheckedUpdateManyWithoutFolderNestedInput
+  }
+
+  export type UserUpsertWithoutPermissionsInput = {
+    update: XOR<UserUpdateWithoutPermissionsInput, UserUncheckedUpdateWithoutPermissionsInput>
+    create: XOR<UserCreateWithoutPermissionsInput, UserUncheckedCreateWithoutPermissionsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutPermissionsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutPermissionsInput, UserUncheckedUpdateWithoutPermissionsInput>
+  }
+
+  export type UserUpdateWithoutPermissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userName?: NullableStringFieldUpdateOperationsInput | string | null
+    img?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExp?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    folders?: FolderUpdateManyWithoutUserNestedInput
+    files?: FileUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutPermissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userName?: NullableStringFieldUpdateOperationsInput | string | null
+    img?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExp?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    folders?: FolderUncheckedUpdateManyWithoutUserNestedInput
+    files?: FileUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type FolderCreateManyUserInput = {
@@ -6440,6 +8359,7 @@ export namespace Prisma {
     parentId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    private?: boolean
   }
 
   export type FileCreateManyUserInput = {
@@ -6453,14 +8373,25 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type FolderPermissionCreateManyUserInput = {
+    id?: string
+    folderId: string
+    canView?: boolean
+    canCreate?: boolean
+    canUpdate?: boolean
+    canDelete?: boolean
+  }
+
   export type FolderUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    private?: BoolFieldUpdateOperationsInput | boolean
     parent?: FolderUpdateOneWithoutChildrenNestedInput
     children?: FolderUpdateManyWithoutParentNestedInput
     files?: FileUpdateManyWithoutFolderNestedInput
+    permissions?: FolderPermissionUpdateManyWithoutFolderNestedInput
   }
 
   export type FolderUncheckedUpdateWithoutUserInput = {
@@ -6469,8 +8400,10 @@ export namespace Prisma {
     parentId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    private?: BoolFieldUpdateOperationsInput | boolean
     children?: FolderUncheckedUpdateManyWithoutParentNestedInput
     files?: FileUncheckedUpdateManyWithoutFolderNestedInput
+    permissions?: FolderPermissionUncheckedUpdateManyWithoutFolderNestedInput
   }
 
   export type FolderUncheckedUpdateManyWithoutUserInput = {
@@ -6479,6 +8412,7 @@ export namespace Prisma {
     parentId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    private?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type FileUpdateWithoutUserInput = {
@@ -6514,12 +8448,40 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type FolderPermissionUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    canView?: BoolFieldUpdateOperationsInput | boolean
+    canCreate?: BoolFieldUpdateOperationsInput | boolean
+    canUpdate?: BoolFieldUpdateOperationsInput | boolean
+    canDelete?: BoolFieldUpdateOperationsInput | boolean
+    folder?: FolderUpdateOneRequiredWithoutPermissionsNestedInput
+  }
+
+  export type FolderPermissionUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folderId?: StringFieldUpdateOperationsInput | string
+    canView?: BoolFieldUpdateOperationsInput | boolean
+    canCreate?: BoolFieldUpdateOperationsInput | boolean
+    canUpdate?: BoolFieldUpdateOperationsInput | boolean
+    canDelete?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type FolderPermissionUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folderId?: StringFieldUpdateOperationsInput | string
+    canView?: BoolFieldUpdateOperationsInput | boolean
+    canCreate?: BoolFieldUpdateOperationsInput | boolean
+    canUpdate?: BoolFieldUpdateOperationsInput | boolean
+    canDelete?: BoolFieldUpdateOperationsInput | boolean
+  }
+
   export type FolderCreateManyParentInput = {
     id?: string
     name: string
     userId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    private?: boolean
   }
 
   export type FileCreateManyFolderInput = {
@@ -6533,14 +8495,25 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type FolderPermissionCreateManyFolderInput = {
+    id?: string
+    userId: string
+    canView?: boolean
+    canCreate?: boolean
+    canUpdate?: boolean
+    canDelete?: boolean
+  }
+
   export type FolderUpdateWithoutParentInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    private?: BoolFieldUpdateOperationsInput | boolean
     user?: UserUpdateOneRequiredWithoutFoldersNestedInput
     children?: FolderUpdateManyWithoutParentNestedInput
     files?: FileUpdateManyWithoutFolderNestedInput
+    permissions?: FolderPermissionUpdateManyWithoutFolderNestedInput
   }
 
   export type FolderUncheckedUpdateWithoutParentInput = {
@@ -6549,8 +8522,10 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    private?: BoolFieldUpdateOperationsInput | boolean
     children?: FolderUncheckedUpdateManyWithoutParentNestedInput
     files?: FileUncheckedUpdateManyWithoutFolderNestedInput
+    permissions?: FolderPermissionUncheckedUpdateManyWithoutFolderNestedInput
   }
 
   export type FolderUncheckedUpdateManyWithoutParentInput = {
@@ -6559,6 +8534,7 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    private?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type FileUpdateWithoutFolderInput = {
@@ -6592,6 +8568,33 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FolderPermissionUpdateWithoutFolderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    canView?: BoolFieldUpdateOperationsInput | boolean
+    canCreate?: BoolFieldUpdateOperationsInput | boolean
+    canUpdate?: BoolFieldUpdateOperationsInput | boolean
+    canDelete?: BoolFieldUpdateOperationsInput | boolean
+    user?: UserUpdateOneRequiredWithoutPermissionsNestedInput
+  }
+
+  export type FolderPermissionUncheckedUpdateWithoutFolderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    canView?: BoolFieldUpdateOperationsInput | boolean
+    canCreate?: BoolFieldUpdateOperationsInput | boolean
+    canUpdate?: BoolFieldUpdateOperationsInput | boolean
+    canDelete?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type FolderPermissionUncheckedUpdateManyWithoutFolderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    canView?: BoolFieldUpdateOperationsInput | boolean
+    canCreate?: BoolFieldUpdateOperationsInput | boolean
+    canUpdate?: BoolFieldUpdateOperationsInput | boolean
+    canDelete?: BoolFieldUpdateOperationsInput | boolean
   }
 
 

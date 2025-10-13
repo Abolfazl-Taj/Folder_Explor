@@ -9,33 +9,39 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  userName      String?   @unique
-  img           String?
-  email         String    @unique
-  password      String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  folders       Folder[]
-  files         File[]
-  resetToken    String? // temporary token
-  resetTokenExp DateTime? // expiry time
+  id        String   @id @default(cuid())
+  userName  String?  @unique
+  img       String?
+  email     String   @unique
+  password  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  folders Folder[] @relation("FolderOwner")
+  files   File[]
+
+  permissions FolderPermission[]
+
+  resetToken    String?
+  resetTokenExp DateTime?
 }
 
 model Folder {
   id        String   @id @default(cuid())
   name      String
-  parentId  String? // nullable for root folders
+  parentId  String?
   userId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  user User @relation(fields: [userId], references: [id])
-
+  user     User     @relation("FolderOwner", fields: [userId], references: [id])
   parent   Folder?  @relation("FolderChildren", fields: [parentId], references: [id])
   children Folder[] @relation("FolderChildren")
 
-  files File[]
+  private Boolean @default(false)
+
+  files       File[]
+  permissions FolderPermission[]
 }
 
 model File {
@@ -51,4 +57,19 @@ model File {
 
   folder Folder? @relation(fields: [folderId], references: [id])
   user   User    @relation(fields: [userId], references: [id])
+}
+
+model FolderPermission {
+  id        String  @id @default(cuid())
+  folderId  String
+  userId    String
+  canView   Boolean @default(true)
+  canCreate Boolean @default(false)
+  canUpdate Boolean @default(false)
+  canDelete Boolean @default(false)
+
+  folder Folder @relation(fields: [folderId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([folderId, userId]) // each user can have one permission set per folder
 }

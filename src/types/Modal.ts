@@ -4,6 +4,7 @@ export type Modal = {
     type: "add" | "delete" | "update";
     data?: FolderType | any;
     folderId?: string | null
-    form?: "folder" | "file"
-    id? :string
+    form?: "folder" | "file" | "permission"
+    id?: string
+    accessedBy? : []
 }

@@ -8,7 +8,6 @@ const JWT_SECRET = process.env.JWT_SECRET || "my_super_secret_key";
 export const GET = async (req: NextRequest) => {
   try {
     const token = req.cookies.get("token")?.value;
-    console.log("token is here", token);
 
     if (!token) {
       return nextRedirect("/login", req);

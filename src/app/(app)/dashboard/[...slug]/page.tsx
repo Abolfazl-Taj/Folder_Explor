@@ -9,6 +9,7 @@ import Files from "@/app/components/Files"
 import SortData from "@/app/components/SortData"
 import sortData from "@/app/lib/sortData"
 import Image from "next/image"
+import PrivateFolderBtn from "@/app/components/PrivateFolderBtn";
 
 const FolderPage = ({ params }: { params: { slug?: string[] } }) => {
     const unwarpedSlug: string[] = use(params).slug
@@ -21,19 +22,20 @@ const FolderPage = ({ params }: { params: { slug?: string[] } }) => {
         queryFn: () => getRequest({ url: `/api/folder/${folderId}` })
     })
     useEffect(() => {
-        
+
         if (!isPending) {
             setFodlerPath([
                 'Main Folder',
-                rawData.folder.parent?.name,
-                rawData.folder.name,
+                rawData?.folder.parent?.name,
+                rawData?.folder.name,
             ].filter(Boolean).join('/'))
             const sortedFolder = rawData.folder.children && sortData(rawData.folder.children, sortMethod.type, sortMethod.field)
             const sortedFile = rawData.folder.files && sortData(rawData.folder.files, sortMethod.type, sortMethod.field)
             setData({ files: sortedFile, folders: sortedFolder })
         }
-    }, [rawData , sortMethod])
-
+    }, [rawData, sortMethod])
+ console.log(rawData);
+ 
     return (
         <div className="flex-1 p-4 space-y-3 flex flex-col relative">
             {isPending ? (
@@ -41,7 +43,10 @@ const FolderPage = ({ params }: { params: { slug?: string[] } }) => {
             ) : data?.folders?.length !== 0 && data?.files?.length !== 0 ? (
                 <>
                     <SortData sortMethod={sortMethod} setSortMethod={setSortMethod} />
-                    <span className="shadow w-fit p-2 bg-[#333] rounded-md self-center border border-zinc-900/25 font-semibold">Path: {folderPath}</span>
+                    <div className="flex items-center justify-center relative">
+                        <span className="shadow w-fit p-2 bg-[#333] rounded-md self-center border border-zinc-900/25 font-semibold">Path: {folderPath}</span>
+                        <PrivateFolderBtn id={rawData?.folder?.id} private={rawData?.folder?.private} />
+                    </div>
 
                     <div className="max-h-full overflow-y-auto flex flex-col gap-4">
                         <Folders data={data?.folders} />
@@ -67,8 +72,9 @@ const FolderPage = ({ params }: { params: { slug?: string[] } }) => {
             )}
 
             <div className=" w-full max-w-2xl bottom-4 flex justify-between px-20 left-0  mx-auto">
-                <ModalForm type="add" form="file" folderId={null} />
-                <ModalForm type="add" />
+                <ModalForm type="add" form="file" folderId={rawData?.folder?.id} />
+                <ModalForm type="add" form="permission" folderId={rawData?.folder?.id} />
+                <ModalForm type="add" folderId={rawData?.folder?.id} accessedBy={rawData?.folder?.accessedBy} />
             </div>
         </div >
     )
