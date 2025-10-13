@@ -76,7 +76,7 @@ const FilePage = () => {
 
         ) : (
           <>
-            {data.file.folder ? data.file.folder.name : "Main folder"}/{filename ? filename : data.file.name}
+            {data?.file?.folder ? data?.file?.folder?.name : "Main folder"}/{filename ? filename : data.file.name}
             <button onClick={() => setIsediting(true)}>
               <MdModeEdit className='text-2xl cursor-pointer' />
             </button>

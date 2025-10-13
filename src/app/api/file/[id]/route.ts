@@ -10,11 +10,9 @@ export const GET = async (
 ) => {
   try {
     const { id } = await params;
-    const userId = getUserId(req);
-    if (!userId) return NextResponse.redirect("/login");
 
     const file = await prisma.file.findUnique({
-      where: { id, userId },
+      where: { id},
       include: { folder: true, user: { select: { email: true } } },
     });
 

@@ -27,9 +27,9 @@ export async function GET(
       return nextResponse({ message: "Folder dosent exist!" }, { status: 404 });
     if (!userId)
       return nextResponse({ message: "User id not found" }, { status: 404 });
-    const userPemissionExiste = folder.permissions.find((u) => u.id === userId);
+    const userPemissionExiste = folder.permissions.find((u) => u.userId === userId);    
     if (folder.private) {
-      if (userId === folder.userId || userPemissionExiste?.canUpdate) {
+      if (userId === folder.userId || userPemissionExiste?.canView) {
         return nextResponse(
           { message: "Folder feched successfully !", folder },
           { status: 200 }
