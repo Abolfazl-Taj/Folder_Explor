@@ -1,7 +1,9 @@
 import nextResponse from "@/app/lib/nextResponse";
 import prisma from "@/app/lib/prisma";
+import { NextRequest } from "next/server";
 
 export async function DELETEHandler(id: string) {
+
   if (!id) {
     return nextResponse({ message: "Folder ID is required" }, { status: 400 });
   }

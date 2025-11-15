@@ -19,13 +19,24 @@ export async function POSTHandler(req: NextRequest) {
     return nextResponse({ message: "User id required!" }, { status: 400 });
   }
   try {
-    const folder = await prisma.folder.create({
-      data: { name, userId, parentId },
+    const parentFolder = await prisma.folder.findUnique({
+      where: { id: parentId },
+      select: { permissions: true, userId: true },
     });
-    return nextResponse(
-      { message: "Folder created successfully ", folder },
-      { status: 200 }
+    const authorizedUser = parentFolder?.permissions.find(
+      (u) => u.userId === userId
     );
+    if (parentFolder?.userId === userId || authorizedUser?.canCreate) {
+      const folder = await prisma.folder.create({
+        data: { name, userId, parentId },
+      });
+      return nextResponse(
+        { message: "Folder created successfully ", folder },
+        { status: 200 }
+      );
+    } else {
+      return nextResponse({ message: "Unauthorzied" }, { status: 401 });
+    }
   } catch (error) {
     return nextResponse({ message: "Internal server error" }, { status: 500 });
   }

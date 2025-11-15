@@ -44,10 +44,10 @@ export const POSTHandler = async (req: NextRequest) => {
       const body = await req.json();
       name = body.name;
       folderId = body.folderId || null;
-      content = Buffer.from(body.content, "utf-8");
       if (!name || typeof content !== "string") {
         return nextResponse({ message: "Invalid input" }, { status: 400 });
       }
+      content = Buffer.from(body.content, "utf-8");
 
       size = content.length;
 
@@ -61,21 +61,52 @@ export const POSTHandler = async (req: NextRequest) => {
     }
 
     // ✅ Save to database
-    const file = await prisma.file.create({
-      data: {
-        name,
-        userId,
-        folderId,
-        content: content || null, // stored as string
-        mimeType: mimeType || null,
-        size, // stored as bytes
-      },
-    });
-
-    return nextResponse(
-      { message: "File saved successfully!", file },
-      { status: 201 }
-    );
+    if (folderId !== null) {
+      const parentFolder = await prisma.folder.findUnique({
+        where: { id: folderId },
+        include: {
+          permissions: {
+            select: { userId: true, canCreate: true },
+          },
+          user: { select: { id: true } },
+        },
+      });
+      if (!parentFolder)
+        return nextResponse({ message: "Folder not found" }, { status: 404 });
+      const isAuthorizedUser =
+        parentFolder.userId === userId ||
+        parentFolder.permissions.find((u) => u.userId === userId)?.canCreate;
+      if (isAuthorizedUser) {
+        const file = await prisma.file.create({
+          data: {
+            name,
+            userId,
+            folderId,
+            content: content || null, // stored as string
+            mimeType: mimeType || null,
+            size, // stored as bytes
+          },
+        });
+        return nextResponse(
+          { message: "File saved successfully!", file },
+          { status: 201 }
+        );
+      } else {
+        return nextResponse({ message: "Unauthorized" }, { status: 401 });
+      }
+    } else if (folderId === null) {
+      const file = await prisma.file.create({
+        data: {
+          name,
+          userId,
+          folderId,
+          content: content || null, // stored as string
+          mimeType: mimeType || null,
+          size, // stored as bytes
+        },
+      });
+      return nextResponse({message:"File created sucessfully!" , data:file} , {status:200})
+    }
   } catch (err) {
     console.error("File save error:", err);
     return nextResponse(
