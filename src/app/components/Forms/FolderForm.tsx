@@ -1,3 +1,4 @@
+"use client"
 import { deleteRequest, patchRequest, postRequest } from '@/app/lib/fetchRequest';
 import CreateFolderScheme from '@/app/lib/schemas/FolderCreate';
 import { Modal } from '@/types/Modal';
@@ -67,7 +68,6 @@ const FolderForm = ({ type, data, folderId }: Modal) => {
             })
         }
     }
-
     const FolderButtonUi: { [key: string]: { style: string, icon: ReactNode, title: string } } = {
         "add": {
             style: "flex bg-[#111]/2 backdrop-blur-2xl border border-white/20 w-fit px-4 py-1 rounded-md shadow-2xl gap-2 items-center  hover:bg-[#111]/40 transition-all",
@@ -100,7 +100,7 @@ const FolderForm = ({ type, data, folderId }: Modal) => {
                         className="flex flex-col gap-4"
                         initialState={{ name: "" }} schema={CreateFolderScheme} onSubmit={createFolder}>
                         <Input labelClass="text-xl" name="name" labelName="Folder name" placeHolder="Test123" icon={<FaFolderClosed />} type="text" />
-                        <button className="bg-[#444]/40 transition-all w-fit px-4 py-1 self-center rounded-md hover:bg-[#444]" >Create folder</button>
+                        <button type='submit' className="bg-[#444]/40 transition-all w-fit px-4 py-1 self-center rounded-md hover:bg-[#444]" >Create folder</button>
                     </FormikForm>
                 </>
             )
@@ -108,16 +108,16 @@ const FolderForm = ({ type, data, folderId }: Modal) => {
         "delete": {
             ui: (<>                    <h1 className="font-bold text-2xl text-center">Are you sure ?</h1>
                 <p className="text-center text-gray-300 text-sm ">Deleting folder meaning to delete the folder with all the items inside</p>
-                <h3 className="text-center">Your trying to delete <span className="font-bold border-b text-red-900">{data.name}</span> Folder</h3>
+                <h3 className="text-center">Your trying to delete <span className="font-bold border-b text-red-900">{data?.name}</span> Folder</h3>
                 <div className="w-full items-center justify-around flex mt-2">
                     <button className="px-12 py-1 rounded-md shadow border border-white/20 bg-green-700 hover:bg-green-900 transition-all" onClick={deleteFolder} >Yes</button><button onClick={() => setIsopen(false)} className=" transition-all px-12 py-1 rounded-md shadow border border-white/20 bg-red-900 hover:bg-red-950">No</button>
                 </div></>)
         },
         "update": {
             ui: (<>                    <h1 className="font-bold text-2xl text-center">Editing folder</h1>
-                <h3 className="text-center text-gray-300">Your trying to edit <span className="font-bold border-b text-red-900">{data.name}</span> Folder</h3>
+                <h3 className="text-center text-gray-300">Your trying to edit <span className="font-bold border-b text-red-900">{data?.name}</span> Folder</h3>
                 <div className="px-4">
-                    <input ref={nameInput} type="text" placeholder={`current one : ${data.name}`} className="w-full py-2 outline-none ring focus-within:ring-blue-500 rounded-md px-4" />
+                    <input ref={nameInput} type="text" placeholder={`current one : ${data?.name}`} className="w-full py-2 outline-none ring focus-within:ring-blue-500 rounded-md px-4" />
                 </div>
                 <div className="w-full items-center justify-around flex mt-2">
                     <button className="px-12 py-1 rounded-md shadow border border-white/20 bg-green-700 hover:bg-green-900 transition-all" onClick={PatchFolder} >Save</button><button onClick={() => setIsopen(false)} className=" transition-all px-12 py-1 rounded-md shadow border border-white/20 bg-red-900 hover:bg-red-950">Cancel</button>

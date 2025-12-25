@@ -6,5 +6,5 @@ export type Modal = {
     folderId?: string | null
     form?: "folder" | "file" | "permission"
     id?: string
-    accessedBy? : []
+    permissions?: any
 }

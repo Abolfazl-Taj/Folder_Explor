@@ -26,7 +26,7 @@ const RadioBtn = ({ labelName, setValue, value, name }: RadioBtnProps) => {
                 id={id}
                 name={labelName}
                 checked={value}
-                onChange={valueHandler}
+                onClick={valueHandler}
                 className="hidden "
             />
             <label htmlFor={id} className="flex items-center gap-2 select-none cursor-pointer">

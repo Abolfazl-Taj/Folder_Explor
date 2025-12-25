@@ -131,7 +131,7 @@ const FileForm = ({ type, folderId = null, data }: Modal) => {
     "delete": {
       ui: <>          <h1 className="font-bold text-2xl text-center">Are you sure ?</h1>
         <p className="text-center text-gray-300 text-sm ">Deleting file meaning to delete every content inside of it.</p>
-        <h3 className="text-center">Your trying to delete <span className="font-bold border-b text-red-900">{data.name}</span> File</h3>
+        <h3 className="text-center">Your trying to delete <span className="font-bold border-b text-red-900">{data?.name}</span> File</h3>
         <div className="w-full items-center justify-around flex mt-2">
           <button className="px-12 py-1 rounded-md shadow border border-white/20 bg-green-700 hover:bg-green-900 transition-all" onClick={deleteFile} >Yes</button><button onClick={() => setIsopen(false)} className=" transition-all px-12 py-1 rounded-md shadow border border-white/20 bg-red-900 hover:bg-red-950">No</button>
         </div></>

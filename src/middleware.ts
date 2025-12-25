@@ -36,8 +36,9 @@ export async function middleware(req: NextRequest) {
   const isPublic = publicRoutes.some((path) => pathname.startsWith(path));
 
   if (isPublic) return NextResponse.next();
-
-  if (!token) {
+  console.log(pathname  , isPublic);
+  
+  if (!token && !isPublic) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 

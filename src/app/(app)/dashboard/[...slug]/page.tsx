@@ -4,7 +4,7 @@ import Folders from "@/app/components/Folders"
 import Loading from "@/app/components/Loading"
 import ModalForm from "@/app/components/ModalForm"
 import { useQuery } from "@tanstack/react-query"
-import React, { use, useEffect, useState } from "react"
+import  { use, useEffect, useState } from "react"
 import Files from "@/app/components/Files"
 import SortData from "@/app/components/SortData"
 import sortData from "@/app/lib/sortData"
@@ -40,7 +40,7 @@ const FolderPage = ({ params }: { params: { slug?: string[] } }) => {
         <div className="flex-1 p-4 space-y-3 flex flex-col relative">
             {isPending ? (
                 <Loading />
-            ) : data?.folders?.length !== 0 && data?.files?.length !== 0 ? (
+            ) : data?.folders?.length !== 0 || data?.files?.length !== 0 ? (
                 <>
                     <SortData sortMethod={sortMethod} setSortMethod={setSortMethod} />
                     <div className="flex items-center justify-center relative">
@@ -73,8 +73,8 @@ const FolderPage = ({ params }: { params: { slug?: string[] } }) => {
 
             <div className=" w-full max-w-2xl bottom-4 flex justify-between px-20 left-0  mx-auto">
                 <ModalForm type="add" form="file" folderId={rawData?.folder?.id} />
-                <ModalForm type="add" form="permission" folderId={rawData?.folder?.id} />
-                <ModalForm type="add" folderId={rawData?.folder?.id} accessedBy={rawData?.folder?.accessedBy} />
+                <ModalForm type="add" form="permission" folderId={rawData?.folder?.id}  permissions={rawData?.folder?.permissions}/>
+                <ModalForm type="add" folderId={rawData?.folder?.id}  />
             </div>
         </div >
     )

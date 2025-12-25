@@ -15,31 +15,35 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
-
+import {getCookie} from  'cookies-next/client';
 const LoginPage = () => {
   const router = useRouter();
   const [error, setError] = useState<any>(null);
 
   // ✅ Google Login → send access_token to backend
-  const loginWithGoogle = useGoogleLogin({
-    onSuccess: async (tokenResponse) => {
-      try {
-        const res = await postRequest({ url: "/api/googleAuth", body: { token: tokenResponse.access_token } })
-        const { user } = res
-        setToLocalStorage("user", user)
-        router.push("/dashboard")
-      } catch (error) {
-        setError("Google login failed please try again later!")
-      }
-    },
-    onError: () => {
-      setError("Google login failed please try again later")
-    }
-  });
+  // const loginWithGoogle = useGoogleLogin({
+  //   onSuccess: async (tokenResponse) => {
+  //     try {
+  //       const res = await postRequest({ url: "/api/googleAuth", body: { token: tokenResponse.access_token } })
+  //       const { user } = res
+  //       setToLocalStorage("user", user)
+  //       router.push("/dashboard")
+  //     } catch (error) {
+  //       setError("Google login failed please try again later!")
+  //     }
+  //   },
+  //   onError: () => {
+  //     setError("Google login failed please try again later")
+  //   }
+  // });
 
   // ✅ Redirect if already logged in
   useEffect(() => {
-    if (getFromLocalStorage("user")) router.push("/dashboard");
+
+
+    const SigendIn = getFromLocalStorage("user") || getCookie("token")
+
+    if (SigendIn) return router.push("/dashboard")
   }, []);
 
   // ✅ Normal email/password login

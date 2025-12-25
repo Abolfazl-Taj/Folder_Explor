@@ -19,14 +19,14 @@ export async function POSTHandler(req: NextRequest) {
     return nextResponse({ message: "User id required!" }, { status: 400 });
   }
   try {
-    const parentFolder = await prisma.folder.findUnique({
-      where: { id: parentId },
+    const parentFolder = await prisma.folder.findFirst({
+      where: { id: parentId},
       select: { permissions: true, userId: true },
     });
     const authorizedUser = parentFolder?.permissions.find(
       (u) => u.userId === userId
     );
-    if (parentFolder?.userId === userId || authorizedUser?.canCreate) {
+    if (parentFolder?.userId === userId || authorizedUser?.canCreate || parentId == null) {
       const folder = await prisma.folder.create({
         data: { name, userId, parentId },
       });
@@ -38,6 +38,7 @@ export async function POSTHandler(req: NextRequest) {
       return nextResponse({ message: "Unauthorzied" }, { status: 401 });
     }
   } catch (error) {
-    return nextResponse({ message: "Internal server error" }, { status: 500 });
+    console.log(error);
+    return nextResponse({ message: "Internal server error"  , error}, { status: 500 });
   }
 }

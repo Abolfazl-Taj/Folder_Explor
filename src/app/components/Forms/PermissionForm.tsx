@@ -1,12 +1,12 @@
 "use client"
 import { getRequest, postRequest } from '@/app/lib/fetchRequest'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { IoIosGitMerge } from 'react-icons/io'
 import { IoClose } from 'react-icons/io5'
 import RadioBtn from '../RadioBtn'
 
-const PermissionForm = ({ folderId }: { folderId: string }) => {
+const PermissionForm = ({ folderId, permissions: authorizedBy }: { folderId: string, permissions: any }) => {
     const [isOpen, setIsOpen] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [selectedUser, setSelectedUser] = useState<any>()
@@ -17,6 +17,7 @@ const PermissionForm = ({ folderId }: { folderId: string }) => {
         create: false,
         delete: false,
     })
+
     const FindUserHandler = (e: React.FocusEvent<HTMLInputElement>) => {
         const { value } = e.target
         setIsLoading(true)
@@ -25,9 +26,18 @@ const PermissionForm = ({ folderId }: { folderId: string }) => {
                 try {
                     const { data } = await getRequest({ url: `/api/user/${value}` })
                     setSelectedUser(data)
-                    console.log(data);
+                    setPermissions(() => {
+                        const selectedUser = authorizedBy.find((u) => u.userId === data.id)
+                        if (selectedUser) {
+                            return {
+                                view: selectedUser.canView,
+                                update: selectedUser.canUpdate,
+                                delete: selectedUser.canDelete,
+                                create: selectedUser.canCreate
+                            }
+                        }
+                    })
                     setIsLoading(false)
-                    // console.log(data , folderId);
                 } catch (err) {
                     setSelectedUser("")
                     setIsLoading(false)
@@ -36,9 +46,9 @@ const PermissionForm = ({ folderId }: { folderId: string }) => {
             }, 500)
         }
     }
-    
+
     const setPermissionHandler = () => {
-        
+
         postRequest({
             url: '/api/permission', body: {
                 userId: selectedUser.id,

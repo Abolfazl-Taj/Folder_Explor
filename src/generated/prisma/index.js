@@ -170,7 +170,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\Utian\\Desktop\\folder-explor\\src\\generated\\prisma",
+      "value": "C:\\Users\\Utian\\Desktop\\Folder_Explor\\src\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -184,7 +184,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\Utian\\Desktop\\folder-explor\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\Utian\\Desktop\\Folder_Explor\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -198,7 +198,6 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {

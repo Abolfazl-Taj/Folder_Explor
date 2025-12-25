@@ -40,6 +40,7 @@ const Dashboard = () => {
           <Image
             src="/noFolder.webp"
             width={150}
+            unoptimized={true}
             height={150}
             className="w-auto h-auto mb-5"
             alt="Empty folder illustration"
