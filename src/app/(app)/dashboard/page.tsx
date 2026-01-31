@@ -19,6 +19,7 @@ const Dashboard = () => {
     const sortedFolder = folders && sortData(folders, sortMethod.type, sortMethod.field)
     const sortedFile = files && sortData(files, sortMethod.type, sortMethod.field)
     setData({ files: sortedFile, folders: sortedFolder })
+    
   }, [files, folders, sortMethod])
 
   return (

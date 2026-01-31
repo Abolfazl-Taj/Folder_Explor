@@ -11,6 +11,7 @@ import { BsFillShieldLockFill } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import { getFromLocalStorage, setToLocalStorage } from "@/app/lib/localStorgeRequest";
 import Link from "next/link";
+import {getCookie} from  'cookies-next/client';
 
 const RegisterPage = () => {
     const router = useRouter()
@@ -28,9 +29,6 @@ const RegisterPage = () => {
             setError(err.response.data.error)
         })
     };
-    useEffect(() => {
-        if (getFromLocalStorage("user")) router.push("/dashboard")
-    }, [])
     return (
         <div className="w-full h-screen flex justify-center items-center bg-gradient-to-r from-[#222] via-[#111] to-[#333] ">
             <Continer>

@@ -37,14 +37,7 @@ const LoginPage = () => {
   //   }
   // });
 
-  // ✅ Redirect if already logged in
-  useEffect(() => {
 
-
-    const SigendIn = getFromLocalStorage("user") || getCookie("token")
-
-    if (SigendIn) return router.push("/dashboard")
-  }, []);
 
   // ✅ Normal email/password login
   const submithandler = (value: { email: string; password: string }) => {
