@@ -164,9 +164,25 @@ exports.Prisma.FolderPermissionScalarFieldEnum = {
   canDelete: 'canDelete'
 };
 
+exports.Prisma.ActivityLogScalarFieldEnum = {
+  id: 'id',
+  actorId: 'actorId',
+  targetOwnerId: 'targetOwnerId',
+  action: 'action',
+  entityType: 'entityType',
+  entityId: 'entityId',
+  metadata: 'metadata',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.QueryMode = {
@@ -179,12 +195,38 @@ exports.Prisma.NullsOrder = {
   last: 'last'
 };
 
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
+};
+exports.ActivityAction = exports.$Enums.ActivityAction = {
+  FILE_UPLOAD: 'FILE_UPLOAD',
+  FILE_DELETE: 'FILE_DELETE',
+  FILE_UPDATE: 'FILE_UPDATE',
+  FILE_RENAME: 'FILE_RENAME',
+  FOLDER_CREATE: 'FOLDER_CREATE',
+  FOLDER_DELETE: 'FOLDER_DELETE',
+  FOLDER_RENAME: 'FOLDER_RENAME',
+  FOLDER_MOVE: 'FOLDER_MOVE',
+  PERMISSION_ADD: 'PERMISSION_ADD',
+  PERMISSION_UPDATE: 'PERMISSION_UPDATE',
+  PERMISSION_REMOVE: 'PERMISSION_REMOVE',
+  PROFILE_UPDATE: 'PROFILE_UPDATE'
+};
+
+exports.EntityType = exports.$Enums.EntityType = {
+  FILE: 'FILE',
+  FOLDER: 'FOLDER',
+  USER: 'USER'
+};
 
 exports.Prisma.ModelName = {
   User: 'User',
   Folder: 'Folder',
   File: 'File',
-  FolderPermission: 'FolderPermission'
+  FolderPermission: 'FolderPermission',
+  ActivityLog: 'ActivityLog'
 };
 
 /**

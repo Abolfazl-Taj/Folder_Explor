@@ -24,6 +24,10 @@ permissions FolderPermission[]
 
   resetToken     String?   
   resetTokenExp  DateTime? 
+  actedLogs        ActivityLog[] @relation("Actor")
+  targetOwnerLogs  ActivityLog[] @relation("TargetOwner")
+
+
 }
 
 model Folder {
@@ -72,4 +76,43 @@ model FolderPermission {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([folderId, userId]) // each user can have one permission set per folder
+}
+model ActivityLog {
+  id             String   @id @default(cuid())
+
+  actorId        String
+  targetOwnerId  String?
+
+  action         ActivityAction
+  entityType     EntityType
+  entityId       String
+  metadata       Json?
+  createdAt      DateTime @default(now())
+
+  actor User @relation("Actor", fields: [actorId], references: [id])
+  targetOwner User? @relation("TargetOwner", fields: [targetOwnerId], references: [id])
+
+  @@index([actorId])
+  @@index([targetOwnerId])
+  @@index([entityType, entityId])
+}
+enum ActivityAction {
+  FILE_UPLOAD
+  FILE_DELETE
+  FILE_UPDATE
+  FILE_RENAME
+  FOLDER_CREATE
+  FOLDER_DELETE
+  FOLDER_RENAME
+  FOLDER_MOVE
+  PERMISSION_ADD
+  PERMISSION_UPDATE
+  PERMISSION_REMOVE
+  PROFILE_UPDATE
+}
+
+enum EntityType {
+  FILE
+  FOLDER
+  USER
 }

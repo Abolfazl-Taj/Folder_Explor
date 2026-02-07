@@ -5,6 +5,7 @@ import ProfileView from "@/app/components/ProfileView";
 import { postRequest } from "@/app/lib/fetchRequest";
 import settingScheme from "@/app/lib/schemas/settings";
 import { useUser } from "@/hooks/useUser"
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaUser } from "react-icons/fa";
@@ -14,6 +15,7 @@ import { toast } from "react-toastify";
 const ProfilePage = () => {
     const { user } = useUser()
     const router = useRouter()
+    const query = useQueryClient()
     const [isEditing, setIsEditing] = useState(false)
     const updateSettings = async (value: any) => {
         setIsEditing(false)
@@ -28,6 +30,7 @@ const ProfilePage = () => {
             url: "/api/profile", body: formdata
         }).then(() => {
             toast.success("Your profile saved sucessfully!")
+            query.invalidateQueries({ queryKey: ["profile_details", "id"] })
             router.push("/settings")
         }).catch(err => {
             console.log();

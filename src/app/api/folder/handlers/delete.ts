@@ -5,7 +5,7 @@ import { NextRequest } from "next/server";
 
 export async function DELETEHandler(req: NextRequest, id: string) {
   const userId = getUserId(req);
-
+  
   if (!id) {
     return nextResponse({ message: "Folder ID is required" }, { status: 400 });
   }

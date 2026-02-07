@@ -7,6 +7,8 @@ const ProfileView = ({ user, setIsEditing }: {
     user: User | any,
     setIsEditing: any
 }) => {
+    console.log(user);
+    
     return (
         <div className='w-full flex justify-center items-center flex-col gap-8'>
             <Image unoptimized={true} className="w-40  h-40  rounded-full border-2 border-red-950 object-cover" src={user?.img || "https://ui-avatars.com/api/?name=user&background=#111"} alt={`${user?.userName}-img`} width={20} height={20} />

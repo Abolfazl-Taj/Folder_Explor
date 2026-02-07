@@ -25,7 +25,7 @@ const RadioBtn = ({ labelName, setValue, value, name }: RadioBtnProps) => {
                 type="radio"
                 id={id}
                 name={labelName}
-                checked={value}
+                defaultChecked={value}
                 onClick={valueHandler}
                 className="hidden "
             />

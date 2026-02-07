@@ -20,7 +20,7 @@ const publicRoutes = [
   "/api/googleAuth",
 ];
 
-export async function middleware(req: NextRequest) {
+export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   if (
@@ -49,6 +49,7 @@ export async function middleware(req: NextRequest) {
   }
 
   try {
+    if(token)
     await jwtVerify(token, JWT_SECRET);
     return NextResponse.next();
   } catch (err) {

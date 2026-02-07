@@ -127,14 +127,14 @@ const PermissionForm = ({ folderId, permissions: authorizedBy }: { folderId: str
                                             <div className='w-full border p-4 rounded-md border-red-900 shadow flex flex-col gap-4'>
                                                 <h1 className='text-center font-bold border-b border-[#000] py-1'>Permission Settings</h1>
                                                 <div className='flex flex-wrap gap-4 justify-center items-center'>
-                                                    <RadioBtn labelName='View' name={"view"} value={permissions.view} setValue={setPermissions} />
-                                                    <RadioBtn labelName='Create' name={"create"} value={permissions.create} setValue={setPermissions} />
-                                                    <RadioBtn labelName='Delete' name={"delete"} value={permissions.delete} setValue={setPermissions} />
-                                                    <RadioBtn labelName='Update' name={"update"} value={permissions.update} setValue={setPermissions} />
+                                                    <RadioBtn labelName='View' name={"view"} value={permissions?.view || false} setValue={setPermissions} />
+                                                    <RadioBtn labelName='Create' name={"create"} value={permissions?.create || false} setValue={setPermissions} />
+                                                    <RadioBtn labelName='Delete' name={"delete"} value={permissions?.delete || false} setValue={setPermissions} />
+                                                    <RadioBtn labelName='Update' name={"update"} value={permissions?.update || false} setValue={setPermissions} />
                                                 </div>
                                             </div>
                                         </div>
-                                    ) : <span className=" text-white px-4 py-2 rounded-md shadow-md border border-red-600 text-sm font-medium">{error}</span>}
+                                    ) : error && <span className=" text-white px-4 py-2 rounded-md shadow-md border border-red-600 text-sm font-medium">{error}</span> }
                             </div>
                         </div>
                         <button

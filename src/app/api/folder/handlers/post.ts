@@ -1,8 +1,8 @@
-import jwt from "jsonwebtoken";
 import prisma from "@/app/lib/prisma";
 import nextResponse, { nextRedirect } from "@/app/lib/nextResponse";
 import { NextRequest } from "next/server";
-const JWT_SECRET = process.env.JWT_SECRET || "my_super_secret_key";
+import createLog from "@/app/lib/createLog";
+import getUserId from "@/app/lib/getUserId";
 
 export async function POSTHandler(req: NextRequest) {
   const token =
@@ -10,8 +10,8 @@ export async function POSTHandler(req: NextRequest) {
     req.headers.get("authorization")?.replace("Bearer ", "");
   const { name, parentId } = await req.json();
   if (!token) return nextRedirect("/login", req.url);
-  const decode = jwt.verify(token, JWT_SECRET) as { id: string };
-  const userId = decode.id;
+  const userId = getUserId(req);
+
   if (!name) {
     return nextResponse({ message: "Folder name required!" }, { status: 400 });
   }
@@ -20,25 +20,45 @@ export async function POSTHandler(req: NextRequest) {
   }
   try {
     const parentFolder = await prisma.folder.findFirst({
-      where: { id: parentId},
-      select: { permissions: true, userId: true },
+      where: { id: parentId },
+      select: {
+        permissions: true,
+        userId: true,
+      },
     });
-    const authorizedUser = parentFolder?.permissions.find(
-      (u) => u.userId === userId
-    );
-    if (parentFolder?.userId === userId || authorizedUser?.canCreate || parentId == null) {
+    const isAuthorizedUser =
+      parentFolder?.userId === userId ||
+      parentFolder?.permissions.find((u) => u.userId === userId)?.canCreate ||
+      !parentFolder?.userId || parentId == null;
+    if (isAuthorizedUser) {
       const folder = await prisma.folder.create({
         data: { name, userId, parentId },
+        include:{user:{select:{userName:true ,email:true}}}
+      });
+      console.log("Parent Folder id" , parentFolder);
+      
+    await  createLog({
+        action: "FOLDER_CREATE",
+        actor: userId,
+        entityType: "FOLDER",
+        entityId: folder.id,
+        ownerId: parentFolder?.userId || userId,
+        metadata: {
+          desc: `Creating a folder called ${folder.name} by ${folder.user.userName || folder.user.email}`,
+        },
       });
       return nextResponse(
         { message: "Folder created successfully ", folder },
-        { status: 200 }
+        { status: 200 },
       );
     } else {
       return nextResponse({ message: "Unauthorzied" }, { status: 401 });
     }
   } catch (error) {
     console.log(error);
-    return nextResponse({ message: "Internal server error"  , error}, { status: 500 });
+    return nextResponse(
+      { message: "Internal server error", error },
+      { status: 500 },
+    );
   }
 }

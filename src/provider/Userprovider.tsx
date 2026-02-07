@@ -6,6 +6,8 @@ import { userType } from "@/types/user"
 import { redirect, useRouter } from "next/navigation"
 import { ReactNode, useEffect, useState } from "react"
 import { usePathname } from "next/navigation"
+import { useQuery } from "@tanstack/react-query"
+import Loading from "@/app/components/Loading"
 
 const authRoutes = ["/login", "/register", "/logout"]
 
@@ -13,39 +15,41 @@ const Userprovider = ({ children }: { children: ReactNode }) => {
     const [user, setUser] = useState<userType | null | undefined>(null)
     const router = useRouter()
     const pathName = usePathname()
-    const [loading, setLoading] = useState(true);
-
+    const { data, refetch, isLoading, error } = useQuery({
+        queryKey: ["profile_details", "id"],
+        queryFn: async () => {
+            try {
+                const res = await getRequest({ url: "/api/me" })
+                if (res.redirect || res.user === undefined) return router.push("/login")
+                return res.user
+            } catch (error) {
+                removeFromLocalStorage("user");
+                setUser(null);
+                router.push("/login");
+                throw error
+            }
+        }
+    })
+    useEffect(() => {
+        setUser(data)
+        setToLocalStorage("user", data)
+    }, [data])
     useEffect(() => {
         if (authRoutes.some(path => path === pathName)) return
         const storedUser = getFromLocalStorage("user");
-
-        const shouldForceRefresh = pathName === "/profile"; // for example
-
+        const shouldForceRefresh = pathName === "/settings"; // for example
+        
         if (!storedUser || shouldForceRefresh) {
-            getRequest({ url: "/api/me" })
-                .then(res => {
-                    if (res.redirected || res.user === undefined) {
-                        return redirect("/login")
-                    }
-                    setUser(res.user)
-                    setToLocalStorage("user", res.user);
-                    setLoading(false);
-                })
-                .catch(() => {
-                    removeFromLocalStorage("user");
-                    setUser(null);
-                    setLoading(false);
-                    router.push("/login");
-                });
+            refetch()
         } else {
             setUser(storedUser);
-            setLoading(false);
         }
     }, [pathName]);
-
-
+    
+    
+    if (isLoading) return <Loading />
     return (
-        <userContext.Provider value={{ user, setUser }}>
+        <userContext.Provider value={{ user, setUser, error }}>
             {children}
         </userContext.Provider>
     );

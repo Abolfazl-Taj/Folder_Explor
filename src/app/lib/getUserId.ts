@@ -4,7 +4,7 @@ import { NextRequest } from "next/server";
 const JWT_SECRET = process.env.JWT_SECRET || "my_super_secret_key";
 
 const getUserId = (req: NextRequest): string | null => {
-  const token = req.cookies.get("token")?.value;
+  const token = req?.cookies?.get("token")?.value;
   if (!token) return null;
 
   try {
