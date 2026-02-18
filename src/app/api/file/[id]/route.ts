@@ -47,5 +47,5 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   const { id } = await params;
-  return DELETEHandler(id);
+  return DELETEHandler(req , id);
 }

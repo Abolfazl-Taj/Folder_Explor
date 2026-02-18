@@ -15,44 +15,57 @@ const Userprovider = ({ children }: { children: ReactNode }) => {
     const [user, setUser] = useState<userType | null | undefined>(null)
     const router = useRouter()
     const pathName = usePathname()
+
+    const isAuthRoute = authRoutes.includes(pathName)
+
     const { data, refetch, isLoading, error } = useQuery({
         queryKey: ["profile_details", "id"],
+        enabled: !isAuthRoute, // 🔥 THIS is the fix
         queryFn: async () => {
             try {
                 const res = await getRequest({ url: "/api/me" })
-                if (res.redirect || res.user === undefined) return router.push("/login")
+                if (res.redirect || res.user === undefined) {
+                    router.push("/login")
+                    return null
+                }
                 return res.user
             } catch (error) {
-                removeFromLocalStorage("user");
-                setUser(null);
-                router.push("/login");
+                removeFromLocalStorage("user")
+                setUser(null)
+                router.push("/login")
                 throw error
             }
         }
     })
+
     useEffect(() => {
-        setUser(data)
-        setToLocalStorage("user", data)
+        if (data) {
+            setUser(data)
+            setToLocalStorage("user", data)
+        }
     }, [data])
+
     useEffect(() => {
-        if (authRoutes.some(path => path === pathName)) return
-        const storedUser = getFromLocalStorage("user");
-        const shouldForceRefresh = pathName === "/settings"; // for example
-        
+        if (isAuthRoute) return
+
+        const storedUser = getFromLocalStorage("user")
+        const shouldForceRefresh = pathName === "/settings"
+
         if (!storedUser || shouldForceRefresh) {
             refetch()
         } else {
-            setUser(storedUser);
+            setUser(storedUser)
         }
-    }, [pathName]);
-    
-    
-    if (isLoading) return <Loading />
+    }, [pathName])
+
+    if (!isAuthRoute && isLoading) return <Loading />
+
     return (
         <userContext.Provider value={{ user, setUser, error }}>
             {children}
         </userContext.Provider>
-    );
+    )
 }
+
 
 export default Userprovider

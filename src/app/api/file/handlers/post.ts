@@ -4,6 +4,7 @@ import prisma from "@/app/lib/prisma";
 import { NextRequest } from "next/server";
 import { fileTypeFromBuffer } from "file-type";
 import extensionToMime from "@/app/lib/extensionToMime ";
+import createLog from "@/app/lib/createLog";
 
 export const POSTHandler = async (req: NextRequest) => {
   try {
@@ -56,23 +57,28 @@ export const POSTHandler = async (req: NextRequest) => {
     } else {
       return nextResponse(
         { message: "Unsupported content type" },
-        { status: 415 }
+        { status: 415 },
       );
     }
-
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { userName: true, email: true },
+    });
     // ✅ Save to database
     if (folderId !== null) {
       const parentFolder = await prisma.folder.findUnique({
         where: { id: folderId },
-        include: {
+        select: {
+          name: true,
+          userId: true,
           permissions: {
             select: { userId: true, canCreate: true },
           },
-          user: { select: { id: true } },
         },
       });
       if (!parentFolder)
         return nextResponse({ message: "Folder not found" }, { status: 404 });
+
       const isAuthorizedUser =
         parentFolder.userId === userId ||
         parentFolder.permissions.find((u) => u.userId === userId)?.canCreate;
@@ -87,9 +93,22 @@ export const POSTHandler = async (req: NextRequest) => {
             size, // stored as bytes
           },
         });
+        await createLog({
+          actor: userId,
+          entityId: file.id,
+          action: "FILE_UPLOAD",
+          entityType: "FILE",
+          ownerId: parentFolder?.userId,
+          metadata: {
+            doneBy: user?.userName || user?.email,
+            folderName: parentFolder.name,
+            fileName: file.name,
+            fileSize: size || 0,
+          },
+        });
         return nextResponse(
           { message: "File saved successfully!", file },
-          { status: 201 }
+          { status: 201 },
         );
       } else {
         return nextResponse({ message: "Unauthorized" }, { status: 401 });
@@ -105,7 +124,23 @@ export const POSTHandler = async (req: NextRequest) => {
           size, // stored as bytes
         },
       });
-      return nextResponse({message:"File created sucessfully!" , data:file} , {status:200})
+      await createLog({
+        actor: userId,
+        entityId: file.id,
+        action: "FILE_UPLOAD",
+        entityType: "FILE",
+        ownerId: userId,
+        metadata: {
+          doneBy: user?.userName || user?.email,
+          folderName: "Main Folder",
+          fileName: file.name,
+          fileSize: size || 0,
+        },
+      });
+      return nextResponse(
+        { message: "File created sucessfully!", data: file },
+        { status: 200 },
+      );
     }
   } catch (err) {
     console.error("File save error:", err);
@@ -114,7 +149,7 @@ export const POSTHandler = async (req: NextRequest) => {
         message: "Internal Server Error",
         error: err instanceof Error ? err.message : String(err),
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };

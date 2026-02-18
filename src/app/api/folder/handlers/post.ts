@@ -19,31 +19,41 @@ export async function POSTHandler(req: NextRequest) {
     return nextResponse({ message: "User id required!" }, { status: 400 });
   }
   try {
-    const parentFolder = await prisma.folder.findFirst({
-      where: { id: parentId },
-      select: {
-        permissions: true,
-        userId: true,
-      },
-    });
+    const parentFolder = parentId
+      ? await prisma.folder.findUnique({
+          where: { id: parentId },
+          select: {
+            permissions: true,
+            userId: true,
+          },
+        })
+      : null;
+
     const isAuthorizedUser =
       parentFolder?.userId === userId ||
       parentFolder?.permissions.find((u) => u.userId === userId)?.canCreate ||
-      !parentFolder?.userId || parentId == null;
+      !parentFolder?.userId ||
+      parentId == null;
     if (isAuthorizedUser) {
       const folder = await prisma.folder.create({
         data: { name, userId, parentId },
-        include:{user:{select:{userName:true ,email:true}}}
+        include: { user: { select: { userName: true, email: true } } },
       });
-      console.log("Parent Folder id" , parentFolder);
-      
-    await  createLog({
+      console.log("Parent Folder id", parentFolder);
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+        select: { userName: true, email: true },
+      });
+
+      await createLog({
         action: "FOLDER_CREATE",
         actor: userId,
         entityType: "FOLDER",
         entityId: folder.id,
-        ownerId: parentFolder?.userId || userId,
+        ownerId: parentFolder ? parentFolder.userId : userId,
         metadata: {
+          doneBy: user?.userName || user?.email,
+          folderName: folder.name,
           desc: `Creating a folder called ${folder.name} by ${folder.user.userName || folder.user.email}`,
         },
       });

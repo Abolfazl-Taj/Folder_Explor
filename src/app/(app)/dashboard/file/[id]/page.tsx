@@ -44,7 +44,7 @@ const FilePage = () => {
   const editorRef = useRef<any>(null);
   if (isLoading) return <Loading />
   const saveHandler = () => {
-    const value = editorRef.current.getValue()
+    const value = editorRef?.current?.getValue() || null
     patchRequest("/api/file", {
       id: data.file.id,
       name: filename || data.file.name,
