@@ -36,7 +36,7 @@
     "src/app/lib/Icons.ks",
     "src/app/lib/Icons.js",
     ".next/dev/types/**/*.ts"
-, "src/app/lib/logUi.js"  ],
+, "src/app/lib/logUi.js", "src/app/lib/navbarItem.js"  ],
   "exclude": [
     "node_modules"
   ]

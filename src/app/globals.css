@@ -4,8 +4,8 @@
     background-position: 250px;
   }
 }
-body {
-  background: url("../../public/background.svg");
+.animatedbg{
+    background: url("../../public/background.svg");
   background-size: 100%;
   background-position: center;
   animation: alternate bgAnimation 10s infinite ease-in-out;
