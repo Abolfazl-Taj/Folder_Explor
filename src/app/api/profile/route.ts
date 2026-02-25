@@ -6,6 +6,7 @@ import { NextRequest } from "next/server";
 import bcrypt from "bcryptjs";
 import path from "path";
 import { writeFile, unlink } from "fs/promises";
+import createLog from "@/app/lib/createLog";
 const JWT_SECRET = process.env.JWT_SECRET || "my_super_secret_key";
 
 export const POST = async (req: NextRequest) => {
@@ -112,6 +113,25 @@ export const POST = async (req: NextRequest) => {
       secure: process.env.NODE_ENV === "production",
       maxAge: 60 * 60 * 24 * 7,
     });
+    await createLog({
+      actor: id,
+      action: "PROFILE_UPDATE",
+      entityId: id,
+      entityType: "USER",
+      ownerId: id,
+      metadata: {
+        oldUserName: user.userName,
+        oldEmail: user.email,
+        newUserName: updatedUser.userName,
+        newEmail: updatedUser.email,
+        changes: {
+          password: password ?? true,
+          email: email ?? true,
+          image: file.size > 0,
+          userName: userName ?? true
+        },
+      }
+    })
     return response;
   } catch (error) {
     return nextResponse(

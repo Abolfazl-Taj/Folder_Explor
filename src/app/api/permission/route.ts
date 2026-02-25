@@ -1,3 +1,4 @@
+import createLog from "@/app/lib/createLog";
 import nextResponse from "@/app/lib/nextResponse";
 import prisma from "@/app/lib/prisma";
 import { NextRequest } from "next/server";
@@ -22,11 +23,11 @@ export const POST = async (req: NextRequest) => {
       await prisma.$transaction([
         prisma.folder.findUnique({
           where: { id: folderId },
-          select: { id: true },
+          select: { id: true, userId: true, name: true },
         }),
         prisma.user.findUnique({
           where: { id: userId },
-          select: { id: true },
+          select: { id: true, userName: true, email: true },
         }),
         prisma.folderPermission.findUnique({
           where: { folderId_userId: { userId, folderId } },
@@ -52,6 +53,7 @@ export const POST = async (req: NextRequest) => {
           canView: view,
         },
       });
+
       return nextResponse(
         {
           message: "Folder permission updated successfully!",
@@ -70,6 +72,28 @@ export const POST = async (req: NextRequest) => {
         userId: existedUser.id,
       },
     });
+    await createLog({
+      actor: userId,
+      action: "PERMISSION_UPDATE",
+      entityId: folderId,
+      entityType: "FOLDER",
+      ownerId: existedFolder.userId,
+      metadata: {
+        folderName: existedFolder.name,
+        userName: existedUser.userName || existedUser.email,
+        newCanView: newPermission.canView,
+        newCanCreate: newPermission.canCreate,
+        newCanDelete: newPermission.canDelete,
+        newCanUpdate: newPermission.canUpdate,
+        permissionUpdate: {
+          canView: existedPermission?.canView !== newPermission.canView,
+          canCreate: existedPermission?.canCreate !== newPermission.canCreate,
+          canDelete: existedPermission?.canDelete !== newPermission.canDelete,
+          canUpdate: existedPermission?.canUpdate !== newPermission.canUpdate
+        }
+      }
+    })
+
     return nextResponse(
       {
         message: "Folder permission created successfully",
