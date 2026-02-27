@@ -17,7 +17,7 @@ export async function DELETEHandler(req: NextRequest, id: string) {
         userId: true,
         permissions: true,
         name: true,
-        deleted: true
+        deleted: true,
         user: { select: { userName: true, email: true } },
       },
     });

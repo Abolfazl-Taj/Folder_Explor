@@ -4,12 +4,13 @@ import Folders from "@/app/components/Folders"
 import Loading from "@/app/components/Loading"
 import ModalForm from "@/app/components/ModalForm"
 import { useQuery } from "@tanstack/react-query"
-import  { use, useEffect, useState } from "react"
+import { use, useEffect, useState } from "react"
 import Files from "@/app/components/Files"
 import SortData from "@/app/components/SortData"
 import sortData from "@/app/lib/sortData"
 import Image from "next/image"
 import PrivateFolderBtn from "@/app/components/PrivateFolderBtn";
+import { Folder, File } from "@/generated/prisma"
 
 const FolderPage = ({ params }: { params: { slug?: string[] } }) => {
     const unwarpedSlug: string[] = use(params).slug
@@ -22,20 +23,21 @@ const FolderPage = ({ params }: { params: { slug?: string[] } }) => {
         queryFn: () => getRequest({ url: `/api/folder/${folderId}` })
     })
     useEffect(() => {
-
         if (!isPending) {
             setFodlerPath([
                 'Main Folder',
                 rawData?.folder.parent?.name,
                 rawData?.folder.name,
             ].filter(Boolean).join('/'))
-            const sortedFolder = rawData.folder.children && sortData(rawData.folder.children, sortMethod.type, sortMethod.field)
-            const sortedFile = rawData.folder.files && sortData(rawData.folder.files, sortMethod.type, sortMethod.field)
+            const VisualFolders = rawData.folder.children && rawData.folder.children.filter((f: Folder) => !f.deleted)
+            const VisualFiles = rawData.folder.files && rawData.folder.files.filter((f: File) => !f.deleted);
+            const sortedFolder = VisualFolders && sortData(VisualFolders, sortMethod.type, sortMethod.field)
+            const sortedFile = VisualFiles && sortData(VisualFiles, sortMethod.type, sortMethod.field)
             setData({ files: sortedFile, folders: sortedFolder })
         }
     }, [rawData, sortMethod])
- console.log(rawData);
- 
+    console.log(rawData);
+
     return (
         <div className="flex-1 p-4 space-y-3 flex flex-col relative">
             {isPending ? (
@@ -73,8 +75,8 @@ const FolderPage = ({ params }: { params: { slug?: string[] } }) => {
 
             <div className=" w-full max-w-2xl bottom-4 flex justify-between px-20 left-0  mx-auto">
                 <ModalForm type="add" form="file" folderId={rawData?.folder?.id} />
-                <ModalForm type="add" form="permission" folderId={rawData?.folder?.id}  permissions={rawData?.folder?.permissions}/>
-                <ModalForm type="add" folderId={rawData?.folder?.id}  />
+                <ModalForm type="add" form="permission" folderId={rawData?.folder?.id} permissions={rawData?.folder?.permissions} />
+                <ModalForm type="add" folderId={rawData?.folder?.id} />
             </div>
         </div >
     )

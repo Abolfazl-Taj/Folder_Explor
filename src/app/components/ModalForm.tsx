@@ -7,6 +7,7 @@ const ModalForm = ({ type, data, folderId, form = "folder", id   , permissions}:
     const Forms: { [key: string]: any } = {
         "folder": <FolderForm data={data} folderId={folderId} type={type} />,
         "file": <FileForm data={data} folderId={folderId} type={type} id={id} />,
+        "restore": <FileForm data={data} folderId={folderId} type={type} id={id} />,
         "permission": <PermissionForm folderId={folderId || ""} permissions={permissions || []} />
     }
     return Forms[form]

@@ -7,7 +7,7 @@ export type FileType = {
   content?: string;
   folderId?: string;
   updatedAt?: any;
-  size : number
+  size: number
   userId: string;
 };
 

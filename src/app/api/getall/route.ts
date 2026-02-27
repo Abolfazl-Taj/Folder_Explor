@@ -25,6 +25,8 @@ export const GET = async (req: NextRequest) => {
           userId: true,
           createdAt: true,
           updatedAt: true,
+          deleted:true,
+          deletedAt:true
         },
       }),
       prisma.file.findMany({
@@ -35,7 +37,9 @@ export const GET = async (req: NextRequest) => {
           userId: true,
           createdAt: true,
           updatedAt: true,
-          size:true
+          size: true,
+          deleted:true,
+          deletedAt:true
         },
       }),
     ]);

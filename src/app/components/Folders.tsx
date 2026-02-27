@@ -8,7 +8,7 @@ import ModalForm from "./ModalForm";
 
 
 
-const Folders = ({ data }: { data: FolderType[] }) => {
+const Folders = ({ data, bin }: { data: FolderType[], bin: boolean }) => {
     const pathName = usePathname()
     return (
         <div className="flex flex-col gap-4">
@@ -20,7 +20,7 @@ const Folders = ({ data }: { data: FolderType[] }) => {
                         className="group flex w-full items-center gap-3 border-b border-gray-300/20 py-2 px-3 rounded-md transition-all hover:bg-[#222] hover:shadow-md">
 
                         <Link
-                            href={`${pathName}/${folder.id}`}
+                            href={!bin ? `${pathName}/${folder.id}` : ""}
                             className="flex w-full items-center"
                         >
                             <div className="flex flex-1 items-center justify-between ">
@@ -33,7 +33,7 @@ const Folders = ({ data }: { data: FolderType[] }) => {
                                 </span>
                             </div>
                         </Link>
-                        <ModalForm type="update" data={folder} />
+                        {!bin && <ModalForm type="update" data={folder} />}
                         <ModalForm type="delete" data={{ id: folder.id, name: folder.name }} />
                     </div >
                 </div>

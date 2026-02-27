@@ -4,7 +4,7 @@ import Link from "next/link";
 import icons from "../lib/Icons";
 import { formatBytes } from "../lib/formatBytes";
 
-const Files = ({ data, queryKey }: { data: FileType[], queryKey: any }) => {
+const Files = ({ data, queryKey, bin }: { data: FileType[], queryKey: any, bin: boolean }) => {
 
     if (!data || data.length <= 0) return
     return (
@@ -16,7 +16,7 @@ const Files = ({ data, queryKey }: { data: FileType[], queryKey: any }) => {
                     : "default";
 
                 return <div key={file.id} className="flex justify-between items-center gap-4 group bg-transparent rounded-lg py-2 px-4 border-b border-gray-300/20 shadow shadow-[#000]/30  hover:bg-[#222]">
-                    <Link href={`/dashboard/file/${file.id}`} className="flex-1">
+                    <Link href={!bin ? `/dashboard/file/${file.id}` : ""}  className="flex-1">
                         <div
                             className="flex-1">
                             <div title={file.name}
@@ -26,7 +26,7 @@ const Files = ({ data, queryKey }: { data: FileType[], queryKey: any }) => {
                                     {file.name}
                                     <div></div>
                                 </h4>
-                                <h5 className="text-sm font-semibold self-center flex-1 flex justify-center">{formatBytes(file.size , 2)}</h5>
+                                <h5 className="text-sm font-semibold self-center flex-1 flex justify-center">{formatBytes(file.size, 2)}</h5>
                                 <div>
                                     <span className="text-xs text-gray-400 w-fit">
                                         {new Date(file.createdAt).toLocaleDateString()}

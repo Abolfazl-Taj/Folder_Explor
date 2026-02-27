@@ -5,6 +5,7 @@ import Loading from "@/app/components/Loading";
 import ModalForm from "@/app/components/ModalForm";
 import SortData from "@/app/components/SortData";
 import sortData from "@/app/lib/sortData";
+import { Folder, File } from "@/generated/prisma";
 import useExpo from "@/hooks/useExpo"
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -16,8 +17,11 @@ const Dashboard = () => {
   const [data, setData] = useState()
   const [sortMethod, setSortMethod] = useState({ type: "sort", field: "name" })
   useEffect(() => {
-    const sortedFolder = folders && sortData(folders, sortMethod.type, sortMethod.field)
-    const sortedFile = files && sortData(files, sortMethod.type, sortMethod.field)
+    console.log(folders);
+    const VisualFolders = folders && folders.filter((f: Folder) => !f.deleted)
+    const VisualFiles = files && files.filter((f: File) => !f.deleted)
+    const sortedFolder = VisualFolders && sortData(VisualFolders, sortMethod.type, sortMethod.field)
+    const sortedFile = VisualFiles && sortData(VisualFiles, sortMethod.type, sortMethod.field)
     setData({ files: sortedFile, folders: sortedFolder })
   }, [files, folders, sortMethod])
 
