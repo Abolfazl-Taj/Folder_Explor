@@ -17,23 +17,21 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  folders   Folder[]    @relation("FolderOwner")
-  files     File[]
-  
-permissions FolderPermission[]
+  folders Folder[] @relation("FolderOwner")
+  files   File[]
 
-  resetToken     String?   
-  resetTokenExp  DateTime? 
-  actedLogs        ActivityLog[] @relation("Actor")
-  targetOwnerLogs  ActivityLog[] @relation("TargetOwner")
+  permissions FolderPermission[]
 
-
+  resetToken      String?
+  resetTokenExp   DateTime?
+  actedLogs       ActivityLog[] @relation("Actor")
+  targetOwnerLogs ActivityLog[] @relation("TargetOwner")
 }
 
 model Folder {
-  id        String @id @default(cuid())
+  id        String   @id @default(cuid())
   name      String
-  parentId  String? 
+  parentId  String?
   userId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -42,60 +40,65 @@ model Folder {
   parent   Folder?  @relation("FolderChildren", fields: [parentId], references: [id])
   children Folder[] @relation("FolderChildren")
 
-  private  Boolean @default(false)
-
-  files    File[]
+  private     Boolean            @default(false)
+  deleted     Boolean            @default(false)
+  deletedAt   DateTime?
+  files       File[]
   permissions FolderPermission[]
 }
-
 
 model File {
   id        String   @id @default(cuid())
   name      String
   mimeType  String?
-  content   Bytes?  
-  size      Int?     
+  content   Bytes?
+  size      Int?
   folderId  String?
   userId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  
-  folder Folder? @relation(fields: [folderId], references: [id])
-  user   User   @relation(fields: [userId], references: [id])
+
+  folder    Folder?   @relation(fields: [folderId], references: [id])
+  user      User      @relation(fields: [userId], references: [id])
+  deleted   Boolean   @default(false)
+  deletedAt DateTime?
 }
+
 model FolderPermission {
-  id         String  @id @default(cuid())
-  folderId   String
-  userId     String
-  canView    Boolean @default(true)
-  canCreate  Boolean @default(false)
-  canUpdate  Boolean @default(false)
-  canDelete  Boolean @default(false)
+  id        String  @id @default(cuid())
+  folderId  String
+  userId    String
+  canView   Boolean @default(true)
+  canCreate Boolean @default(false)
+  canUpdate Boolean @default(false)
+  canDelete Boolean @default(false)
 
   folder Folder @relation(fields: [folderId], references: [id], onDelete: Cascade)
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([folderId, userId]) // each user can have one permission set per folder
 }
+
 model ActivityLog {
-  id             String   @id @default(cuid())
+  id String @id @default(cuid())
 
-  actorId        String
-  targetOwnerId  String?
+  actorId       String
+  targetOwnerId String?
 
-  action         ActivityAction
-  entityType     EntityType
-  entityId       String
-  metadata       Json?
-  createdAt      DateTime @default(now())
+  action     ActivityAction
+  entityType EntityType
+  entityId   String
+  metadata   Json?
+  createdAt  DateTime       @default(now())
 
-  actor User @relation("Actor", fields: [actorId], references: [id])
+  actor       User  @relation("Actor", fields: [actorId], references: [id])
   targetOwner User? @relation("TargetOwner", fields: [targetOwnerId], references: [id])
 
   @@index([actorId])
   @@index([targetOwnerId])
   @@index([entityType, entityId])
 }
+
 enum ActivityAction {
   FILE_UPLOAD
   FILE_DELETE

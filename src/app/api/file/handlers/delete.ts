@@ -9,11 +9,23 @@ export async function DELETEHandler(req: NextRequest, id: string) {
   if (!id) {
     return nextResponse({ message: "Folder ID is required" }, { status: 400 });
   }
-
+  const file = await prisma.file.findUnique({
+    where: { id },
+    select: { deleted: true }
+  })
+  if (!file) {
+    throw new Error("File not found")
+  }
   try {
-    const deletedFile = await prisma.file.delete({
+    const deletedFile = !file.deleted ? await prisma.file.update({
       where: { id: id },
-    });
+      data: {
+        deleted: true,
+        deletedAt: new Date()
+      }
+    }) : await prisma.file.delete({
+      where: { id },
+    })
     const user = await prisma.user.findUnique({
       where: { id: userId },
       select: { userName: true, email: true },

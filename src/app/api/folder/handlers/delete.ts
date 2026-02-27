@@ -17,7 +17,8 @@ export async function DELETEHandler(req: NextRequest, id: string) {
         userId: true,
         permissions: true,
         name: true,
-        user: { select: { userName: true, email: true }},
+        deleted: true
+        user: { select: { userName: true, email: true } },
       },
     });
     if (!folder)
@@ -26,9 +27,13 @@ export async function DELETEHandler(req: NextRequest, id: string) {
       folder.userId === userId ||
       folder.permissions.find((u) => u.id === userId)?.canDelete;
     if (isAuthorized) {
-      const deletedFolder = await prisma.folder.delete({
+      const deletedFolder = !folder.deleted ? await prisma.folder.update({
         where: { id: id },
-      });
+        data: {
+          deleted: true,
+          deletedAt: new Date()
+        }
+      }) : await prisma.folder.delete({ where: { id } })
       await createLog({
         actor: userId,
         action: "FOLDER_DELETE",

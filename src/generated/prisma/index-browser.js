@@ -139,7 +139,9 @@ exports.Prisma.FolderScalarFieldEnum = {
   userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  private: 'private'
+  private: 'private',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt'
 };
 
 exports.Prisma.FileScalarFieldEnum = {
@@ -151,7 +153,9 @@ exports.Prisma.FileScalarFieldEnum = {
   folderId: 'folderId',
   userId: 'userId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt'
 };
 
 exports.Prisma.FolderPermissionScalarFieldEnum = {

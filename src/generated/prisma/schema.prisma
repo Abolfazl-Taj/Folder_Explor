@@ -40,8 +40,9 @@ model Folder {
   parent   Folder?  @relation("FolderChildren", fields: [parentId], references: [id])
   children Folder[] @relation("FolderChildren")
 
-  private Boolean @default(false)
-
+  private     Boolean            @default(false)
+  deleted     Boolean            @default(false)
+  deletedAt   DateTime?
   files       File[]
   permissions FolderPermission[]
 }
@@ -57,8 +58,10 @@ model File {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  folder Folder? @relation(fields: [folderId], references: [id])
-  user   User    @relation(fields: [userId], references: [id])
+  folder    Folder?   @relation(fields: [folderId], references: [id])
+  user      User      @relation(fields: [userId], references: [id])
+  deleted   Boolean   @default(false)
+  deletedAt DateTime?
 }
 
 model FolderPermission {
