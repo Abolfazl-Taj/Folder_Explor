@@ -12,10 +12,12 @@ import { IoCloseSharp } from 'react-icons/io5';
 import Input from '../Input';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
-import { title } from 'process';
+import { LuLock } from 'react-icons/lu';
 
 const FolderForm = ({ type, data, folderId }: Modal) => {
     const nameInput = useRef<HTMLInputElement>(null);
+    const PrevPasswordInput = useRef<HTMLInputElement>(null);
+    const NewPasswordInput = useRef<HTMLInputElement>(null);
     const [isopen, setIsopen] = useState(false)
     const router = useRouter()
     const path = folderId ? `/dashboard/${folderId}` : "/dashboard"
@@ -68,7 +70,41 @@ const FolderForm = ({ type, data, folderId }: Modal) => {
             })
         }
     }
-    const FolderButtonUi: { [key: string]: { style: string, icon: ReactNode, title: string } } = {
+    const LockFolderHandler = () => {
+        if (nameInput.current) {
+            patchRequest("/api/folder", {
+                id: data.id,
+                locked: true,
+                passCode: nameInput.current.value
+            }).then(() => {
+                queryClient.invalidateQueries()
+                toast.success("Folder updated sucessfully!")
+                router.push(path)
+                setIsopen(false)
+            }).catch(err => {
+                toast.error(err.message)
+                router.push(path)
+            })
+        }
+    }
+    const changePasswordHandler = () => {
+        if (PrevPasswordInput.current && NewPasswordInput.current) {
+            patchRequest("/api/folder", {
+                id: data.id,
+                currentPassCode: PrevPasswordInput.current.value,
+                passCode: NewPasswordInput.current.value
+            }).then(() => {
+                queryClient.invalidateQueries()
+                toast.success("Folder updated sucessfully!")
+                router.push(path)
+                setIsopen(false)
+            }).catch(err => {
+                toast.error(err.message)
+                router.push(path)
+            })
+        }
+    }
+    const FolderButtonUi: { [key: string]: { style: string, icon: ReactNode, title: string, } } = {
         "add": {
             style: "flex bg-[#111]/2 backdrop-blur-2xl border border-white/20 w-fit px-4 py-1 rounded-md shadow-2xl gap-2 items-center  hover:bg-[#111]/40 transition-all",
             icon: <FaPlus className="text-red-900" />,
@@ -83,12 +119,17 @@ const FolderForm = ({ type, data, folderId }: Modal) => {
             style: "flex justify-end  text-blue-700 hover:text-blue-800 transition-all hover:scale-110",
             icon: <BsPencilSquare />,
             title: ""
+        },
+        "lock": {
+            style: "text-orange-500",
+            icon: <LuLock />,
+            title: ""
         }
     }
     if (!isopen) {
-        return <button onClick={() => setIsopen(true)} className={`${FolderButtonUi[type].style}`}>
-            {FolderButtonUi[type].title ?? FolderButtonUi[type].title}
-            {FolderButtonUi[type].icon ?? FolderButtonUi[type].icon}
+        return <button onClick={() => setIsopen(true)} className={`${FolderButtonUi[type]?.style}`}>
+            {FolderButtonUi[type]?.title ?? FolderButtonUi[type]?.title}
+            {FolderButtonUi[type]?.icon ?? FolderButtonUi[type]?.icon}
         </button>
     }
     const FolderFormUi: { [key: string]: { ui: ReactNode } } = {
@@ -121,6 +162,20 @@ const FolderForm = ({ type, data, folderId }: Modal) => {
                 </div>
                 <div className="w-full items-center justify-around flex mt-2">
                     <button className="px-12 py-1 rounded-md shadow border border-white/20 bg-green-700 hover:bg-green-900 transition-all" onClick={PatchFolder} >Save</button><button onClick={() => setIsopen(false)} className=" transition-all px-12 py-1 rounded-md shadow border border-white/20 bg-red-900 hover:bg-red-950">Cancel</button>
+                </div></>)
+        },
+        "lock": {
+            ui: (<>                    <h1 className="font-bold text-2xl text-center">Locking Folder</h1>
+                <h3 className="text-center text-gray-300">Your trying to Lock <span className="font-bold border-b text-orange-500">{data?.name}</span> Folder</h3>
+                {!data?.locked && <p className='text-center text-red-500'>Your Folder currently is not protected</p>}
+                {data?.locked && <p className='text-center text-[#fdfdfd]/50 text-sm   self-center'>Your Folder is protected for changing your password we need your prev password</p>}
+                <div className="px-4 flex flex-col gap-4">
+                    <input ref={!data?.locked ? nameInput : PrevPasswordInput} type="text" placeholder={`${data?.locked ? "Prev Password" : "Ex: A1@B!C#d1"}`} className="w-full py-2 outline-none ring ring-white/20 focus-within:ring-blue-500 rounded-md px-4" />
+                    {data?.locked && <input ref={NewPasswordInput} type="text" placeholder={`New Password`} className="w-full py-2 outline-none ring ring-white/20 focus-within:ring-blue-500 rounded-md px-4" />}
+                </div>
+                <div className="w-full items-center justify-around flex my-2 gap-2 px-4">
+                    {!data?.locked && <button className="px-12 py-1 rounded-md shadow border border-white/20 bg-green-700 hover:bg-green-900 transition-all" onClick={LockFolderHandler} >Lock</button>}
+                    {data?.locked && <button onClick={changePasswordHandler} className=" transition-all px-12 py-1 rounded-md shadow border border-white/20 bg-blue-900 hover:bg-blue-950">Change Password</button>}                    <button onClick={() => setIsopen(false)} className=" transition-all px-12 py-1 rounded-md shadow border border-white/20 bg-red-900 hover:bg-red-950">Unlock </button>
                 </div></>)
         }
     }

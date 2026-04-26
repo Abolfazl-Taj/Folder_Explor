@@ -4,6 +4,10 @@ import sortData from "@/app/lib/sortData";
 import { useUser } from "@/hooks/useUser";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import { BsSearch } from "react-icons/bs";
+import useExpo from "@/hooks/useExpo";
+import { usePathname } from "next/navigation";
 
 const sortOptions = [
     { icon: <FaSortAlphaDown />, type: "sort", action: "name" },
@@ -14,9 +18,16 @@ const sortOptions = [
 
 
 
-
 const SortData = ({ sortMethod, setSortMethod }: { sortMethod: any, setSortMethod: any }) => {
     const { user } = useUser();
+    const pathName = usePathname()
+    const { setFolders, setFiles, safeData } = useExpo()
+
+    const searchInputHandler = (e: any) => {
+        const value = e.target?.value
+        setFolders(safeData?.folders?.filter(f => f.name.toLocaleLowerCase().includes(value.toLocaleLowerCase())))
+        setFiles(safeData?.files?.filter(f => f.name.toLocaleLowerCase().includes(value.toLocaleLowerCase())))
+    }
     return (
         <div className="w-full flex items-center justify-between px-6 py-1 border border-white/10 rounded-full  backdrop-blur">
             <Link href={"/settings"}>
@@ -29,7 +40,10 @@ const SortData = ({ sortMethod, setSortMethod }: { sortMethod: any, setSortMetho
                     className="w-12 h-12 rounded-full border border-red-950 object-cover"
                 />
             </Link>
-
+            <label htmlFor="#searchInput" className={` ${pathName === "/bin" ? "hidden" : ""} rounded-full ring-2 transition-all ring-white/30 w-1/2  px-4 py-2 shadow group flex items-center gap-4 focus-within:ring-red-900`}>
+                <BsSearch className="text-2xl text-white/40 group-focus-within:text-red-800 transition-all" />
+                <input id="searchInput" type="text" className="w-full outline-none " onChange={searchInputHandler} />
+            </label>
             <div className="flex items-center gap-2 sm:gap-4">
                 {sortOptions.map(({ icon, type, action }, index) => (
                     <button
@@ -40,6 +54,7 @@ const SortData = ({ sortMethod, setSortMethod }: { sortMethod: any, setSortMetho
                                 field: action
                             })
                         }}
+
                         className={`
                         ${type === sortMethod.type && sortMethod.field === action ? "bg-red-950 scale-110" : ""}
                             
@@ -49,6 +64,7 @@ const SortData = ({ sortMethod, setSortMethod }: { sortMethod: any, setSortMetho
                         {icon}
                     </button>
                 ))}
+
             </div>
         </div>
     );

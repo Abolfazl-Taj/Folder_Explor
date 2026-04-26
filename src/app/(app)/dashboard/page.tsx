@@ -34,7 +34,7 @@ const Dashboard = () => {
         <Loading />
       ) : folders?.length !== 0 || files?.length !== 0 ? (
         <>
-          <div className="max-h-full overflow-y-auto flex flex-col gap-4">
+          <div className="max-h-full h-[500px] overflow-y-auto flex flex-col gap-4">
             <Folders data={data?.folders} />
             <Files queryKey={["folder", null]} data={data?.files} />
           </div>

@@ -26,7 +26,9 @@ export const GET = async (req: NextRequest) => {
           createdAt: true,
           updatedAt: true,
           deleted:true,
-          deletedAt:true
+          deletedAt: true,
+          locked: true,
+          passCode: true
         },
       }),
       prisma.file.findMany({

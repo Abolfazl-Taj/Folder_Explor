@@ -45,6 +45,8 @@ model Folder {
   deletedAt   DateTime?
   files       File[]
   permissions FolderPermission[]
+  locked Boolean @default(false)
+  passCode String? 
 }
 
 model File {
@@ -112,6 +114,11 @@ enum ActivityAction {
   PERMISSION_UPDATE
   PERMISSION_REMOVE
   PROFILE_UPDATE
+  FILE_RESTORED
+  FOLDER_RESTORED
+  FOLDER_RECYCLED
+  FILE_RECYCLED
+  
 }
 
 enum EntityType {

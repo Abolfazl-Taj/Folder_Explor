@@ -4,9 +4,11 @@ import Files from "@/app/components/Files"
 import Folders from "@/app/components/Folders"
 import Loading from "@/app/components/Loading"
 import SortData from "@/app/components/SortData"
+import { deleteRequest } from "@/app/lib/fetchRequest"
 import sortData from "@/app/lib/sortData"
 import { Folder, File } from "@/generated/prisma"
 import useExpo from "@/hooks/useExpo"
+import axios from "axios"
 import Image from "next/image"
 import { useEffect, useState } from "react"
 import { FiTrash2 } from "react-icons/fi"
@@ -47,6 +49,13 @@ const RecycleBinPage = () => {
         (data?.folders?.length ?? 0) === 0 &&
         (data?.files?.length ?? 0) === 0
 
+    const deleteManyHandler = async () => {
+        const ids = data?.folders?.filter(f => f.deleted).map(f => f.id)
+        console.log(ids);
+        const res = axios.delete(`/api/deletemany/${ids}`)
+        console.log(res);
+
+    }
     return (
         <div className="flex-1 p-6 flex flex-col space-y-6 relative  text-white">
 
@@ -59,19 +68,19 @@ const RecycleBinPage = () => {
 
                 <div className="flex items-center gap-4 w-full justify-end">
                     <div className="w-1/3">
-                    <SortData
-                        sortMethod={sortMethod}
-                        setSortMethod={setSortMethod}
+                        <SortData
+                            sortMethod={sortMethod}
+                            setSortMethod={setSortMethod}
                         />
-                        </div>
+                    </div>
 
                     {!isEmpty && (
-                        <button className="flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 transition px-4 py-2 rounded-lg text-sm font-semibol">
-                            <IoIosWarning className="text-2xl"/>
+                        <button onClick={deleteManyHandler} className="flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 transition px-4 py-2 rounded-lg text-sm font-semibol">
+                            <IoIosWarning className="text-2xl" />
                             <span>Clear the bin</span>
                         </button>
                     )}
-                    </div>
+                </div>
             </div>
 
             {/* Content */}

@@ -36,19 +36,35 @@ export async function DELETEHandler(req: NextRequest, id: string) {
         where: { id: deletedFile.folderId },
         select: { name: true },
       })) : null
-    await createLog({
-      actor: userId,
-      action: "FILE_DELETE",
-      entityId: deletedFile.id,
-      entityType: "FILE",
-      ownerId: deletedFile.userId,
-      metadata: {
-        doneBy: user?.userName || user?.email,
-        fileName: deletedFile.name,
-        size: deletedFile.size || 0,
-        parentFolderName: parentFolder?.name || "Main Folder",
-      },
-    });
+    if (deletedFile.deleted) {
+      await createLog({
+        actor: userId,
+        action: "FILE_DELETE",
+        entityId: deletedFile.id,
+        entityType: "FILE",
+        ownerId: deletedFile.userId,
+        metadata: {
+          doneBy: user?.userName || user?.email,
+          fileName: deletedFile.name,
+          size: deletedFile.size || 0,
+          parentFolderName: parentFolder?.name || "Main Folder",
+        },
+      });
+    } else {
+      await createLog({
+        actor: userId,
+        action: "FILE_RECYCLED",
+        entityId: deletedFile.id,
+        entityType: "FILE",
+        ownerId: deletedFile.userId,
+        metadata: {
+          doneBy: user?.userName || user?.email,
+          fileName: deletedFile.name,
+          size: deletedFile.size || 0,
+          parentFolderName: parentFolder?.name || "Main Folder",
+        },
+      });
+    }
     return nextResponse(
       { message: "File deleted successfully!", deletedFile },
       { status: 200 },

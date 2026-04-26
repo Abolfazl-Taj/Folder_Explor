@@ -55,7 +55,11 @@ export namespace $Enums {
   PERMISSION_ADD: 'PERMISSION_ADD',
   PERMISSION_UPDATE: 'PERMISSION_UPDATE',
   PERMISSION_REMOVE: 'PERMISSION_REMOVE',
-  PROFILE_UPDATE: 'PROFILE_UPDATE'
+  PROFILE_UPDATE: 'PROFILE_UPDATE',
+  FILE_RESTORED: 'FILE_RESTORED',
+  FOLDER_RESTORED: 'FOLDER_RESTORED',
+  FOLDER_RECYCLED: 'FOLDER_RECYCLED',
+  FILE_RECYCLED: 'FILE_RECYCLED'
 };
 
 export type ActivityAction = (typeof ActivityAction)[keyof typeof ActivityAction]
@@ -2642,6 +2646,8 @@ export namespace Prisma {
     private: boolean | null
     deleted: boolean | null
     deletedAt: Date | null
+    locked: boolean | null
+    passCode: string | null
   }
 
   export type FolderMaxAggregateOutputType = {
@@ -2654,6 +2660,8 @@ export namespace Prisma {
     private: boolean | null
     deleted: boolean | null
     deletedAt: Date | null
+    locked: boolean | null
+    passCode: string | null
   }
 
   export type FolderCountAggregateOutputType = {
@@ -2666,6 +2674,8 @@ export namespace Prisma {
     private: number
     deleted: number
     deletedAt: number
+    locked: number
+    passCode: number
     _all: number
   }
 
@@ -2680,6 +2690,8 @@ export namespace Prisma {
     private?: true
     deleted?: true
     deletedAt?: true
+    locked?: true
+    passCode?: true
   }
 
   export type FolderMaxAggregateInputType = {
@@ -2692,6 +2704,8 @@ export namespace Prisma {
     private?: true
     deleted?: true
     deletedAt?: true
+    locked?: true
+    passCode?: true
   }
 
   export type FolderCountAggregateInputType = {
@@ -2704,6 +2718,8 @@ export namespace Prisma {
     private?: true
     deleted?: true
     deletedAt?: true
+    locked?: true
+    passCode?: true
     _all?: true
   }
 
@@ -2789,6 +2805,8 @@ export namespace Prisma {
     private: boolean
     deleted: boolean
     deletedAt: Date | null
+    locked: boolean
+    passCode: string | null
     _count: FolderCountAggregateOutputType | null
     _min: FolderMinAggregateOutputType | null
     _max: FolderMaxAggregateOutputType | null
@@ -2818,6 +2836,8 @@ export namespace Prisma {
     private?: boolean
     deleted?: boolean
     deletedAt?: boolean
+    locked?: boolean
+    passCode?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     parent?: boolean | Folder$parentArgs<ExtArgs>
     children?: boolean | Folder$childrenArgs<ExtArgs>
@@ -2836,6 +2856,8 @@ export namespace Prisma {
     private?: boolean
     deleted?: boolean
     deletedAt?: boolean
+    locked?: boolean
+    passCode?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     parent?: boolean | Folder$parentArgs<ExtArgs>
   }, ExtArgs["result"]["folder"]>
@@ -2850,6 +2872,8 @@ export namespace Prisma {
     private?: boolean
     deleted?: boolean
     deletedAt?: boolean
+    locked?: boolean
+    passCode?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     parent?: boolean | Folder$parentArgs<ExtArgs>
   }, ExtArgs["result"]["folder"]>
@@ -2864,9 +2888,11 @@ export namespace Prisma {
     private?: boolean
     deleted?: boolean
     deletedAt?: boolean
+    locked?: boolean
+    passCode?: boolean
   }
 
-  export type FolderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "parentId" | "userId" | "createdAt" | "updatedAt" | "private" | "deleted" | "deletedAt", ExtArgs["result"]["folder"]>
+  export type FolderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "parentId" | "userId" | "createdAt" | "updatedAt" | "private" | "deleted" | "deletedAt" | "locked" | "passCode", ExtArgs["result"]["folder"]>
   export type FolderInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     parent?: boolean | Folder$parentArgs<ExtArgs>
@@ -2903,6 +2929,8 @@ export namespace Prisma {
       private: boolean
       deleted: boolean
       deletedAt: Date | null
+      locked: boolean
+      passCode: string | null
     }, ExtArgs["result"]["folder"]>
     composites: {}
   }
@@ -3340,6 +3368,8 @@ export namespace Prisma {
     readonly private: FieldRef<"Folder", 'Boolean'>
     readonly deleted: FieldRef<"Folder", 'Boolean'>
     readonly deletedAt: FieldRef<"Folder", 'DateTime'>
+    readonly locked: FieldRef<"Folder", 'Boolean'>
+    readonly passCode: FieldRef<"Folder", 'String'>
   }
     
 
@@ -7292,7 +7322,9 @@ export namespace Prisma {
     updatedAt: 'updatedAt',
     private: 'private',
     deleted: 'deleted',
-    deletedAt: 'deletedAt'
+    deletedAt: 'deletedAt',
+    locked: 'locked',
+    passCode: 'passCode'
   };
 
   export type FolderScalarFieldEnum = (typeof FolderScalarFieldEnum)[keyof typeof FolderScalarFieldEnum]
@@ -7610,6 +7642,8 @@ export namespace Prisma {
     private?: BoolFilter<"Folder"> | boolean
     deleted?: BoolFilter<"Folder"> | boolean
     deletedAt?: DateTimeNullableFilter<"Folder"> | Date | string | null
+    locked?: BoolFilter<"Folder"> | boolean
+    passCode?: StringNullableFilter<"Folder"> | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     parent?: XOR<FolderNullableScalarRelationFilter, FolderWhereInput> | null
     children?: FolderListRelationFilter
@@ -7627,6 +7661,8 @@ export namespace Prisma {
     private?: SortOrder
     deleted?: SortOrder
     deletedAt?: SortOrderInput | SortOrder
+    locked?: SortOrder
+    passCode?: SortOrderInput | SortOrder
     user?: UserOrderByWithRelationInput
     parent?: FolderOrderByWithRelationInput
     children?: FolderOrderByRelationAggregateInput
@@ -7647,6 +7683,8 @@ export namespace Prisma {
     private?: BoolFilter<"Folder"> | boolean
     deleted?: BoolFilter<"Folder"> | boolean
     deletedAt?: DateTimeNullableFilter<"Folder"> | Date | string | null
+    locked?: BoolFilter<"Folder"> | boolean
+    passCode?: StringNullableFilter<"Folder"> | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     parent?: XOR<FolderNullableScalarRelationFilter, FolderWhereInput> | null
     children?: FolderListRelationFilter
@@ -7664,6 +7702,8 @@ export namespace Prisma {
     private?: SortOrder
     deleted?: SortOrder
     deletedAt?: SortOrderInput | SortOrder
+    locked?: SortOrder
+    passCode?: SortOrderInput | SortOrder
     _count?: FolderCountOrderByAggregateInput
     _max?: FolderMaxOrderByAggregateInput
     _min?: FolderMinOrderByAggregateInput
@@ -7682,6 +7722,8 @@ export namespace Prisma {
     private?: BoolWithAggregatesFilter<"Folder"> | boolean
     deleted?: BoolWithAggregatesFilter<"Folder"> | boolean
     deletedAt?: DateTimeNullableWithAggregatesFilter<"Folder"> | Date | string | null
+    locked?: BoolWithAggregatesFilter<"Folder"> | boolean
+    passCode?: StringNullableWithAggregatesFilter<"Folder"> | string | null
   }
 
   export type FileWhereInput = {
@@ -8028,6 +8070,8 @@ export namespace Prisma {
     private?: boolean
     deleted?: boolean
     deletedAt?: Date | string | null
+    locked?: boolean
+    passCode?: string | null
     user: UserCreateNestedOneWithoutFoldersInput
     parent?: FolderCreateNestedOneWithoutChildrenInput
     children?: FolderCreateNestedManyWithoutParentInput
@@ -8045,6 +8089,8 @@ export namespace Prisma {
     private?: boolean
     deleted?: boolean
     deletedAt?: Date | string | null
+    locked?: boolean
+    passCode?: string | null
     children?: FolderUncheckedCreateNestedManyWithoutParentInput
     files?: FileUncheckedCreateNestedManyWithoutFolderInput
     permissions?: FolderPermissionUncheckedCreateNestedManyWithoutFolderInput
@@ -8058,6 +8104,8 @@ export namespace Prisma {
     private?: BoolFieldUpdateOperationsInput | boolean
     deleted?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    locked?: BoolFieldUpdateOperationsInput | boolean
+    passCode?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutFoldersNestedInput
     parent?: FolderUpdateOneWithoutChildrenNestedInput
     children?: FolderUpdateManyWithoutParentNestedInput
@@ -8075,6 +8123,8 @@ export namespace Prisma {
     private?: BoolFieldUpdateOperationsInput | boolean
     deleted?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    locked?: BoolFieldUpdateOperationsInput | boolean
+    passCode?: NullableStringFieldUpdateOperationsInput | string | null
     children?: FolderUncheckedUpdateManyWithoutParentNestedInput
     files?: FileUncheckedUpdateManyWithoutFolderNestedInput
     permissions?: FolderPermissionUncheckedUpdateManyWithoutFolderNestedInput
@@ -8090,6 +8140,8 @@ export namespace Prisma {
     private?: boolean
     deleted?: boolean
     deletedAt?: Date | string | null
+    locked?: boolean
+    passCode?: string | null
   }
 
   export type FolderUpdateManyMutationInput = {
@@ -8100,6 +8152,8 @@ export namespace Prisma {
     private?: BoolFieldUpdateOperationsInput | boolean
     deleted?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    locked?: BoolFieldUpdateOperationsInput | boolean
+    passCode?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type FolderUncheckedUpdateManyInput = {
@@ -8112,6 +8166,8 @@ export namespace Prisma {
     private?: BoolFieldUpdateOperationsInput | boolean
     deleted?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    locked?: BoolFieldUpdateOperationsInput | boolean
+    passCode?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type FileCreateInput = {
@@ -8575,6 +8631,8 @@ export namespace Prisma {
     private?: SortOrder
     deleted?: SortOrder
     deletedAt?: SortOrder
+    locked?: SortOrder
+    passCode?: SortOrder
   }
 
   export type FolderMaxOrderByAggregateInput = {
@@ -8587,6 +8645,8 @@ export namespace Prisma {
     private?: SortOrder
     deleted?: SortOrder
     deletedAt?: SortOrder
+    locked?: SortOrder
+    passCode?: SortOrder
   }
 
   export type FolderMinOrderByAggregateInput = {
@@ -8599,6 +8659,8 @@ export namespace Prisma {
     private?: SortOrder
     deleted?: SortOrder
     deletedAt?: SortOrder
+    locked?: SortOrder
+    passCode?: SortOrder
   }
 
   export type BoolWithAggregatesFilter<$PrismaModel = never> = {
@@ -9612,6 +9674,8 @@ export namespace Prisma {
     private?: boolean
     deleted?: boolean
     deletedAt?: Date | string | null
+    locked?: boolean
+    passCode?: string | null
     parent?: FolderCreateNestedOneWithoutChildrenInput
     children?: FolderCreateNestedManyWithoutParentInput
     files?: FileCreateNestedManyWithoutFolderInput
@@ -9627,6 +9691,8 @@ export namespace Prisma {
     private?: boolean
     deleted?: boolean
     deletedAt?: Date | string | null
+    locked?: boolean
+    passCode?: string | null
     children?: FolderUncheckedCreateNestedManyWithoutParentInput
     files?: FileUncheckedCreateNestedManyWithoutFolderInput
     permissions?: FolderPermissionUncheckedCreateNestedManyWithoutFolderInput
@@ -9795,6 +9861,8 @@ export namespace Prisma {
     private?: BoolFilter<"Folder"> | boolean
     deleted?: BoolFilter<"Folder"> | boolean
     deletedAt?: DateTimeNullableFilter<"Folder"> | Date | string | null
+    locked?: BoolFilter<"Folder"> | boolean
+    passCode?: StringNullableFilter<"Folder"> | string | null
   }
 
   export type FileUpsertWithWhereUniqueWithoutUserInput = {
@@ -9950,6 +10018,8 @@ export namespace Prisma {
     private?: boolean
     deleted?: boolean
     deletedAt?: Date | string | null
+    locked?: boolean
+    passCode?: string | null
     user: UserCreateNestedOneWithoutFoldersInput
     parent?: FolderCreateNestedOneWithoutChildrenInput
     files?: FileCreateNestedManyWithoutFolderInput
@@ -9966,6 +10036,8 @@ export namespace Prisma {
     private?: boolean
     deleted?: boolean
     deletedAt?: Date | string | null
+    locked?: boolean
+    passCode?: string | null
     files?: FileUncheckedCreateNestedManyWithoutFolderInput
     permissions?: FolderPermissionUncheckedCreateNestedManyWithoutFolderInput
   }
@@ -9983,6 +10055,8 @@ export namespace Prisma {
     private?: boolean
     deleted?: boolean
     deletedAt?: Date | string | null
+    locked?: boolean
+    passCode?: string | null
     user: UserCreateNestedOneWithoutFoldersInput
     children?: FolderCreateNestedManyWithoutParentInput
     files?: FileCreateNestedManyWithoutFolderInput
@@ -9998,6 +10072,8 @@ export namespace Prisma {
     private?: boolean
     deleted?: boolean
     deletedAt?: Date | string | null
+    locked?: boolean
+    passCode?: string | null
     children?: FolderUncheckedCreateNestedManyWithoutParentInput
     files?: FileUncheckedCreateNestedManyWithoutFolderInput
     permissions?: FolderPermissionUncheckedCreateNestedManyWithoutFolderInput
@@ -10139,6 +10215,8 @@ export namespace Prisma {
     private?: BoolFieldUpdateOperationsInput | boolean
     deleted?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    locked?: BoolFieldUpdateOperationsInput | boolean
+    passCode?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutFoldersNestedInput
     parent?: FolderUpdateOneWithoutChildrenNestedInput
     files?: FileUpdateManyWithoutFolderNestedInput
@@ -10155,6 +10233,8 @@ export namespace Prisma {
     private?: BoolFieldUpdateOperationsInput | boolean
     deleted?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    locked?: BoolFieldUpdateOperationsInput | boolean
+    passCode?: NullableStringFieldUpdateOperationsInput | string | null
     files?: FileUncheckedUpdateManyWithoutFolderNestedInput
     permissions?: FolderPermissionUncheckedUpdateManyWithoutFolderNestedInput
   }
@@ -10215,6 +10295,8 @@ export namespace Prisma {
     private?: boolean
     deleted?: boolean
     deletedAt?: Date | string | null
+    locked?: boolean
+    passCode?: string | null
     user: UserCreateNestedOneWithoutFoldersInput
     parent?: FolderCreateNestedOneWithoutChildrenInput
     children?: FolderCreateNestedManyWithoutParentInput
@@ -10231,6 +10313,8 @@ export namespace Prisma {
     private?: boolean
     deleted?: boolean
     deletedAt?: Date | string | null
+    locked?: boolean
+    passCode?: string | null
     children?: FolderUncheckedCreateNestedManyWithoutParentInput
     permissions?: FolderPermissionUncheckedCreateNestedManyWithoutFolderInput
   }
@@ -10296,6 +10380,8 @@ export namespace Prisma {
     private?: BoolFieldUpdateOperationsInput | boolean
     deleted?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    locked?: BoolFieldUpdateOperationsInput | boolean
+    passCode?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutFoldersNestedInput
     parent?: FolderUpdateOneWithoutChildrenNestedInput
     children?: FolderUpdateManyWithoutParentNestedInput
@@ -10312,6 +10398,8 @@ export namespace Prisma {
     private?: BoolFieldUpdateOperationsInput | boolean
     deleted?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    locked?: BoolFieldUpdateOperationsInput | boolean
+    passCode?: NullableStringFieldUpdateOperationsInput | string | null
     children?: FolderUncheckedUpdateManyWithoutParentNestedInput
     permissions?: FolderPermissionUncheckedUpdateManyWithoutFolderNestedInput
   }
@@ -10367,6 +10455,8 @@ export namespace Prisma {
     private?: boolean
     deleted?: boolean
     deletedAt?: Date | string | null
+    locked?: boolean
+    passCode?: string | null
     user: UserCreateNestedOneWithoutFoldersInput
     parent?: FolderCreateNestedOneWithoutChildrenInput
     children?: FolderCreateNestedManyWithoutParentInput
@@ -10383,6 +10473,8 @@ export namespace Prisma {
     private?: boolean
     deleted?: boolean
     deletedAt?: Date | string | null
+    locked?: boolean
+    passCode?: string | null
     children?: FolderUncheckedCreateNestedManyWithoutParentInput
     files?: FileUncheckedCreateNestedManyWithoutFolderInput
   }
@@ -10448,6 +10540,8 @@ export namespace Prisma {
     private?: BoolFieldUpdateOperationsInput | boolean
     deleted?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    locked?: BoolFieldUpdateOperationsInput | boolean
+    passCode?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutFoldersNestedInput
     parent?: FolderUpdateOneWithoutChildrenNestedInput
     children?: FolderUpdateManyWithoutParentNestedInput
@@ -10464,6 +10558,8 @@ export namespace Prisma {
     private?: BoolFieldUpdateOperationsInput | boolean
     deleted?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    locked?: BoolFieldUpdateOperationsInput | boolean
+    passCode?: NullableStringFieldUpdateOperationsInput | string | null
     children?: FolderUncheckedUpdateManyWithoutParentNestedInput
     files?: FileUncheckedUpdateManyWithoutFolderNestedInput
   }
@@ -10680,6 +10776,8 @@ export namespace Prisma {
     private?: boolean
     deleted?: boolean
     deletedAt?: Date | string | null
+    locked?: boolean
+    passCode?: string | null
   }
 
   export type FileCreateManyUserInput = {
@@ -10732,6 +10830,8 @@ export namespace Prisma {
     private?: BoolFieldUpdateOperationsInput | boolean
     deleted?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    locked?: BoolFieldUpdateOperationsInput | boolean
+    passCode?: NullableStringFieldUpdateOperationsInput | string | null
     parent?: FolderUpdateOneWithoutChildrenNestedInput
     children?: FolderUpdateManyWithoutParentNestedInput
     files?: FileUpdateManyWithoutFolderNestedInput
@@ -10747,6 +10847,8 @@ export namespace Prisma {
     private?: BoolFieldUpdateOperationsInput | boolean
     deleted?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    locked?: BoolFieldUpdateOperationsInput | boolean
+    passCode?: NullableStringFieldUpdateOperationsInput | string | null
     children?: FolderUncheckedUpdateManyWithoutParentNestedInput
     files?: FileUncheckedUpdateManyWithoutFolderNestedInput
     permissions?: FolderPermissionUncheckedUpdateManyWithoutFolderNestedInput
@@ -10761,6 +10863,8 @@ export namespace Prisma {
     private?: BoolFieldUpdateOperationsInput | boolean
     deleted?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    locked?: BoolFieldUpdateOperationsInput | boolean
+    passCode?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type FileUpdateWithoutUserInput = {
@@ -10898,6 +11002,8 @@ export namespace Prisma {
     private?: boolean
     deleted?: boolean
     deletedAt?: Date | string | null
+    locked?: boolean
+    passCode?: string | null
   }
 
   export type FileCreateManyFolderInput = {
@@ -10930,6 +11036,8 @@ export namespace Prisma {
     private?: BoolFieldUpdateOperationsInput | boolean
     deleted?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    locked?: BoolFieldUpdateOperationsInput | boolean
+    passCode?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutFoldersNestedInput
     children?: FolderUpdateManyWithoutParentNestedInput
     files?: FileUpdateManyWithoutFolderNestedInput
@@ -10945,6 +11053,8 @@ export namespace Prisma {
     private?: BoolFieldUpdateOperationsInput | boolean
     deleted?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    locked?: BoolFieldUpdateOperationsInput | boolean
+    passCode?: NullableStringFieldUpdateOperationsInput | string | null
     children?: FolderUncheckedUpdateManyWithoutParentNestedInput
     files?: FileUncheckedUpdateManyWithoutFolderNestedInput
     permissions?: FolderPermissionUncheckedUpdateManyWithoutFolderNestedInput
@@ -10959,6 +11069,8 @@ export namespace Prisma {
     private?: BoolFieldUpdateOperationsInput | boolean
     deleted?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    locked?: BoolFieldUpdateOperationsInput | boolean
+    passCode?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type FileUpdateWithoutFolderInput = {

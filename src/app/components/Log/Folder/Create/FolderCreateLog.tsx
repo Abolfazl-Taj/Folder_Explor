@@ -6,7 +6,7 @@ import { MdAlternateEmail } from "react-icons/md";
 const FolderCreateLog = ({ data }: { data: ActivityLog }) => {
 
     return (
-        <li className="w-full flex flex-col gap-1 bg-green-400/20 p-4 border border-green-400 rounded-md shadow-md hover:bg-green-400/50 hover:border-green-200 transition-all">
+        <li className="w-full flex flex-col  gap-1 bg-green-400/20 p-4 border border-green-400 rounded-md shadow-md hover:bg-green-400/50 hover:border-green-200 transition-all">
             <h1 className="flex items-center gap-1 text-green-400 font-bold">
                 <span className="text-xl">
                     <FaFolderPlus />

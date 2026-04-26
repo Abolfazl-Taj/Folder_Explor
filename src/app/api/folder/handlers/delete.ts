@@ -34,18 +34,33 @@ export async function DELETEHandler(req: NextRequest, id: string) {
           deletedAt: new Date()
         }
       }) : await prisma.folder.delete({ where: { id } })
-      await createLog({
-        actor: userId,
-        action: "FOLDER_DELETE",
-        entityId: id,
-        ownerId: folder.userId,
-        entityType: "FOLDER",
-        metadata: {
-          doneBy: folder.user.userName || folder.user.email,
-          desc: `Folder named as ${folder.name} deleted by ${folder.user.userName || folder.user.email}.`,
-          folderName: folder.name,
-        },
-      });
+      if (deletedFolder.deleted) {
+        await createLog({
+          actor: userId,
+          action: "FOLDER_DELETE",
+          entityId: id,
+          ownerId: folder.userId,
+          entityType: "FOLDER",
+          metadata: {
+            doneBy: folder.user.userName || folder.user.email,
+            desc: `Folder named as ${folder.name} deleted by ${folder.user.userName || folder.user.email}.`,
+            folderName: folder.name,
+          },
+        });
+      } else {
+        await createLog({
+          actor: userId,
+          action: "FOLDER_RECYCLED",
+          entityId: id,
+          ownerId: folder.userId,
+          entityType: "FOLDER",
+          metadata: {
+            doneBy: folder.user.userName || folder.user.email,
+            desc: `Folder named as ${folder.name} deleted by ${folder.user.userName || folder.user.email}.`,
+            folderName: folder.name,
+          },
+        });
+      }
       return nextResponse(
         { message: "Folder deleted successfully!", deletedFolder },
         { status: 200 },

@@ -141,7 +141,9 @@ exports.Prisma.FolderScalarFieldEnum = {
   updatedAt: 'updatedAt',
   private: 'private',
   deleted: 'deleted',
-  deletedAt: 'deletedAt'
+  deletedAt: 'deletedAt',
+  locked: 'locked',
+  passCode: 'passCode'
 };
 
 exports.Prisma.FileScalarFieldEnum = {
@@ -216,7 +218,11 @@ exports.ActivityAction = exports.$Enums.ActivityAction = {
   PERMISSION_ADD: 'PERMISSION_ADD',
   PERMISSION_UPDATE: 'PERMISSION_UPDATE',
   PERMISSION_REMOVE: 'PERMISSION_REMOVE',
-  PROFILE_UPDATE: 'PROFILE_UPDATE'
+  PROFILE_UPDATE: 'PROFILE_UPDATE',
+  FILE_RESTORED: 'FILE_RESTORED',
+  FOLDER_RESTORED: 'FOLDER_RESTORED',
+  FOLDER_RECYCLED: 'FOLDER_RECYCLED',
+  FILE_RECYCLED: 'FILE_RECYCLED'
 };
 
 exports.EntityType = exports.$Enums.EntityType = {

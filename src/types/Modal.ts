@@ -1,10 +1,12 @@
 import { FolderType } from "./Expo";
 
 export type Modal = {
-    type: "add" | "delete" | "update";
+    type: "add" | "delete" | "update" | "restore" | "lock";
     data?: FolderType | any;
     folderId?: string | null
-    form?: "folder" | "file" | "permission"
+    form?: "folder" | "file" | "permission" |"restore"
     id?: string
-    permissions?: any
+    permissions?: any,
+    name?: string
+    entityType? : "file" | "folder"
 }

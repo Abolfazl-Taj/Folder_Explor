@@ -16,7 +16,7 @@ const Files = ({ data, queryKey, bin }: { data: FileType[], queryKey: any, bin: 
                     : "default";
 
                 return <div key={file.id} className="flex justify-between items-center gap-4 group bg-transparent rounded-lg py-2 px-4 border-b border-gray-300/20 shadow shadow-[#000]/30  hover:bg-[#222]">
-                    <Link href={!bin ? `/dashboard/file/${file.id}` : ""}  className="flex-1">
+                    <Link href={!bin ? `/dashboard/file/${file.id}` : ""} className="flex-1">
                         <div
                             className="flex-1">
                             <div title={file.name}
@@ -35,12 +35,14 @@ const Files = ({ data, queryKey, bin }: { data: FileType[], queryKey: any, bin: 
                             </div>
                         </div>
                     </Link>
+                    {bin && <ModalForm form="restore" entityType="file" type="restore" id={file.id} name={file.name} />}
                     <ModalForm type="delete" form="file" data={file} />
                 </div>
 
             })}
         </div >
     )
+
 }
 
 export default Files

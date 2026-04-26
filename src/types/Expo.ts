@@ -19,6 +19,8 @@ export type FolderType = {
   createdAt: any;
   updatedAt?: any;
   parentId?: string;
+  locked?: boolean,
+  passCode?: string
 };
 
 export type ExpoContextType = {

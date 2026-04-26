@@ -49,10 +49,10 @@ const LogPage = () => {
             No activity logs yet
           </div>
         ) : (
-          <ul className="flex flex-wrap gap-x-4 gap-y-4  justify-around items-stretch ">
+          <ul className="flex flex-wrap gap-x-4 gap-y-4 justify-center">
             {logData.data.map((data: ActivityLog) => {
               const [entity, type] = data.action.split("_")
-              return <div key={data.id} className="w-full md:w-[32%] flex">
+              return <div key={data.id} className="w-full flex md:w-[32%]">
                 {logUi({ entity, type, data })}
               </div>
             })}
