@@ -58,7 +58,7 @@ const Dashboard = () => {
         </div>
       )}
 
-      <div className=" w-full max-w-2xl bottom-4 flex justify-between px-20 left-0  mx-auto">
+      <div className="w-full  bottom-4 flex justify-around lg:px-20 left-0 ">
         <ModalForm type="add" form="file" folderId={null} />
         <ModalForm type="add" />
       </div>

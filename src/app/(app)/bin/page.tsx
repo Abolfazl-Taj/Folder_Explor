@@ -4,25 +4,27 @@ import Files from "@/app/components/Files"
 import Folders from "@/app/components/Folders"
 import Loading from "@/app/components/Loading"
 import SortData from "@/app/components/SortData"
-import { deleteRequest } from "@/app/lib/fetchRequest"
 import sortData from "@/app/lib/sortData"
 import { Folder, File } from "@/generated/prisma"
 import useExpo from "@/hooks/useExpo"
+import { useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
-import Image from "next/image"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { FiTrash2 } from "react-icons/fi"
 import { HiOutlineRefresh } from "react-icons/hi"
 import { IoIosWarning } from "react-icons/io"
+import { toast } from "react-toastify"
 
 const RecycleBinPage = () => {
     const { folders, files, loading } = useExpo()
     const [data, setData] = useState<{ files?: File[]; folders?: Folder[] }>({})
+    const router = useRouter()
     const [sortMethod, setSortMethod] = useState({
         type: "sort",
         field: "deletedAt",
     })
-
+    const queryClinet = useQueryClient()
     useEffect(() => {
         const visualFolders =
             folders?.filter((f: Folder) => f.deleted) || []
@@ -50,11 +52,18 @@ const RecycleBinPage = () => {
         (data?.files?.length ?? 0) === 0
 
     const deleteManyHandler = async () => {
-        const ids = data?.folders?.filter(f => f.deleted).map(f => f.id)
-        console.log(ids);
-        const res = axios.delete(`/api/deletemany/${ids}`)
-        console.log(res);
-
+        const folderIds = data?.folders?.filter(f => f.deleted).map(f => f.id)
+        const fileIds = data.files.filter(f => f.deleted).map(f => f.id)
+        axios.delete(`/api/deletemany`, {
+            data: {
+                folderIds,
+                fileIds
+            }
+        }).then(() => {
+            queryClinet.invalidateQueries()
+            toast.success("Recycle bin got cleared sucessfully")
+            router.push("/dashboard")
+        })
     }
     return (
         <div className="flex-1 p-6 flex flex-col space-y-6 relative  text-white">

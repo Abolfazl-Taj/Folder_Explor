@@ -153,7 +153,9 @@ const PermissionForm = ({ folderId, permissions: authorizedBy }: { folderId: str
                 className="flex items-center gap-2 bg-[#111]/50 hover:bg-[#111]/70 border border-white/20 text-white font-semibold px-4 py-2 rounded-lg  hover:border-white/20 hover:shadow-lg  transition group"
             >
                 <IoIosGitMerge className="text-red-800 text-xl group-hover:text-red-500 transition" />
+                <span className='hidden lg:block'>
                 Modify Permissions
+                </span>
             </button>
         </>
     )

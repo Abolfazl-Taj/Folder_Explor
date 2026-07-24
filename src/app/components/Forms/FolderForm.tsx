@@ -5,7 +5,7 @@ import { Modal } from '@/types/Modal';
 import { useQueryClient } from '@tanstack/react-query';
 import React, { ReactNode, useRef, useState } from 'react'
 import { BsPencilSquare } from 'react-icons/bs';
-import { FaPlus } from 'react-icons/fa';
+import { FaLockOpen, FaPlus } from 'react-icons/fa';
 import { FaFolderClosed, FaTrashCan } from 'react-icons/fa6';
 import FormikForm from '../FormikForm';
 import { IoCloseSharp } from 'react-icons/io5';
@@ -106,8 +106,8 @@ const FolderForm = ({ type, data, folderId }: Modal) => {
     }
     const FolderButtonUi: { [key: string]: { style: string, icon: ReactNode, title: string, } } = {
         "add": {
-            style: "flex bg-[#111]/2 backdrop-blur-2xl border border-white/20 w-fit px-4 py-1 rounded-md shadow-2xl gap-2 items-center  hover:bg-[#111]/40 transition-all",
-            icon: <FaPlus className="text-red-900" />,
+            style: "flex flex-1/2 lg:flex-none justify-center bg-[#111]/2 backdrop-blur-2xl border border-white/20 w-fit px-4 py-1 rounded-md shadow-2xl gap-2 items-center  hover:bg-[#111]/40 transition-all",
+            icon: <FaFolderClosed className="text-red-900" />,
             title: "Create Folder"
         },
         "delete": {
@@ -122,13 +122,16 @@ const FolderForm = ({ type, data, folderId }: Modal) => {
         },
         "lock": {
             style: "text-orange-500",
-            icon: <LuLock />,
+            icon:  data?.locked ? <LuLock /> : <FaLockOpen/>  ,
             title: ""
         }
+        
     }
     if (!isopen) {
-        return <button onClick={() => setIsopen(true)} className={`${FolderButtonUi[type]?.style}`}>
+        return <button onClick={() => setIsopen(true)} className={`${FolderButtonUi[type]?.style} `}>
+            <span className='hidden lg:block'>
             {FolderButtonUi[type]?.title ?? FolderButtonUi[type]?.title}
+            </span>
             {FolderButtonUi[type]?.icon ?? FolderButtonUi[type]?.icon}
         </button>
     }

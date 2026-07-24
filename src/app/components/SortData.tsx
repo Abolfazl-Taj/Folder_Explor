@@ -32,7 +32,7 @@ const SortData = ({ sortMethod, setSortMethod }: { sortMethod: any, setSortMetho
         <div className="w-full flex items-center justify-between px-6 py-1 border border-white/10 rounded-full  backdrop-blur">
             <Link href={"/settings"}>
                 <Image
-                    unoptimized
+                    unoptimized={true}
                     src={user?.img || "https://ui-avatars.com/api/?name=user&background=111&color=fff"}
                     alt={user?.userName || "User"}
                     width={48}

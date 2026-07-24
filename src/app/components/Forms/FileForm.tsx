@@ -9,7 +9,7 @@ import { IoCloseSharp } from "react-icons/io5"
 import { deleteRequest, postRequest } from "@/app/lib/fetchRequest"
 import { useRouter } from "next/navigation"
 import { useQueryClient } from "@tanstack/react-query"
-import { FaFileAlt } from "react-icons/fa";
+import { FaFile, FaFileAlt } from "react-icons/fa";
 import { toast } from "react-toastify"
 
 const FileForm = ({ type, folderId = null, data }: Modal) => {
@@ -71,8 +71,8 @@ const FileForm = ({ type, folderId = null, data }: Modal) => {
   }
   const FileButtonUi: { [key: string]: { className: string; icon: ReactNode; title: string } } = {
     "add": {
-      className: "flex bg-[#111]/2 backdrop-blur-2xl border border-white/20 w-fit px-4 py-1 rounded-md shadow-2xl gap-2 items-center hover:bg-[#111]/40 transition-all",
-      icon: <FaPlus className="text-red-900" />,
+      className: "flex-1/2 mx-2 lg:flex-none justify-center flex bg-[#111]/2 backdrop-blur-2xl border border-white/20 w-fit px-4 py-1 rounded-md shadow-2xl gap-2 items-center hover:bg-[#111]/40 transition-all",
+      icon: <FaFile className="text-red-900" />,
       title: "Add File"
     },
     "delete": {
@@ -83,7 +83,7 @@ const FileForm = ({ type, folderId = null, data }: Modal) => {
   }
   const FileFormUi: { [key: string]: { ui: ReactNode } } = {
     "add": {
-      ui: <>  <h1 className="font-bold text-2xl text-center">Add new file</h1>
+      ui: <>  <h1 className="font-bold text-2xl text-center  ">Add new file</h1>
         <FormikForm className="flex flex-col gap-4"
           initialState={{ name: "", content: "" }}
           schema={CreateFileSchema}
@@ -141,7 +141,9 @@ const FileForm = ({ type, folderId = null, data }: Modal) => {
     return <button
       onClick={() => setIsopen(true)}
       className={`${FileButtonUi[type].className}`}>
+      <span className="hidden lg:block">
       {FileButtonUi[type].title ?? FileButtonUi[type].title}
+      </span>
       {FileButtonUi[type].icon ?? FileButtonUi[type].icon}
     </button>
   }

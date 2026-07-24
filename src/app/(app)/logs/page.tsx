@@ -2,9 +2,12 @@
 
 import Loading from "@/app/components/Loading";
 import { getRequest } from "@/app/lib/fetchRequest";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ActivityLog } from "@/generated/prisma";
 import { logUi } from "@/app/lib/logUi";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const LogPage = () => {
   const {
@@ -18,8 +21,9 @@ const LogPage = () => {
     queryFn: () => getRequest({ url: "/api/logs" }),
   });
 
-  console.log(logData);
-  
+  const router = useRouter()
+  const queryClinet = useQueryClient()
+
   if (isLoading) return <Loading />;
 
   if (isError) {
@@ -38,7 +42,21 @@ const LogPage = () => {
     );
   }
 
+  const clearLogs = () => {
+    console.log(logData);
 
+    const logsIds = logData?.data.map(l => l.id)
+
+    axios.delete("/api/deletemany", {
+      data: {
+        logsIds
+      }
+    }).then(() => {
+      queryClinet.invalidateQueries()
+      toast.success("Logs got cleared sucessfully")
+      router.push("/dashboard")
+    })
+  }
   return (
     <div className="w-full px-6 py-8 flex flex-col gap-6">
       <h1 className="font-bold text-2xl text-white">Activity Logs</h1>
@@ -59,7 +77,11 @@ const LogPage = () => {
           </ul>
         )}
       </div>
-      <button onClick={() => refetch()} className="self-center font-bold px-4 py-2 rounded-md bg-green-500 text-white hover:bg-green-700 transition-all cursor-pointer w-[200px]">{isLoading || isPending ? <Loading /> : "Refetch"}</button>
+      <div className="flex w-full justify-center gap-4">
+        <button onClick={() => refetch()} className="self-center font-bold px-4 py-2 rounded-md bg-green-500 text-white hover:bg-green-700 transition-all cursor-pointer w-[200px]">{isLoading || isPending ? <Loading /> : "Refetch"}</button>
+        <button onClick={clearLogs} className="self-center font-bold px-4 py-2 rounded-md bg-red-500 text-white hover:bg-red-700 transition-all cursor-pointer w-[200px]">{isLoading || isPending ? <Loading /> : "Clear All logs"}</button>
+      </div>
+
     </div>
   );
 };

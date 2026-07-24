@@ -73,7 +73,7 @@ const FolderPage = ({ params }: { params: { slug?: string[] } }) => {
                 </div>
             )}
 
-            <div className=" w-full max-w-2xl bottom-4 flex justify-between px-20 left-0  mx-auto">
+            <div className=" w-full max-w-2xl bottom-4 flex   lg:justify-between justify-around left-0  mx-auto  ">
                 <ModalForm type="add" form="file" folderId={rawData?.folder?.id} />
                 <ModalForm type="add" form="permission" folderId={rawData?.folder?.id} permissions={rawData?.folder?.permissions} />
                 <ModalForm type="add" folderId={rawData?.folder?.id} />

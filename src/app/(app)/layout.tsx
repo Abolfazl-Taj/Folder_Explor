@@ -6,7 +6,7 @@ import { Bounce, ToastContainer } from "react-toastify"
 const AppLayout = ({ children }: { children: ReactNode }) => {
     return <ExpoProvider>
         <div className="min-w-full min-h-screen overflow-hidden  animatedbg flex flex-col items-start md:justify-center md:items-center bg-gradient-to-r from-[#000]/20 via-[#111]/20 to-[#222]/20">
-            <Continer className="gap-4">
+            <Continer className="gap-4 relative overflow-x-hidden">
                 <div className="bg-gradient-to-br from-white/5 via-[#1a1a1a]/80 to-[#0f0f0f]/60 backdrop-blur-[6px] backdrop-saturate-[180%]  rounded-[12px] w-full  text-white
          border border-white/20 gap-2 flex justify-between min-h-screen md:min-h-[700px]">
                     <SideBar />

@@ -1,15 +1,12 @@
 "use client"
 import { FolderType } from "@/types/Expo"
-import { usePathname, useRouter } from "next/navigation"
-import { useRef, useEffect } from "react"
+import { useRef, useEffect, useState } from "react"
+import { FaEyeSlash, FaRegEye } from "react-icons/fa"
 import { toast } from "react-toastify"
 
 const PassFolder = ({ data, onSuccess, onClose }: { data: FolderType, onSuccess: () => void, onClose: () => void }) => {
+    const [inputType, setInputType] = useState("password")
     const passwordInput = useRef<HTMLInputElement>(null)
-    const router = useRouter()
-    const pathName = usePathname()
-
-    // Auto-focus the input when modal opens
     useEffect(() => {
         if (passwordInput.current) {
             passwordInput.current.focus()
@@ -51,19 +48,22 @@ const PassFolder = ({ data, onSuccess, onClose }: { data: FolderType, onSuccess:
         >
             <div
                 className="bg-[#111] rounded-lg p-6 max-w-md w-full mx-4 shadow border border-white/20"
-                onClick={handleModalClick} // Prevent closing when clicking modal content
+                onClick={handleModalClick} 
             >
                 <h1 className="text-xl font-bold mb-4">Enter the Password</h1>
                 <p className="text-gray-300 mb-4">
                     The folder "{data.name}" is locked. Please enter the password to access it.
                 </p>
-                <input
-                    type="password"
-                    ref={passwordInput}
-                    onKeyPress={handleKeyPress}
-                    className="w-full px-3 py-2 ring ring-white/20 bg-black rounded-md mb-4 focus:outline-none focus:ring-1 focus:ring-red-950"
-                    placeholder="Enter password"
-                />
+                <div className="w-full px-3 py-2 ring ring-white/20 bg-black rounded-md mb-4 focus:outline-none focus-within:ring-1 in-focus-within:ring-red-950 flex justify-between items-center">
+                    <input
+                        type={inputType}
+                        ref={passwordInput}
+                        onKeyPress={handleKeyPress}
+                        className="outline-none w-full transition-all"
+                        placeholder="Enter password"
+                    />
+                    <i onClick={() => setInputType(inputType === "password" ? "text" : "password")}>{inputType === "password" ? <FaRegEye /> : <FaEyeSlash />}</i>
+                </div>
                 <div className="flex gap-3">
                     <button
                         onClick={enterHandler}

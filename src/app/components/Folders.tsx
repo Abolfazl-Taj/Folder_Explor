@@ -6,12 +6,14 @@ import { MdFolderCopy } from "react-icons/md";
 import ModalForm from "./ModalForm";
 import PassFolder from "./Forms/PassFolder";
 import { useState } from "react";
+import { BsArrowDown, BsArrowUp } from "react-icons/bs";
 
 const Folders = ({ data, bin }: { data: FolderType[], bin: boolean }) => {
     const pathName = usePathname()
     const [isOpen, setIsOpen] = useState(false)
     const [lockedFolder, setLockedFolder] = useState<FolderType | null>(null)
     const router = useRouter()
+    const [openRowId, setOpenRowId] = useState<string | null>(null)
 
     const folderLockedHandler = ({ folderData }: { folderData: FolderType }) => {
         if (!folderData.locked) {
@@ -23,7 +25,6 @@ const Folders = ({ data, bin }: { data: FolderType[], bin: boolean }) => {
     }
 
     const handleSuccess = () => {
-        // Navigate to the folder only after successful password entry
         if (lockedFolder) {
             router.push(`${pathName}/${lockedFolder.id}`)
         }
@@ -34,7 +35,9 @@ const Folders = ({ data, bin }: { data: FolderType[], bin: boolean }) => {
         setIsOpen(false)
         setLockedFolder(null)
     }
-
+    const toggleRow = (folderId: string) => {
+        setOpenRowId((prev) => prev === folderId ? null : folderId)
+    }
     return (
         <>
             {/* Password Modal - rendered conditionally */}
@@ -50,7 +53,7 @@ const Folders = ({ data, bin }: { data: FolderType[], bin: boolean }) => {
                 <h2 className="font-bold text-lg">Folders:</h2>
 
                 {data?.map((folder: FolderType) => (
-                    <div key={folder.id}>
+                    <div key={folder.id} className="relative">
                         <div className="group flex w-full items-center gap-3 border-b border-gray-300/20 py-2 px-3 rounded-md transition-all hover:bg-[#222] hover:shadow-md">
                             <button
                                 onClick={() => folderLockedHandler({ folderData: folder })}
@@ -68,10 +71,21 @@ const Folders = ({ data, bin }: { data: FolderType[], bin: boolean }) => {
                                     </span>
                                 </div>
                             </button>
-                            {!bin && <ModalForm type="update" data={folder} />}
-                            {!bin && <ModalForm type="lock" data={folder} />}
-                            {bin && <ModalForm form="restore" entityType="folder" type="restore" id={folder.id} name={folder.name} data={folder} />}
-                            <ModalForm type="delete" data={{ id: folder.id, name: folder.name }} />
+                            <div className="gap-2 hidden lg:flex">
+                                {!bin && <ModalForm type="update" data={folder} />}
+                                {!bin && <ModalForm type="lock" data={folder} />}
+                                {bin && <ModalForm form="restore" entityType="folder" type="restore" id={folder.id} name={folder.name} data={folder} />}
+                                <ModalForm type="delete" data={{ id: folder.id, name: folder.name }} />
+                            </div>
+                            <button onClick={() => toggleRow(folder.id)} className={`transition-all lg:hidden ${openRowId === folder.id ? "rotate-180" : "rotate-0"}`}>
+                                <BsArrowUp />
+                            </button>
+                            <div className={`lg:hidden transition-all ${openRowId === folder.id ? "scale-100" : "scale-0"}  absolute right-10 top-3 flex gap-6 z-50 bg-[#111]/20 border border-white/20 backdrop-blur-3xl lg:ap-4 rounded-md  px-4 py-6 `}   >
+                                {!bin && <ModalForm type="update" data={folder} />}
+                                {!bin && <ModalForm type="lock" data={folder} />}
+                                {bin && <ModalForm form="restore" entityType="folder" type="restore" id={folder.id} name={folder.name} data={folder} />}
+                                <ModalForm type="delete" data={{ id: folder.id, name: folder.name }} />
+                            </div>
                         </div>
                     </div>
                 ))}

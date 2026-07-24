@@ -1,5 +1,5 @@
-"use client";
-import Continer from "@/app/components/Continer";
+"use client"
+import Continer from "@/app/components/Continer"
 import FormikForm from "@/app/components/FormikForm";
 import Input from "@/app/components/Input";
 import { MdAlternateEmail } from "react-icons/md";
@@ -7,15 +7,12 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import LoginScheme from "@/app/lib/schemas/Login";
 import { postRequest } from "@/app/lib/fetchRequest";
 import { useRouter } from "next/navigation";
-import {
-  getFromLocalStorage,
-  setToLocalStorage,
-} from "@/app/lib/localStorgeRequest";
+import { getFromLocalStorage, setToLocalStorage, } from "@/app/lib/localStorgeRequest";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
-import {getCookie} from  'cookies-next/client';
+import { getCookie } from 'cookies-next/client';
 const LoginPage = () => {
   const router = useRouter();
   const [error, setError] = useState<any>(null);
