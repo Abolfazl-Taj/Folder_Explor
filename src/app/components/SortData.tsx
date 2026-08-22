@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { BsSearch } from "react-icons/bs";
-import useExpo from "@/hooks/useExpo";
+import useExpo from "@/hooks/useFileSystem";
 import { usePathname } from "next/navigation";
 
 const sortOptions = [

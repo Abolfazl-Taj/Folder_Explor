@@ -23,7 +23,7 @@ export type FolderType = {
   passCode?: string
 };
 
-export type ExpoContextType = {
+export type FileSystemContextType = {
   files: FileType[] | null;
   setFiles: Dispatch<SetStateAction<FileType[] | null>>;
   folders: FolderType[] | null;

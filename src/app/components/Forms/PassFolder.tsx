@@ -1,5 +1,5 @@
 "use client"
-import { FolderType } from "@/types/Expo"
+import { FolderType } from "@/types/FileSystem"
 import { useRef, useEffect, useState } from "react"
 import { FaEyeSlash, FaRegEye } from "react-icons/fa"
 import { toast } from "react-toastify"
@@ -48,7 +48,7 @@ const PassFolder = ({ data, onSuccess, onClose }: { data: FolderType, onSuccess:
         >
             <div
                 className="bg-[#111] rounded-lg p-6 max-w-md w-full mx-4 shadow border border-white/20"
-                onClick={handleModalClick} 
+                onClick={handleModalClick}
             >
                 <h1 className="text-xl font-bold mb-4">Enter the Password</h1>
                 <p className="text-gray-300 mb-4">

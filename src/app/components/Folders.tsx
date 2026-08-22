@@ -1,6 +1,6 @@
 "use client";
 
-import { FolderType } from "@/types/Expo";
+import { FolderType } from "@/types/FileSystem";
 import { usePathname, useRouter } from "next/navigation";
 import { MdFolderCopy } from "react-icons/md";
 import ModalForm from "./ModalForm";

@@ -1,10 +1,10 @@
 import Continer from "@/app/components/Continer"
 import SideBar from "@/app/components/SideBar"
-import ExpoProvider from "@/provider/Expoprovider"
+import FileSystemProvider from "@/provider/Expoprovider"
 import { ReactNode } from "react"
 import { Bounce, ToastContainer } from "react-toastify"
 const AppLayout = ({ children }: { children: ReactNode }) => {
-    return <ExpoProvider>
+    return <FileSystemProvider>
         <div className="min-w-full min-h-screen overflow-hidden  animatedbg flex flex-col items-start md:justify-center md:items-center bg-gradient-to-r from-[#000]/20 via-[#111]/20 to-[#222]/20">
             <Continer className="gap-4 relative overflow-x-hidden">
                 <div className="bg-gradient-to-br from-white/5 via-[#1a1a1a]/80 to-[#0f0f0f]/60 backdrop-blur-[6px] backdrop-saturate-[180%]  rounded-[12px] w-full  text-white
@@ -28,6 +28,6 @@ const AppLayout = ({ children }: { children: ReactNode }) => {
             theme="dark"
             transition={Bounce}
         />
-    </ExpoProvider>
+    </FileSystemProvider>
 }
 export default AppLayout

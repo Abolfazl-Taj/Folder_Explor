@@ -6,7 +6,7 @@ import Loading from "@/app/components/Loading"
 import SortData from "@/app/components/SortData"
 import sortData from "@/app/lib/sortData"
 import { Folder, File } from "@/generated/prisma"
-import useExpo from "@/hooks/useExpo"
+import useFileSystem from "@/hooks/useFileSystem"
 import { useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
 import { useRouter } from "next/navigation"
@@ -17,7 +17,7 @@ import { IoIosWarning } from "react-icons/io"
 import { toast } from "react-toastify"
 
 const RecycleBinPage = () => {
-    const { folders, files, loading } = useExpo()
+    const { folders, files, loading } = useFileSystem()
     const [data, setData] = useState<{ files?: File[]; folders?: Folder[] }>({})
     const router = useRouter()
     const [sortMethod, setSortMethod] = useState({

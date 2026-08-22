@@ -1,8 +1,8 @@
 
-import ExpoContext from "@/context/ExpoContext";
+import ExpoContext from "@/context/FileSystemContext";
 import { useContext } from "react"
 
-const useExpo = () => {
+const useFileSystem = () => {
     const value = useContext(ExpoContext)
     if (value) {
         return value
@@ -12,4 +12,4 @@ const useExpo = () => {
     }
 }
 
-export default useExpo
+export default useFileSystem

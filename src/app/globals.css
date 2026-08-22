@@ -6,11 +6,11 @@
 }
 .animatedbg{
     background: url("../../public/background.svg");
-  background-size: 100%;
+  /* background-size: 300% 500%; */
   background-position: center;
   animation: alternate bgAnimation 10s infinite ease-in-out;
   background-blend-mode: darken;
-  @apply bg-[#111]/10;
+  @apply bg-[#111]/10 bg-size-[300%_200%] md:bg-size-[100%_200%]; 
 }
 input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 1000px #111 inset !important;

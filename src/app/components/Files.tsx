@@ -1,4 +1,4 @@
-import { FileType } from "@/types/Expo"
+import { FileType } from "@/types/FileSystem"
 import ModalForm from "./ModalForm";
 import Link from "next/link";
 import icons from "../lib/Icons";

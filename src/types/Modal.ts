@@ -1,12 +1,12 @@
-import { FolderType } from "./Expo";
+import { FolderType } from "./FileSystem";
 
 export type Modal = {
     type: "add" | "delete" | "update" | "restore" | "lock";
     data?: FolderType | any;
     folderId?: string | null
-    form?: "folder" | "file" | "permission" |"restore"
+    form?: "folder" | "file" | "permission" | "restore"
     id?: string
     permissions?: any,
     name?: string
-    entityType? : "file" | "folder"
+    entityType?: "file" | "folder"
 }

@@ -6,7 +6,7 @@ import ModalForm from "@/app/components/ModalForm";
 import SortData from "@/app/components/SortData";
 import sortData from "@/app/lib/sortData";
 import { Folder, File } from "@/generated/prisma";
-import useExpo from "@/hooks/useExpo"
+import useExpo from "@/hooks/useFileSystem"
 import Image from "next/image";
 import { useEffect, useState } from "react";
 

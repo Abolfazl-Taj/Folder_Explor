@@ -1,12 +1,12 @@
 "use client";
 
 import { getRequest } from "@/app/lib/fetchRequest";
-import ExpoContext from "@/context/ExpoContext";
-import { FileType, FolderType } from "@/types/Expo";
+import ExpoContext from "@/context/FileSystemContext";
+import { FileType, FolderType } from "@/types/FileSystem";
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
-const ExpoProvider = ({ children }: { children: ReactNode }) => {
+const FileSystemProvider = ({ children }: { children: ReactNode }) => {
     const [folders, setFolders] = useState<FolderType[] | null>(null);
     const [files, setFiles] = useState<FileType[] | null>(null);
     const [safeData, setSafeData] = useState({})
@@ -37,4 +37,4 @@ const ExpoProvider = ({ children }: { children: ReactNode }) => {
     );
 };
 
-export default ExpoProvider;
+export default FileSystemProvider;

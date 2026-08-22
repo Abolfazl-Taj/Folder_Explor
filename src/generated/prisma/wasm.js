@@ -128,6 +128,7 @@ exports.Prisma.UserScalarFieldEnum = {
   password: 'password',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  isAdmin: 'isAdmin',
   resetToken: 'resetToken',
   resetTokenExp: 'resetTokenExp'
 };
@@ -222,7 +223,8 @@ exports.ActivityAction = exports.$Enums.ActivityAction = {
   FILE_RESTORED: 'FILE_RESTORED',
   FOLDER_RESTORED: 'FOLDER_RESTORED',
   FOLDER_RECYCLED: 'FOLDER_RECYCLED',
-  FILE_RECYCLED: 'FILE_RECYCLED'
+  FILE_RECYCLED: 'FILE_RECYCLED',
+  USER_DELETE: 'USER_DELETE'
 };
 
 exports.EntityType = exports.$Enums.EntityType = {
