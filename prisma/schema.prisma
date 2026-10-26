@@ -119,7 +119,6 @@ enum ActivityAction {
   FOLDER_RECYCLED
   FILE_RECYCLED
   USER_DELETE
-  
 }
 
 enum EntityType {
